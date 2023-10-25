@@ -120,10 +120,82 @@ A render of the kettle only. Using cycles and 200 samples.
 
 ## Sink
 
+(Nick Diamond)
+
+### Reference images
+
+<img src="Reference Pictures/Sink/sink_1.jpg" alt="Sink Ref 1" width="200"/><img src="Reference Pictures/Sink/sink_2.jpg" alt="Sink Ref 2" width="200"/>
+
+
+### Modelling process
+
+<img src="Blender_Project_Files_V1/Sink/sink_snapshot1.png" alt="Sink 1" width="300"/>
+
+Main body of the sink.
+
+<img src="Blender_Project_Files_V2/Sink/sink_snapshot2.png" alt="Sink 2" width="300"/>
+
+Plugs.
+
+<img src="Blender_Project_Files_V3/Sink/sink_snapshot3.png" alt="Sink 3" width="300"/>
+
+Tap & shaders.
+
+<img src="Blender_Project_Files_V4/Sink/sink_snapshot4.png" alt="Sink 4" width="300"/>
+
+Geometry fix (on the "insets" in the sink)
+
+<img src="Blender_Project_Files_V5/Sink/sink_snapshot5.png" alt="Sink 5" width="300"/>
+
+Overflow
+
+### References
+- Metalic texture: https://www.youtube.com/watch?v=8D4exODUKmk
+
+### Render
+
+<img src="Blender_Project_Files_V5/Sink/sink_render_1.png" alt="Sink Render" width="600"/>
+
+A render of the sink only. Using cycles and 200 samples.
+
 
 <br/><br/>
 
 ## Storage Jars
+
+(Nick Diamond)
+
+### Reference images
+
+<img src="Reference Pictures/Storage Jar 1/StorageJar_1.jpg" alt="Storage Jar Ref 1" width="300"/>
+
+### Modelling process
+
+<img src="Blender_Project_Files_V1/Storage Jar 1/jar_snapshot1.png" alt="Jar 1" width="300"/>
+
+Inital jar body.
+
+<img src="Blender_Project_Files_V2/Storage Jar 1/jar_snapshot2.png" alt="Jar 2" width="300"/>
+
+Jar lid.
+
+<img src="Blender_Project_Files_V3/Storage Jar 1/jar_snapshot3.png" alt="Jar 3" width="300"/>
+
+Jar window/see through plastic. Added shaders.
+
+<img src="Blender_Project_Files_V4/Storage Jar 1/jar_snapshot4.png" alt="Jar 4" width="300"/><img src="Blender_Project_Files_V4/Storage Jar 1/jar_snapshot4_alt.png" alt="Jar 4" width="300"/>
+
+Final jar. Created a silver & black version
+
+### References
+- Metalic texture: https://www.youtube.com/watch?v=8D4exODUKmk
+- Clear plastic: https://www.youtube.com/watch?v=PKwKT-tvu5E
+
+### Render
+
+<img src="Blender_Project_Files_V4/Storage Jar 1/jar_render_1.png" alt="Jar Render (Silver)" width="600"/><img src="Blender_Project_Files_V4/Storage Jar 1/jar_render_1_alt.png" alt="Jar Render (Black)" width="600"/>
+
+A render of the jars only. Using cycles and 200 samples.
 
 
 <br/><br/>
