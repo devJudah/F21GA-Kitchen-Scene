@@ -229,11 +229,11 @@ Added toaster handle/lever.
 
 <img src="Blender_Project_Files_V4/Appliances/toaster_snapshot4.png" alt="Toaster 4" width="300"/>
 
-Added toaster textures
+Added toaster textures & materials.
 
 ### References
-- Metalic texture: https://www.youtube.com/watch?v=8D4exODUKmk
-- Matte plastic: https://www.youtube.com/watch?v=Wd494AmpGDI
+- Metalic material: https://www.youtube.com/watch?v=8D4exODUKmk
+- Matte material: https://www.youtube.com/watch?v=Wd494AmpGDI
 
 ### Render
 
