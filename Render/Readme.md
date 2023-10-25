@@ -70,10 +70,7 @@
 
 ### Reference images
 
-<img src="Reference Pictures/Appliances/kettle_back_1.jpg" alt="Kettle Ref 1" width="200"/>
-<img src="Reference Pictures/Appliances/kettle_front_1.jpg" alt="Kettle Ref 1" width="200"/>
-<img src="Reference Pictures/Appliances/kettle_front_2.jpg" alt="Kettle Ref 1" width="200"/>
-
+<img src="Reference Pictures/Appliances/kettle_back_1.jpg" alt="Kettle Ref 1" width="200"/><img src="Reference Pictures/Appliances/kettle_front_1.jpg" alt="Kettle Ref 1" width="200"/><img src="Reference Pictures/Appliances/kettle_front_2.jpg" alt="Kettle Ref 1" width="200"/>
 
 
 ### Modelling process
@@ -110,7 +107,7 @@ Final version.
 
 ### Render
 
-<img src="Blender_Project_Files_V6/Appliances/kettle_render_1.png" alt="Kettle Render" width="500"/>
+<img src="Blender_Project_Files_V6/Appliances/kettle_render_1.png" alt="Kettle Render" width="600"/>
 
 A render of the kettle only. Using cycles and 200 samples.
 
@@ -136,6 +133,45 @@ A render of the kettle only. Using cycles and 200 samples.
 
 <br/><br/>
 
+## Toaster
+
+(Nick Diamond)
+
+### Reference images
+
+<img src="Reference Pictures/Appliances/toaster_front_1_r.jpg" alt="Kettle Ref 1" width="200"/><img src="Reference Pictures/Appliances/toaster_side_1_r.jpg" alt="Kettle Ref 1" width="200"/>
+
+### Modelling process
+
+<img src="Blender_Project_Files_V1/Appliances/toaster_snapshot1.png" alt="Toaster 1" width="300"/>
+
+Inital attempt at toaster body.
+
+<img src="Blender_Project_Files_V2/Appliances/toaster_snapshot2.png" alt="Toaster 2" width="300"/>
+
+Improved toaster cutout, and added buttons.
+
+<img src="Blender_Project_Files_V3/Appliances/toaster_snapshot3.png" alt="Toaster 3" width="300"/>
+
+Added toaster handle/lever.
+
+<img src="Blender_Project_Files_V4/Appliances/toaster_snapshot4.png" alt="Toaster 4" width="300"/>
+
+Added toaster textures
+
+### References
+- Metalic texture: https://www.youtube.com/watch?v=8D4exODUKmk
+- Matte plastic: https://www.youtube.com/watch?v=Wd494AmpGDI
+
+### Render
+
+<img src="Blender_Project_Files_V4/Appliances/toaster_render_1.png" alt="Toaster Render" width="600"/>
+
+A render of the toaster only. Using cycles and 200 samples.
+
+
+<br/><br/>
+
 ## Upper Cabinet
 <img src="Reference Pictures/Upper cabinet/1.PNG" alt="Cabinet Ref 1" width="200"/>
 <img src="Reference Pictures/Upper cabinet/2.PNG" alt="Cabinet Ref 1" width="200"/>
@@ -146,13 +182,15 @@ A render of the kettle only. Using cycles and 200 samples.
 <img src="Reference Pictures/Upper cabinet/7.PNG" alt="Cabinet Ref 1" width="200"/>
 <img src="Reference Pictures/Upper cabinet/8.PNG" alt="Cabinet Ref 1" width="200"/>
 
-<br/><br/>
+
 ### References
 - Wood texture: https://www.youtube.com/watch?v=Egd_BNAT3l8
 - Glass texture: https://www.youtube.com/watch?v=jrus-PQZGLk
 ### Render
 
 <img src="Reference Pictures/Upper cabinet/Rendered Image.png" alt="Kettle Render" width="500"/>
+
+<br/><br/>
 
 ## Window
 
