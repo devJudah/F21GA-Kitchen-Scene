@@ -89,21 +89,21 @@ Next, the base and lid.
 
 <img src="Blender_Project_Files_V4/Appliances/kettle_snapshot4.png" alt="Kettle 4" width="300"/>
 
-First attempt at textures.
+First attempt at material.
 
 <img src="Blender_Project_Files_V5/Appliances/kettle_snapshot5.png" alt="Kettle 5" width="300"/>
 
-Second attempt at textures & shaders.
+Second attempt at material & texture.
 
 <img src="Blender_Project_Files_V6/Appliances/kettle_snapshot6.png" alt="Kettle 6" width="300"/>
 
 Final version.
 
 ### References
-- Metalic texture: https://www.youtube.com/watch?v=8D4exODUKmk
-- Glass texture: https://www.youtube.com/watch?v=CtfNtpJa3hU
-- Clear plastic: https://www.youtube.com/watch?v=PKwKT-tvu5E
-- Matte plastic: https://www.youtube.com/watch?v=Wd494AmpGDI
+- Metalic material: https://www.youtube.com/watch?v=8D4exODUKmk
+- Glass material: https://www.youtube.com/watch?v=CtfNtpJa3hU
+- Clear plastic material: https://www.youtube.com/watch?v=PKwKT-tvu5E
+- Matte plastic material: https://www.youtube.com/watch?v=Wd494AmpGDI
 
 ### Render
 
@@ -139,7 +139,7 @@ Plugs.
 
 <img src="Blender_Project_Files_V3/Sink/sink_snapshot3.png" alt="Sink 3" width="300"/>
 
-Tap & shaders.
+Tap & materials.
 
 <img src="Blender_Project_Files_V4/Sink/sink_snapshot4.png" alt="Sink 4" width="300"/>
 
@@ -150,7 +150,7 @@ Geometry fix (on the "insets" in the sink)
 Overflow
 
 ### References
-- Metalic texture: https://www.youtube.com/watch?v=8D4exODUKmk
+- Metalic material: https://www.youtube.com/watch?v=8D4exODUKmk
 
 ### Render
 
@@ -181,15 +181,15 @@ Jar lid.
 
 <img src="Blender_Project_Files_V3/Storage Jar 1/jar_snapshot3.png" alt="Jar 3" width="300"/>
 
-Jar window/see through plastic. Added shaders.
+Jar window/see through plastic. Added materials.
 
 <img src="Blender_Project_Files_V4/Storage Jar 1/jar_snapshot4.png" alt="Jar 4" width="300"/><img src="Blender_Project_Files_V4/Storage Jar 1/jar_snapshot4_alt.png" alt="Jar 4" width="300"/>
 
 Final jar. Created a silver & black version
 
 ### References
-- Metalic texture: https://www.youtube.com/watch?v=8D4exODUKmk
-- Clear plastic: https://www.youtube.com/watch?v=PKwKT-tvu5E
+- Metalic material: https://www.youtube.com/watch?v=8D4exODUKmk
+- Clear plastic material: https://www.youtube.com/watch?v=PKwKT-tvu5E
 
 ### Render
 
