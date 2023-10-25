@@ -137,9 +137,22 @@ A render of the kettle only. Using cycles and 200 samples.
 <br/><br/>
 
 ## Upper Cabinet
-
+<img src="Reference Pictures/Upper cabinet/1.PNG" alt="Cabinet Ref 1" width="200"/>
+<img src="Reference Pictures/Upper cabinet/2.PNG" alt="Cabinet Ref 1" width="200"/>
+<img src="Reference Pictures/Upper cabinet/3.PNG" alt="Cabinet Ref 1" width="200"/>
+<img src="Reference Pictures/Upper cabinet/4.PNG" alt="Cabinet Ref 1" width="200"/>
+<img src="Reference Pictures/Upper cabinet/5.PNG" alt="Cabinet Ref 1" width="200"/>
+<img src="Reference Pictures/Upper cabinet/6.PNG" alt="Cabinet Ref 1" width="200"/>
+<img src="Reference Pictures/Upper cabinet/7.PNG" alt="Cabinet Ref 1" width="200"/>
+<img src="Reference Pictures/Upper cabinet/8.PNG" alt="Cabinet Ref 1" width="200"/>
 
 <br/><br/>
+### References
+- Wood texture: https://www.youtube.com/watch?v=Egd_BNAT3l8
+- Glass texture: https://www.youtube.com/watch?v=jrus-PQZGLk
+### Render
+
+<img src="Reference Pictures/Upper cabinet/Rendered Image.png" alt="Kettle Render" width="500"/>
 
 ## Window
 
