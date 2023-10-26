@@ -77,6 +77,11 @@
 
 ### Door
 
+#### Handle
+##### Reference images
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Reference%20Pictures/Door/handleref.jpg" alt="light 1" width="300"/>
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Reference%20Pictures/Door/handleref2.jpg" alt="light 1" width="300"/>
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Reference%20Pictures/Door/handleref3.jpg" alt="light 1" width="300"/>
 
 <br/><br/>
 
