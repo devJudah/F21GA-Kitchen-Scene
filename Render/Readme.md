@@ -96,6 +96,10 @@ From [3D Kitchen Model D scene](https://www.turbosquid.com/3d-models/3d-kitchen-
 <img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/stool%20unfinished%20textures.png" alt="unfinishedTextures" width="700"/>
 <br/><br/>
 
+#### Rendered Image
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V2/Rendered_Images/Stools.png" alt="Chairs" width="700"/>
+<br/><br/>
+
 ### Cup
 
 #### Reference images
