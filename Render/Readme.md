@@ -21,6 +21,7 @@
     - [Table](#table)
     - [Toaster](#toaster)
     - [Upper Cabinet](#upper-cabinet)
+    - [Walls, ceil and floor](#walls,-ceil-and-floor)
     - [Window](#window)
 - [Final Scene](#final-scene)
 
