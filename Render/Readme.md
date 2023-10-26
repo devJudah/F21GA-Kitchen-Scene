@@ -39,10 +39,10 @@
 ### Ceiling Light
 (Aswin Shaji)
 ### Modeling Image
-<img src ="[Render/Blender_Project_Files_V1/Light modeling screenshots/1.png](https://github.com/devJudah/F21GA-Kitchen-Scene/blob/6632612733b648b1b569b241acb8b9cf31d75b05/Render/Blender_Project_Files_V1/Light%20modeling%20screenshots/1.png)" width="300"/>
-<img src ="[Render/Blender_Project_Files_V1/Light modeling screenshots/1.png](https://github.com/devJudah/F21GA-Kitchen-Scene/blob/6632612733b648b1b569b241acb8b9cf31d75b05/Render/Blender_Project_Files_V1/Light%20modeling%20screenshots/2.png)" width="300"/>
-<img src ="[Render/Blender_Project_Files_V1/Light modeling screenshots/1.png](https://github.com/devJudah/F21GA-Kitchen-Scene/blob/6632612733b648b1b569b241acb8b9cf31d75b05/Render/Blender_Project_Files_V1/Light%20modeling%20screenshots/3.png)" width="300"/>
-<img src ="[Render/Blender_Project_Files_V1/Light modeling screenshots/1.png](https://github.com/devJudah/F21GA-Kitchen-Scene/blob/6632612733b648b1b569b241acb8b9cf31d75b05/Render/Blender_Project_Files_V1/Light%20modeling%20screenshots/4.png)" width="300"/>
+<img src ="[Render/Blender_Project_Files_V1/Light modeling screenshots/1.png](https://github.com/devJudah/F21GA-Kitchen-Scene/blob/6632612733b648b1b569b241acb8b9cf31d75b05/Render/Blender_Project_Files_V1/Light%20modeling%20screenshots/1.png)" alt="light 1" width="300"/>
+<img src ="[Render/Blender_Project_Files_V1/Light modeling screenshots/1.png](https://github.com/devJudah/F21GA-Kitchen-Scene/blob/6632612733b648b1b569b241acb8b9cf31d75b05/Render/Blender_Project_Files_V1/Light%20modeling%20screenshots/2.png)" alt="light 2" width="300"/>
+<img src ="[Render/Blender_Project_Files_V1/Light modeling screenshots/1.png](https://github.com/devJudah/F21GA-Kitchen-Scene/blob/6632612733b648b1b569b241acb8b9cf31d75b05/Render/Blender_Project_Files_V1/Light%20modeling%20screenshots/3.png)" alt="light 3" width="300"/>
+<img src ="[Render/Blender_Project_Files_V1/Light modeling screenshots/1.png](https://github.com/devJudah/F21GA-Kitchen-Scene/blob/6632612733b648b1b569b241acb8b9cf31d75b05/Render/Blender_Project_Files_V1/Light%20modeling%20screenshots/4.png)" alt="light 4" width="300"/>
 
 
 
