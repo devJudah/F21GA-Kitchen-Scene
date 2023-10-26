@@ -41,7 +41,7 @@
 
 ### Rendered image
 
-<img src ="Render/Blender_Project_Files_V2/Rendered_Images/Light Bulb.png" alt="Renderimg" width="300"/>
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/e73766ccf9b8764e658397ad46f4dc0705ed7c71/Render/Blender_Project_Files_V2/Rendered_Images/Light%20Bulb.png" alt="light Render img" width="300"/>
 
 
 
