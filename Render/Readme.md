@@ -270,8 +270,7 @@ A render of the toaster only. Using cycles and 200 samples.
 
 <br/><br/>
 
-## Dustbin
-<br/><br/>
+
 
 ## Final Scene
 
