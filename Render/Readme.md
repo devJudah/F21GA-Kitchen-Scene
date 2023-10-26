@@ -12,6 +12,7 @@
     - [Cup](#cup)
     - [Dish](#dish)
     - [Door](#door)
+    - [Dustbin](#dustbin)
     - [Fridge](#fridge)
     - [Kettle](#kettle)
     - [Lower Cabinet](#lower-cabinet)
@@ -61,6 +62,12 @@
 <br/><br/>
 
 ### Door
+
+
+<br/><br/>
+
+
+### Dustbin
 
 
 <br/><br/>
