@@ -100,6 +100,8 @@ From [3D Kitchen Model D scene](https://www.turbosquid.com/3d-models/3d-kitchen-
 <br/><br/>
 
 ### Cup
+#### Modelling process
+
 #### Reference images
 <img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Reference%20Pictures/Cup/cup.jpg" alt="cup" width="300"/>
 
@@ -107,6 +109,26 @@ From [3D Kitchen Model D scene](https://www.turbosquid.com/3d-models/3d-kitchen-
 
 ### Dish
 #### Modelling process
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/1.%20selectPossibeDishLayoutFromFaces.png" alt="dish1" width="700"/>
+<br/><br/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/2.%20invertAndDeleteFaces.png" alt="dish1" width="700"/>
+<br/><br/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/3.%20platebase.png" alt="dish1" width="700"/>
+<br/><br/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/4.%20useEdgeloopstoFillEdgeAndInsertFacetoFlatten.png" alt="dish1" width="700"/>
+<br/><br/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/5.%20AddModifiers.png" alt="dish1" width="700"/>
+<br/><br/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/6.%20AddTextures.png" alt="dish1" width="700"/>
+<br/><br/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/finished.png" alt="dish1" width="700"/>
+<br/><br/>
 
 #### Rendered Image
 <img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V2/Rendered_Images/Dish.png" alt="dish" width="700"/>
