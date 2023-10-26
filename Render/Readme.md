@@ -141,7 +141,7 @@ A render of the kettle only. Using cycles and 200 samples.
 
 ### Lower Cabinet
 (Aswin Shaji)
-
+<img src ="" alt="lower cabinet" width="300"/>
 
 <br/><br/>
 
