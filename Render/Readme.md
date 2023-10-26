@@ -70,7 +70,7 @@ From [3D Kitchen Model D scene](https://www.turbosquid.com/3d-models/3d-kitchen-
 
 ### Rendered image
 
-<img src ="Render/Blender_Project_Files_V2/Rendered_Images/Light Bulb.png" alt="Renderimg" width="300"/>
+<img src ="Blender_Project_Files_V2/Rendered_Images/Light%20Bulb.png" alt="Renderimg" width="300"/>
 
 
 <br/><br/>
