@@ -33,6 +33,10 @@
 
 ### Bottle
 
+#### Référence image
+
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Prpject_Files_V7/bottleref.jpg" alt="light 1" width="300"/> 
+
 #### Modelling process
 
 <img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Prpject_Files_V7/modelbottle.png" alt="light 1" width="300"/> 
