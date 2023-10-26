@@ -78,7 +78,7 @@ From [3D Kitchen Model D scene](https://www.turbosquid.com/3d-models/3d-kitchen-
 
 
 
-### Chairs
+
 
 
 <br/><br/>
@@ -86,6 +86,17 @@ From [3D Kitchen Model D scene](https://www.turbosquid.com/3d-models/3d-kitchen-
 ### Cooker
 (Aswin Shaji)
 
+<br/><br/>
+
+### Chairs
+#### Reference images
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Reference%20Pictures/Seat/Seat.jpg" alt="chair" width="300"/>
+<br/><br/>
+
+#### Modelling process
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/sculpting%20seats.png" alt="sculptSeat" width="300"/>
+<br/><br/>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/stool%20unfinished%20textures.png" alt="unfinishedTextures" width="300"/>
 <br/><br/>
 
 ### Cup
@@ -103,6 +114,7 @@ From [3D Kitchen Model D scene](https://www.turbosquid.com/3d-models/3d-kitchen-
 
 ### Table
 #### Modelling process
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Creating%20kitchen%20counter.png" alt="tableModelling" width="300"/>
 
 #### Rendered Image
 <img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V2/Rendered_Images/Table.png" alt="table" width="300"/>
@@ -115,6 +127,11 @@ From [3D Kitchen Model D scene](https://www.turbosquid.com/3d-models/3d-kitchen-
 <img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Reference%20Pictures/Fridge/Refrigerator_frontView.jpg" alt="fridge" width="300"/>
 
 #### Modelling process
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Extruding%20fridge%20doors.png" alt="extrudeCubeFrontForDoor" width="300"/>
+<br/><br/>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Handle.png" alt="extrudeCubeFrontForDoor" width="300"/>
+
+
 
 #### Rendered Image
 <img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V2/Rendered_Images/1st_Fridge_Render.png" alt="fridge" width="300"/>
