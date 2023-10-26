@@ -8,14 +8,14 @@
     - [Bottle](#bottle) : @guillotcyril
     - [Ceiling Light](#ceiling-light) :@devAswinCode
     - [Chairs](#chairs) : @devJudah
-    - [Cooker](#cooker)
+    - [Cooker](#cooker) @devAswinCode
     - [Cup](#cup) : @devJudah
     - [Dish](#dish) : @devJudah
     - [Door](#door) : @guillotcyril
     - [Dustbin](#dustbin):@devAswinCode
     - [Fridge](#fridge) : @devJudah
     - [Kettle](#kettle) : @nd-103
-    - [Lower Cabinet](#lower-cabinet)
+    - [Lower Cabinet](#lower-cabinet) :@devAswincode
     - [Sink](#sink) : @nd-103
     - [Storage Jars](#storage-jars) : @nd-103
     - [Table](#table) : @devJudah
