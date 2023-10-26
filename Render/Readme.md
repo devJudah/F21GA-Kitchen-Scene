@@ -7,18 +7,18 @@
 - [Models](#mod)
     - [Bottle](#bottle)
     - [Ceiling Light](#ceiling-light)
-    - [Chairs](#chairs)
+    - [Chairs](#chairs) : @devJudah
     - [Cooker](#cooker)
-    - [Cup](#cup)
-    - [Dish](#dish)
+    - [Cup](#cup) : @devJudah
+    - [Dish](#dish) : @devJudah
     - [Door](#door)
     - [Dustbin](#dustbin)
-    - [Fridge](#fridge)
+    - [Fridge](#fridge) : @devJudah
     - [Kettle](#kettle)
     - [Lower Cabinet](#lower-cabinet)
     - [Sink](#sink)
     - [Storage Jars](#storage-jars)
-    - [Table](#table)
+    - [Table](#table) : @devJudah
     - [Toaster](#toaster)
     - [Upper Cabinet](#upper-cabinet)
     - [Walls, ceil and floor](#walls,-ceil-and-floor)
@@ -78,9 +78,6 @@ From [3D Kitchen Model D scene](https://www.turbosquid.com/3d-models/3d-kitchen-
 
 
 
-
-
-
 <br/><br/>
 
 ### Cooker
@@ -100,34 +97,62 @@ From [3D Kitchen Model D scene](https://www.turbosquid.com/3d-models/3d-kitchen-
 <br/><br/>
 
 ### Cup
-#### Modelling process
 
 #### Reference images
 <img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Reference%20Pictures/Cup/cup.jpg" alt="cup" width="300"/>
-
 <br/><br/>
+
+#### Modelling process
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Cup/1.%20useedgeloopstoMakeAShapedOutline.png" alt="cup1" width="700"/>
+<br/><br/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Cup/2.%20UseEdgeLoopstoScale.png" alt="cup2" width="700"/>
+<br/><br/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Cup/3.%20InsettoMakeFlatBottom.png" alt="cup3" width="700"/>
+<br/><br/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Cup/4.%20applySolidify.png" alt="cup4" width="700"/>
+<br/><br/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Cup/5.%20applySubDiv.png" alt="cup5" width="700"/>
+<br/><br/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Cup/6.%20extrudeFaceForHandle.png" alt="cup6" width="700"/>
+<br/><br/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Cup/7.%20spin%26RotateonYAxis.png" alt="cup7" width="700"/>
+<br/><br/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Cup/8.%20addTextures.png" alt="cup8" width="700"/>
+<br/><br/>
+
+#### Rendered Image
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V2/Rendered_Images/Cup.png" alt="cupRender" width="700"/>
+<br/><br/>
+
 
 ### Dish
 #### Modelling process
 <img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/1.%20selectPossibeDishLayoutFromFaces.png" alt="dish1" width="700"/>
 <br/><br/>
 
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/2.%20invertAndDeleteFaces.png" alt="dish1" width="700"/>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/2.%20invertAndDeleteFaces.png" alt="dish2" width="700"/>
 <br/><br/>
 
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/3.%20platebase.png" alt="dish1" width="700"/>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/3.%20platebase.png" alt="dish3" width="700"/>
 <br/><br/>
 
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/4.%20useEdgeloopstoFillEdgeAndInsertFacetoFlatten.png" alt="dish1" width="700"/>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/4.%20useEdgeloopstoFillEdgeAndInsertFacetoFlatten.png" alt="dish4" width="700"/>
 <br/><br/>
 
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/5.%20AddModifiers.png" alt="dish1" width="700"/>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/5.%20AddModifiers.png" alt="dish5" width="700"/>
 <br/><br/>
 
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/6.%20AddTextures.png" alt="dish1" width="700"/>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/6.%20AddTextures.png" alt="dish6" width="700"/>
 <br/><br/>
 
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/finished.png" alt="dish1" width="700"/>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Modelling%20Screenshots/Dish/finished.png" alt="dish7" width="700"/>
 <br/><br/>
 
 #### Rendered Image
