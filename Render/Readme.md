@@ -5,13 +5,13 @@
 
 - [Kitchen Scene](#kitchen-scene)
 - [Models](#mod)
-    - [Bottle](#bottle)
+    - [Bottle](#bottle) : @guillotcyril
     - [Ceiling Light](#ceiling-light)
     - [Chairs](#chairs) : @devJudah
     - [Cooker](#cooker)
     - [Cup](#cup) : @devJudah
     - [Dish](#dish) : @devJudah
-    - [Door](#door)
+    - [Door](#door) : @guillotcyril
     - [Dustbin](#dustbin)
     - [Fridge](#fridge) : @devJudah
     - [Kettle](#kettle) : @nd-103
@@ -21,8 +21,8 @@
     - [Table](#table) : @devJudah
     - [Toaster](#toaster) : @nd-103
     - [Upper Cabinet](#upper-cabinet)
-    - [Walls, ceiling and floor](#walls-ceiling-and-floor)
-    - [Window](#window)
+    - [Walls, ceiling and floor](#walls-ceiling-and-floor) : @guillotcyril
+    - [Window](#window) : @guillotcyril
 - [Final Scene](#final-scene)
 
 
