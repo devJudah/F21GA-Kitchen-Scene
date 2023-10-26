@@ -142,7 +142,7 @@ A render of the kettle only. Using cycles and 200 samples.
 ### Lower Cabinet
 (Aswin Shaji)
 
-<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/c75c256b73a9636c575999f77fa114f7f5a5a149/Render/Blender_Project_Files_V1/Light%20modeling%20screenshots/4.png" alt="bottom cabinet 1" width="300"/>
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/143e76cd08278b49767d3c2934dbe908557d7148/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/01.png" alt="bottom cabinet 1" width="300"/>
 
 
 <br/><br/>
