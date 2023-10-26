@@ -141,13 +141,8 @@ A render of the kettle only. Using cycles and 200 samples.
 
 ### Lower Cabinet
 (Aswin Shaji)
-<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/8b20dfbb6f3d8beacdbfa7e82cf048c129b1d719/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/01.png."  width="300"/> alt="lowerCabinet 1" width="300"/>
-<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/8b20dfbb6f3d8beacdbfa7e82cf048c129b1d719/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/02.png."  width="300"/> alt="lowerCabinet 2" width="300"/>
-<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/8b20dfbb6f3d8beacdbfa7e82cf048c129b1d719/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/03.png."  width="300"/> alt="lowerCabinet 3" width="300"/>
-<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/8b20dfbb6f3d8beacdbfa7e82cf048c129b1d719/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/04.png."  width="300"/> alt="lowerCabinet 4" width="300"/>
-<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/8b20dfbb6f3d8beacdbfa7e82cf048c129b1d719/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/05.png."  width="300"/> alt="lowerCabinet 5" width="300"/>
-<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/8b20dfbb6f3d8beacdbfa7e82cf048c129b1d719/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/06.png."  width="300"/> alt="lowerCabinet 6" width="300"/>
-<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/8b20dfbb6f3d8beacdbfa7e82cf048c129b1d719/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/07.png."  width="300"/>  alt="lowerCabinet 7" width="300"/>
+
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/c75c256b73a9636c575999f77fa114f7f5a5a149/Render/Blender_Project_Files_V1/Light%20modeling%20screenshots/4.png" alt="bottom cabinet" width="300"/>
 
 
 <br/><br/>
