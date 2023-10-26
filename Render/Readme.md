@@ -87,7 +87,8 @@ The initial idea for the kitchen scene.
 
 ### Cup
 #### Reference images
-<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Reference%20Pictures/Cup/Cup.jpg" alt="light 1" width="300"/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Reference%20Pictures/Cup/cup.jpg"/>
 
 <br/><br/>
 
