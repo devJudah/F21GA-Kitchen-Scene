@@ -315,6 +315,9 @@ A render of the toaster only. Using cycles and 200 samples.
 <br/><br/>
 
 ### Window
+
+#### References
+- Transparent glass material :  https://blender.stackexchange.com/questions/223624/glass-bsdf-gets-totally-grey-white-in-cycles
 #### Reference images
 <img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Reference%20Pictures/Window/windowref.jpg" alt="light 1" width="300"/>
 <img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Reference%20Pictures/Window/windowref2.jpg" alt="light 1" width="300"/>
