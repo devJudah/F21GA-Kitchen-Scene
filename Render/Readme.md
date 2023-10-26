@@ -39,6 +39,10 @@
 ### Ceiling Light
 (Aswin Shaji)
 
+###Rendered image
+
+<img src ="Render/Blender_Project_Files_V2/Rendered_Images/Light Bulb.png" width="300"/>
+
 <br/><br/>
 
 ### Chairs
