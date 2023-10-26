@@ -29,6 +29,14 @@
 
 ## Kitchen Scene
 
+### Concept Pictures
+
+The initial idea for the kitchen scene.
+<img src="Reference Pictures/Kitchen/concept1.png" alt="Kitchen Ref 1" width="800"/>
+<img src="Reference Pictures/Kitchen/concept1.png" alt="Kitchen Ref 2" width="800"/>
+
+<br/><br/>
+
 ## Models
 
 ### Bottle
@@ -356,3 +364,34 @@ A render of the toaster only. Using cycles and 200 samples.
 
 ## Final Scene
 
+### Lighting
+The main light source was a "sun" light, implemented using the [Sun Position](https://docs.blender.org/manual/en/latest/addons/lighting/sun_position.html) addon. 
+
+Both the ceiling lights have a spot light. 
+
+There are some area lights under the upper cabinets. To give a little bit more light to the worktop area.
+
+There are also some area lights around the cooker hood.
+
+
+### Render settings
+
+The image is rendered at a resolution of 1920x1080.
+The scene was rendered using cycles (4096 samples).
+
+
+### Renders
+
+<img src="Kitchen4096Samples.png" alt="Kitchen Render 1" width="960"/>
+
+<img src="Blender_Project_Files_V2/Rendered_Images/01.png" alt="Kitchen Render 1" width="960"/>
+
+<img src="Blender_Project_Files_V2/Rendered_Images/02.png" alt="Kitchen Render 2" width="960"/>
+
+<img src="Blender_Project_Files_V2/Rendered_Images/03.png" alt="Kitchen Render 3" width="960"/>
+
+<img src="Blender_Project_Files_V2/Rendered_Images/04.png" alt="Kitchen Render 4" width="960"/>
+
+<img src="Blender_Project_Files_V2/Rendered_Images/05.png" alt="Kitchen Render 5" width="960"/>
+
+<img src="Blender_Project_Files_V2/Rendered_Images/06.png" alt="Kitchen Render 6" width="960"/>
