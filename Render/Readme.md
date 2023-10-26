@@ -6,7 +6,7 @@
 - [Kitchen Scene](#kitchen-scene)
 - [Models](#mod)
     - [Bottle](#bottle) : @guillotcyril
-    - [Ceiling Light](#ceiling-light)
+    - [Ceiling Light](#ceiling-light) :@devAswinCode
     - [Chairs](#chairs) : @devJudah
     - [Cooker](#cooker)
     - [Cup](#cup) : @devJudah
