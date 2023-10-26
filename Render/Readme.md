@@ -20,7 +20,7 @@
     - [Storage Jars](#storage-jars) : @nd-103
     - [Table](#table) : @devJudah
     - [Toaster](#toaster) : @nd-103
-    - [Upper Cabinet](#upper-cabinet)
+    - [Upper Cabinet](#upper-cabinet) : @shehnilakareem
     - [Walls, ceiling and floor](#walls-ceiling-and-floor) : @guillotcyril
     - [Window](#window) : @guillotcyril
 - [Final Scene](#final-scene)
@@ -473,7 +473,9 @@ A render of the toaster only. Using cycles and 200 samples.
 ## Final Scene
 
 ### Lighting
-The main light source was a "sun" light, implemented using the [Sun Position](https://docs.blender.org/manual/en/latest/addons/lighting/sun_position.html) addon. 
+The main light source was a "sun" light, implemented using the [Sun Position](https://docs.blender.org/manual/en/latest/addons/lighting/sun_position.html) addon.
+
+<img src="Final_Render_03/sunSettings.png" alt="Light Settings - Sun" width="960"/>
 
 Both the ceiling lights have a spot light. 
 
@@ -486,7 +488,7 @@ There are also some area lights around the cooker hood.
 
 The image is rendered at a resolution of 1920x1080.
 The scene was rendered using cycles (4096 samples).
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Final_Render_03/renderSettings.png" alt="Kitchen Render Settings" width="300"/>
+<img src="Final_Render_03/renderSettings.png" alt="Kitchen Render Settings" width="300"/>
 
 ### Renders
 
