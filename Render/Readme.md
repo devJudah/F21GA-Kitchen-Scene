@@ -38,10 +38,20 @@
 
 ### Ceiling Light
 (Aswin Shaji)
+### Modeling Image
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/c75c256b73a9636c575999f77fa114f7f5a5a149/Render/Blender_Project_Files_V1/Light%20modeling%20screenshots/1.png" alt="light 1" width="300"/> 
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/c75c256b73a9636c575999f77fa114f7f5a5a149/Render/Blender_Project_Files_V1/Light%20modeling%20screenshots/2.png" alt="light 2" width="300"/>
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/c75c256b73a9636c575999f77fa114f7f5a5a149/Render/Blender_Project_Files_V1/Light%20modeling%20screenshots/3.png" alt="light 3" width="300"/>
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/c75c256b73a9636c575999f77fa114f7f5a5a149/Render/Blender_Project_Files_V1/Light%20modeling%20screenshots/4.png" alt="light 4" width="300"/>
+
+
+
+
+
 
 ### Rendered image
 
-<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/e73766ccf9b8764e658397ad46f4dc0705ed7c71/Render/Blender_Project_Files_V2/Rendered_Images/Light%20Bulb.png" alt="light Render img" width="300"/>
+<img src ="Render/Blender_Project_Files_V2/Rendered_Images/Light Bulb.png" alt="Renderimg" width="300"/>
 
 
 
@@ -131,6 +141,15 @@ A render of the kettle only. Using cycles and 200 samples.
 
 ### Lower Cabinet
 (Aswin Shaji)
+
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/143e76cd08278b49767d3c2934dbe908557d7148/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/01.png" alt="bottom cabinet 1" width="300"/>
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/143e76cd08278b49767d3c2934dbe908557d7148/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/02.png" alt="bottom cabinet 2" width="300"/>
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/143e76cd08278b49767d3c2934dbe908557d7148/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/03.png" alt="bottom cabinet 3" width="300"/>
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/143e76cd08278b49767d3c2934dbe908557d7148/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/04.png" alt="bottom cabinet 4" width="300"/>
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/143e76cd08278b49767d3c2934dbe908557d7148/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/05.png" alt="bottom cabinet 5" width="300"/>
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/143e76cd08278b49767d3c2934dbe908557d7148/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/06.png" alt="bottom cabinet 6" width="300"/>
+<img src ="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/143e76cd08278b49767d3c2934dbe908557d7148/Render/Blender_Project_Files_V1/Bottom%20Cabinet%20Modeling%20Screenshots/07.png" alt="bottom cabinet 7" width="300"/>
+
 
 
 <br/><br/>
