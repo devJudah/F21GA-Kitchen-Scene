@@ -41,9 +41,9 @@
 
 ### Rendered image
 
-<img src ="Render/Blender_Project_Files_V2/Rendered_Images/Light Bulb.png" alt="Render img" width="300"/>
+<img src ="Render/Blender_Project_Files_V2/Rendered_Images/Light Bulb.png" alt="Renderimg" width="300"/>
 
-<br/><br/>
+
 
 ### Chairs
 
