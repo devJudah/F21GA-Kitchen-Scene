@@ -313,6 +313,9 @@ A render of the toaster only. Using cycles and 200 samples.
 <img src="Reference Pictures/Upper cabinet/Rendered Image.png" alt="Kettle Render" width="500"/>
 
 <br/><br/>
+### Dustbin
+Modeling images
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/351ebfd5c4f09c45c8720fe770d6fd7f01905024/Render/Blender_Project_Files_V1/Dustbin%20Modeling/01.png" alt="Dustbin 1" width="300"/>
 
 ### Window
 
