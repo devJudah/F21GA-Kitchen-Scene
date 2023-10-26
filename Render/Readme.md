@@ -94,8 +94,18 @@ From [3D Kitchen Model D scene](https://www.turbosquid.com/3d-models/3d-kitchen-
 
 ### Cooker
 (Aswin Shaji)
+#### Modelling process
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Cooker%20modeling/01.png" alt="cooker1" width="300"/>
 
-<br/><br/>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Cooker%20modeling/02.png" alt="cooker4" width="300"/>
+
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Cooker%20modeling/03.png" alt="cooker4" width="300"/>
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Blender_Project_Files_V1/Cooker%20modeling/04.png" alt="cooker4" width="300"/>
+
+
+
 
 
 ### Cup
