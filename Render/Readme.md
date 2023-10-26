@@ -39,7 +39,7 @@
 ### Ceiling Light
 (Aswin Shaji)
 ### Modeling Image
-<img src ="" width="300"/>
+<img src ="Render/Blender_Project_Files_V1/Light modeling screenshots/1.png" width="300"/>
 
 
 
