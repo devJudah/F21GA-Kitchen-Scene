@@ -476,7 +476,7 @@ There are also some area lights around the cooker hood.
 
 The image is rendered at a resolution of 1920x1080.
 The scene was rendered using cycles (4096 samples).
-<img src="" alt="Kitchen Render Settings" width="300"/>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Render/Final_Render_03/renderSettings.png" alt="Kitchen Render Settings" width="300"/>
 
 ### Renders
 
