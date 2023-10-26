@@ -35,6 +35,8 @@ The initial idea for the kitchen scene.
 <img src="Reference Pictures/Kitchen/concept1.png" alt="Kitchen Ref 1" width="800"/>
 <img src="Reference Pictures/Kitchen/concept1.png" alt="Kitchen Ref 2" width="800"/>
 
+From [3D Kitchen Model D scene](https://www.turbosquid.com/3d-models/3d-kitchen-model-d-scene-2120856).
+
 <br/><br/>
 
 ## Models
