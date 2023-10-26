@@ -12,7 +12,7 @@
     - [Cup](#cup) : @devJudah
     - [Dish](#dish) : @devJudah
     - [Door](#door) : @guillotcyril
-    - [Dustbin](#dustbin)
+    - [Dustbin](#dustbin):@devAswinCode
     - [Fridge](#fridge) : @devJudah
     - [Kettle](#kettle) : @nd-103
     - [Lower Cabinet](#lower-cabinet)
