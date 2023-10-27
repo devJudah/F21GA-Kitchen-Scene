@@ -21,7 +21,6 @@
     - [Table](#table) : @devJudah
     - [Toaster](#toaster) : @nd-103
     - [Upper Cabinet](#upper-cabinet) : @shehnilakareem
-    - [Walls, ceiling and floor](#walls-ceiling-and-floor) : @guillotcyril
     - [Window](#window) : @guillotcyril
 - [Final Scene](#final-scene)
 
@@ -442,14 +441,6 @@ A render of the toaster only. Using cycles and 200 samples.
 #### Render
 
 <img src="Reference Pictures/Upper cabinet/Rendered Image.png" alt="Kettle Render" width="500"/>
-
-<br/><br/>
-
-
-### Walls, ceiling and floor
-- Marble texture tutorial : https://www.youtube.com/watch?v=jlVrs83wsek
-- Brick texture tutorial : https://www.youtube.com/watch?v=2MxQUaMlk3A
-- Brick texture tutorial : https://www.youtube.com/watch?v=Hl8nfblJNF8
 
 <br/><br/>
 
