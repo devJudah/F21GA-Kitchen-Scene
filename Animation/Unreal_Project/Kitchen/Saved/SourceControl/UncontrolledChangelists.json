@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"changelists": [
+		{
+			"guid": "00000000000000000000000000000000",
+			"description": "Default Uncontrolled Changelist",
+			"files": [
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Cup/CupOuter.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Cup/InnerCup.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Cup/Cup.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Dish/CeramicWhite.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Dish/Dish.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Table/Marble.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Table/TableForUnreal.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Table/TableBaseWood.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Maps/Kitchen/Kitchen.umap",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Fridge/DoorJoined/FridgeDoorJoined.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Table/Wood.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Fridge/DoorJoined/FridgeBody.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Fridge/Regular/frid_FridgeBody.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Fridge/Regular/Seal.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Fridge/Regular/FridgeBody.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Fridge/Regular/frid_FridgeDoor.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Fridge/Regular/MetalDoor.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Fridge/DoorJoined/MetalDoor.uasset",
+				"C:/Users/yuung/Documents/GitHub/F21GA-Kitchen-Scene/Animation/Unreal_Project/Kitchen/Content/Models/Fridge/DoorJoined/Seal.uasset",
+				"C:/Users/yuung/Documents/Unreal Projects/LearnUnreal/Kitchen/Content/StarterContent/Particles/P_Ambient_Dust.uasset",
+				"C:/Users/yuung/Documents/Unreal Projects/LearnUnreal/Kitchen/Content/Maps/NewMap.umap",
+				"C:/Users/yuung/Documents/Unreal Projects/LearnUnreal/Kitchen/Content/Maps/Kitchen.umap",
+				"C:/Users/yuung/Documents/Unreal Projects/LearnUnreal/Kitchen/Content/Maps/Kitchen/Kitchen.umap",
+				"C:/Users/yuung/Documents/Unreal Projects/LearnUnreal/Kitchen/Content/Models/Chairs/Metallic.uasset",
+				"C:/Users/yuung/Documents/Unreal Projects/LearnUnreal/Kitchen/Content/Models/Chairs/Chairs.uasset",
+				"C:/Users/yuung/Documents/Unreal Projects/LearnUnreal/Kitchen/Content/Models/Chairs/SeatWood.uasset",
+				"C:/Users/yuung/Documents/Unreal Projects/LearnUnreal/Kitchen/Content/Models/Chairs/Wood.uasset"
+			]
+		}
+	]
+}
