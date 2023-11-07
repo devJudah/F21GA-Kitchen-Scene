@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"changelists": [
+		{
+			"guid": "00000000000000000000000000000000",
+			"description": "Default Uncontrolled Changelist",
+			"files": [
+				"D:/Unreal Projects/KitchenRender/Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset",
+				"D:/Unreal Projects/KitchenRender/Content/Cinematics/Sequences/Sequence/SequenceMaster.uasset",
+				"D:/Unreal Projects/KitchenRender/Content/Cinematics/Sequences/Sequence/shots/shot0010/shot0010_01.uasset",
+				"D:/Unreal Projects/KitchenRender/Content/Cinematics/Sequences/Sequence/shots/shot0020/shot0020_01.uasset",
+				"D:/Unreal Projects/KitchenRender/Content/Cinematics/Sequences/Sequence/shots/shot0030/shot0030_01.uasset",
+				"D:/Unreal Projects/KitchenRender/Content/Cinematics/Sequences/Sequence/shots/shot0040/shot0040_01.uasset",
+				"D:/Unreal Projects/KitchenRender/Content/Cinematics/Sequences/Sequence/shots/shot0050/shot0050_01.uasset"
+			]
+		}
+	]
+}
