@@ -1,2 +1,156 @@
-# Animation Readme
-# Show how objects were imported into Unreal, any pipeline fixes and issues sorted, and how you created your animation
+# F21GA - Animation
+
+## Contents
+
+- [Object Importing](#object-importing)
+    - [Kettle and Toaster](#kettle-and-toaster)
+    - [Sink](#sink)
+    - [Storage Jars](#storage-jars)
+
+- [Object Animations](#object-animations)
+    - [Toaster Animation](#toaster-animation)
+    - [Sink Animation](#sink-animation)
+
+
+
+## Object Importing
+
+### Kettle and Toaster
+
+Before exporting, some parts of the model were joined together, for example the toaster was joined into two parts: the body and the lever. This is it make the object a bit easier to deal with in Unreal Engine.
+
+<img src="ReadmeImages/screenshots_n/Toaster_blender_prejoined.png" alt="Toaster Joining" width="300"/> <img src="ReadmeImages/screenshots_n/Toaster_blender_joined.png" alt="FBX settings" width="300"/>
+
+To move the kettle and toaster from Blender into Unreal, they are exported as an FBX file using Blender's `File>Export>FBX` option.
+
+<img src="ReadmeImages/screenshots_n/N_fbx_export_options.png" alt="FBX settings" height="800"/>
+
+Then the kettle and toaster are imported into Unreal using the `Content Drawer>Import` menu.
+
+<img src="ReadmeImages/screenshots_n/Kettle_1_initial_import.png" alt="Kettle initial import" width="600"/> <img src="ReadmeImages/screenshots_n/Toaster_1_initial_import.png" alt="Toaster initial import" width="400"/>
+
+The initial kettle and toaster import only has the basic black texture. The texture is without its roughness set. The kettle and toaster are missing the metal texture. The kettle also does not have its glass texture.
+
+Although the kettle had the right texture for the control panel, the toaster did not. 
+
+<img src="ReadmeImages/screenshots_n/toaster_kettle_detail.png" alt="Toaster and Kettle detail" width="600"/>
+
+Attempts were made to bake the texture in blender but were unsuccessful in moving the texture into Unreal.
+
+Fixing the plastic texture involved adding a constant for the roughness in Unreal's material editor.
+
+<img src="ReadmeImages/screenshots_n/plastic_texture_fix.png" alt="Plastic material" width="600"/>
+
+For basic metallic materials the same process can be followed, adding in values for metallic and roughness. For more complex materials, a base material provided by Unreal's `StarterContent` was used. For metals `M_Metal_Brushed_Nickel` and `M_Metal_Chrome` are used. For the glass Unreal's glass material `M_Glass` was used.
+
+<img src="ReadmeImages/screenshots_n/M_metal_chrome_cust_texture.png" alt="Chrome material" width="600"/>
+
+Once the materials have been fixed, the kettle and toaster are then ready to be added to the kitchen scene.
+
+<img src="ReadmeImages/screenshots_n/Kettle_2_textures_fixed.png" alt="Kettle fixed" width="500"/><img src="ReadmeImages/screenshots_n/Toaster_2_textures_fixed.png" alt="Toaster fixed" width="400"/>
+
+
+#### Kettle and Toaster References
+
+- Unreal Engine's StarterContent
+ - Clear plastic tutorial https://www.youtube.com/watch?v=CEBwUx-7xZQ
+ - Brushed metal tutorial https://www.youtube.com/watch?v=POwYQtq-1jU
+ - Metallic texture https://www.behance.net/gallery/60064327/20-Seamless-Brushed-Metal-Background-Textures-DOWNLOAD/modules/353093609
+
+
+<br /><br />
+
+### Sink
+
+The sink is imported using the same FBX options as shown in the [Kettle and Toaster](#kettle-and-toaster) section.
+
+<img src="ReadmeImages/screenshots_n/Sink_1_initial.png" alt="Sink initial import" width="600"/>
+
+The sink has no initial textures as they are metallic and have not been exported/imported correctly. The textures are fixed in a similar way to the [Kettle and Toaster](#kettle-and-toaster), where the materials are either basic metallic ones or built on a provided Unreal material.
+
+<img src="ReadmeImages/screenshots_n/Sink_2_textures_fixed.png" alt="Sink fixed" width="600"/>
+
+
+<br /><br />
+
+### Storage Jars
+
+The storage jars are imported using the same FBX options as shown in the [Kettle and Toaster](#kettle-and-toaster) section.
+
+<img src="ReadmeImages/screenshots_n/SJ_1_initial_import.png" alt="Storage jar initial import" width="600"/>
+
+The oval window in the storage jars should be transparent, however setting this to a transparent material results in being able to see through the entire jar rather than to inside it.
+
+<img src="ReadmeImages/screenshots_n/SJ_2_Seethrough_example.png" alt="Storage jar see through problem" width="600"/>
+
+To fix this, in Blender a Solidify modified was added to increase the thickness of the walls of the jar. Then exported/imported back into Unreal.
+
+The metal texure are fixed in a similar way to the [Kettle and Toaster](#kettle-and-toaster). Then a `Material Instance` is used for the different body colour.
+
+<img src="ReadmeImages/screenshots_n/SJ_Material_Instance.png" alt="Material Instance example" width="400"/>
+
+The models are then ready to use.
+
+<img src="ReadmeImages/screenshots_n/SJ_3_textures_fixed.png" alt="Storage fixed" width="600"/>
+
+
+<br /><br />
+
+
+## Object Animations
+
+### Toaster Animation
+
+For the toaster animation, a toast model was made in Blender.
+
+<img src="ReadmeImages/screenshots_n/toast_model.png" alt="Toast model" width="600"/>
+
+ Then exported/imported to Unreal Engine using the same method as in the [Kettle and Toaster](#kettle-and-toaster) section.
+
+<img src="ReadmeImages/screenshots_n/toast_imported.png" alt="Toast Imported" width="600"/>
+
+As the texture is simple, it only needs roughness adding to fix the material.
+
+To create the toast popping animation, sequencer is used to keyframe in the transformation positions.
+
+<img src="ReadmeImages/screenshots_n/toaster_sequencer_1.png" alt="Toaster Sequencer" width="1000"/>
+
+The toaster lever and toast are first moved down. Then after some time the toast and lever are moved back up, with the toast popping further out of the toaster. More key frames were added for the rotation of the toast and moving it back down into the toaster.
+
+Camera movement and focus is done in a similar way, using Sequencer.
+
+
+#### Toaster Animation References
+
+- Toast https://www.youtube.com/watch?v=ohmidMxrKPI
+- Sequencer https://docs.unrealengine.com/4.26/en-US/AnimatingObjects/Sequencer/QuickStart/
+
+
+<br /><br />
+
+### Sink Animation
+
+The water animation is done in Blender using Blender's Fluid Simulation.
+
+<img src="ReadmeImages/screenshots_n/sink_fluidsim_1.png" alt="Sink Fluid Simulation 1" width="600"/> <img src="ReadmeImages/screenshots_n/sink_fluidsim_2.png" alt="Sink Fluid Simulation 2" width="300"/>
+
+This is then baked and exported into an `Alembic (.abc)` file. Which can then be imported into Unreal Engine as a geometry cache.
+
+Once in Unreal the Sequencer is used in a similar way to the [Toaster Animation](#toaster-animation). Where the camera is moved through the scene using key frames. The tap top on/off animation is also done by using the transformation key frames.
+
+<img src="ReadmeImages/screenshots_n/sink_sequencer_1.png" alt="Sink Sequencer" width="1000"/>
+
+For the water animation, the key frames for the animation running are used to start and stop it at the correct time.
+
+<img src="ReadmeImages/screenshots_n/sink_sequencer_water_opt.png" alt="Sink Sequencer water options" width="400"/>
+
+The water is also set to "Keep State" once the animation is done so that some water remains in the sink.
+
+<img src="ReadmeImages/screenshots_n/sink_sequencer_water_persistant.png" alt="Sink Sequencer water keep state" width="1200"/>
+
+
+#### Sink Animation References
+
+- Creating a Simple Fluid Simulation in Blender and Prepping for Unreal Engine https://www.youtube.com/watch?v=YdWHMD3VhrE
+- Importing Alembic Geometry Cache [Fluid Simulation] into Unreal Engine 4 and 5 https://www.youtube.com/watch?v=qbaoRjjlul8
+- Quick Water Animation in Blender 3.0 https://www.youtube.com/watch?v=6dCcwAUQGC0
