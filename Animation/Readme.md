@@ -297,6 +297,8 @@ fire inside the stove particles in use:
 <br /><br />
 Initial blender attempt, domain capture of steam emitting from model using wind mesh
 <br>
+Reference: https://www.youtube.com/watch?v=_K0XsHht6pg
+<br>
 <img src="ReadmeImages/Models/Steam/1.png" alt="steam1" width="600"/>
 <br>
 Rendered View (Cycles) 
@@ -304,6 +306,8 @@ Rendered View (Cycles)
 <img src="ReadmeImages/Models/Steam/3.png" alt="steam3" width="600"/>
 <br>
 Due to the multiple unsuccessful attempts to redefine the animation domain from blender and render only the gas(steam particle) in unreal, I had to resort to creating the steam particles with Unreal Engine Niagara system:
+<br>
+Reference: https://www.youtube.com/watch?v=46IW8RLSXzE
 <br>
 <img src="ReadmeImages/Models/Steam/4.png" alt="steam4" width="600"/>
 <br>
