@@ -48,6 +48,17 @@ Models uploaded and loaded as fbx files with textures to Unreal Engine
 <img src="ReadmeImages/Models/Cup/1.png" alt="cupUpload" width="600"/>
 <br /><br />
 <img src="ReadmeImages/Models/Cup/2.png" alt="cupUpload" width="600"/>
+<br><br>
+Adding Ceramic Textures to Cup Model
+<br>
+<img src="ReadmeImages/Models/Cup/4.png" alt="cupUpload" width="600"/>
+<br><br>
+<img src="ReadmeImages/Models/Cup/5.png" alt="dishUpload" width="600"/>
+<br><br>
+Viewing Ceramic Textures on Dish Model
+<br>
+<img src="ReadmeImages/Models/Cup/6.png" alt="dishUpload" width="600"/>
+<br><br>
 
 
 <br /><br />
@@ -286,6 +297,8 @@ fire inside the stove particles in use:
 <br /><br />
 Initial blender attempt, domain capture of steam emitting from model using wind mesh
 <br>
+Reference: https://www.youtube.com/watch?v=_K0XsHht6pg
+<br>
 <img src="ReadmeImages/Models/Steam/1.png" alt="steam1" width="600"/>
 <br>
 Rendered View (Cycles) 
@@ -294,11 +307,33 @@ Rendered View (Cycles)
 <br>
 Due to the multiple unsuccessful attempts to redefine the animation domain from blender and render only the gas(steam particle) in unreal, I had to resort to creating the steam particles with Unreal Engine Niagara system:
 <br>
+Reference: https://www.youtube.com/watch?v=46IW8RLSXzE
+<br>
 <img src="ReadmeImages/Models/Steam/4.png" alt="steam4" width="600"/>
 <br>
 Steam particles in use:
 <br>
 <img src="ReadmeImages/Models/Steam/5.png" alt="steam5" width="600"/>
+<br /><br />
+<img src="ReadmeImages/Models/Cup/3.png" alt="steam5" width="600"/>
+<br /><br />
+
+### Fridge Animation (with blueprints)
+Event graph for opening and closing of the fridge door with blueprints
+<br>
+<img src="ReadmeImages/Models/Fridge/3.png" alt="fridge" width="600"/>
+<br /><br />
+<img src="ReadmeImages/Models/Fridge/4.png" alt="fridge" width="600"/>
+<br /><br />
+<img src="ReadmeImages/Models/Fridge/5.png" alt="fridge" width="600"/>
+<br /><br />
+Creating Sequence to capture motion with Level Sequence and CineCameraActor
+<br>
+<img src="ReadmeImages/Models/Fridge/6.png" alt="fridge" width="600"/>
+<br /><br />
+
+<img src="ReadmeImages/Models/Fridge/7.png" alt="fridge" width="600"/>
+<br /><br />
 
 
 <br /><br />
