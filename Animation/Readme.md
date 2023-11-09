@@ -7,12 +7,16 @@
     - [Sink](#sink)
     - [Storage Jars](#storage-jars)
 
-- [Object Animations](#object-animations)
+- [Animations](#animations)
+    - [Cooker Animation](#cooker-animation)
     - [Toaster Animation](#toaster-animation)
     - [Sink Animation](#sink-animation)
     - [Stove/Cooker Animation](#cooker-animation)
     - [Door Animation](#door-animation)
-- [Landscape](#landscape)
+
+- [World](#world)
+    - [Interior](#interior)
+    - [Landscape](#landscape)
 
 
 ## Object Importing
@@ -87,7 +91,7 @@ The oval window in the storage jars should be transparent, however setting this 
 
 To fix this, in Blender a Solidify modified was added to increase the thickness of the walls of the jar. Then exported/imported back into Unreal.
 
-The metal texure are fixed in a similar way to the [Kettle and Toaster](#kettle-and-toaster). Then a `Material Instance` is used for the different body colour.
+The metal texture are fixed in a similar way to the [Kettle and Toaster](#kettle-and-toaster). Then a `Material Instance` is used for the different body colour.
 
 <img src="ReadmeImages/screenshots_n/SJ_Material_Instance.png" alt="Material Instance example" width="400"/>
 
@@ -99,7 +103,32 @@ The models are then ready to use.
 <br /><br />
 
 
-## Object Animations
+## Animations
+
+### Cooker Animation
+
+A flame is created inside the cooker/stove and is animated using Blender 
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/7c981a15f2f168b38a8d6cdac298939a6c29695b/Animation/ReadmeImages/Fire/Fire%201.png" alt="Fire animation 1" width="600"/> 
+
+Nodes are created my mapping the texture in the blender and is shown below 
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/63baaf0bc04c768bd371fa4484fe8e67537c7dbb/Animation/ReadmeImages/Fire/Fire%20Texture.png" alt="Fire animation 2" width="600"/> 
+
+After creating a single flame it is multiplied in to several and is kept in a rotational axis created a round image
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/63baaf0bc04c768bd371fa4484fe8e67537c7dbb/Animation/ReadmeImages/Fire/Fire%20complete%20flame%20.png" alt="Fire animation 3" width="600"/> 
+
+Then the flame is fixed in to the stove 
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/63baaf0bc04c768bd371fa4484fe8e67537c7dbb/Animation/ReadmeImages/Fire/Fire%20Image.png" alt="Fire animation 3" width="600"/> 
+
+#### Rendered image of the flame 
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/e1e22afadc34f6411d3a0c8695248abf3d306e94/Animation/ReadmeImages/Fire/STOVE.gif" alt="Fire animation 3" width="600"/> 
+
+<br /><br />
+
 
 ### Toaster Animation
 
@@ -157,36 +186,10 @@ The water is also set to "Keep State" once the animation is done so that some wa
 - Importing Alembic Geometry Cache [Fluid Simulation] into Unreal Engine 4 and 5 https://www.youtube.com/watch?v=qbaoRjjlul8
 - Quick Water Animation in Blender 3.0 https://www.youtube.com/watch?v=6dCcwAUQGC0
 
-### Cooker Animation 
-
-A flame is created inside the cooker/stove and is animated using Blender 
-
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/7c981a15f2f168b38a8d6cdac298939a6c29695b/Animation/ReadmeImages/Fire/Fire%201.png" alt="Fire animation 1" width="600"/> 
-
-Nodes are created my mapping the texture in the blender and is shown below 
-
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/63baaf0bc04c768bd371fa4484fe8e67537c7dbb/Animation/ReadmeImages/Fire/Fire%20Texture.png" alt="Fire animation 2" width="600"/> 
-
-After creating a single flame it is multipled in to seravla and is kept in a rotatonal axis created a round image
-
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/63baaf0bc04c768bd371fa4484fe8e67537c7dbb/Animation/ReadmeImages/Fire/Fire%20complete%20flame%20.png" alt="Fire animation 3" width="600"/> 
-
-Then the flame is fixed in to the stove 
-
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/63baaf0bc04c768bd371fa4484fe8e67537c7dbb/Animation/ReadmeImages/Fire/Fire%20Image.png" alt="Fire animation 3" width="600"/> 
-
-#### Rendered image of the flame 
-
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/e1e22afadc34f6411d3a0c8695248abf3d306e94/Animation/ReadmeImages/Fire/STOVE.gif" alt="Fire animation 3" width="600"/> 
-
 <br /><br />
 
-#### Walkthrough Shots
 
-- Importing blender export to FBX and importing in unreal https://www.youtube.com/watch?v=KtPYTaCcCNU
-- Adding keyframs, adjusting camera, creating shots https://www.youtube.com/watch?v=5jHhIah8H7U
 
-<br /><br />
 ### Walkthrough Animation
 
 The walkthrough animation is consist of 5 small shorts in sequence master. First rendering was done using Premier Pro but due to size issue it was decided to use legacy.
@@ -194,23 +197,26 @@ I
 
 <img src="Early Animation\KitchenScene.mp4" alt="Early Rendering" width="400"/>
 
-More objects on the scene were extracted from some unreal marketleplace projects
+#### Walkthrough Shots
 
-https://www.unrealengine.com/marketplace/en-US/product/twinmotion-materials
-https://www.unrealengine.com/marketplace/en-US/product/big-triplex-house-villa
+- Importing blender export to FBX and importing in unreal https://www.youtube.com/watch?v=KtPYTaCcCNU
+- Adding keyframes, adjusting camera, creating shots https://www.youtube.com/watch?v=5jHhIah8H7U
+
+<br /><br />
+
 
 ### Door animation
 First I followed a tutorial to animate the door:
 https://www.youtube.com/watch?v=O7vmp73ue4Y&t=63s
 
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Animation/ReadmeImages/screenshots_n/door_bp_door.png" alt="Bluprint" width="400"/>
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Animation/ReadmeImages/screenshots_n/door_bp_tp.png" alt="Bluprint" width="400"/>
+<img src="ReadmeImages/screenshots_n/door_bp_door.png" alt="Bluprint" width="400"/>
+<img src="ReadmeImages/screenshots_n/door_bp_tp.png" alt="Bluprint" width="400"/>
 
 But it didn't work, so I made an animation on Blender, following this tutorial:
 
 https://www.youtube.com/watch?v=8-p7JPtk6n0&t=87s
 
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Animation/ReadmeImages/screenshots_n/door_blender.png" alt="Blender" width="400"/>
+<img src="ReadmeImages/screenshots_n/door_blender.png" alt="Blender" width="400"/>
 
 The animation worked but when I imported it in Unreal Engine, the software crashed.
 
@@ -221,7 +227,21 @@ https://www.youtube.com/watch?v=vOfncpXxRh8
 
 <img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Animation/ReadmeImages/screenshots_n/door_sequence.png" alt="Sequencer" width="400"/>
 
-## LandScape
+
+<br /><br />
+
+## World
+
+### Interior
+
+Additional objects in the scene were extracted from some unreal marketplace projects:
+
+ - _Twinmotion Materials for Unreal Engine_ by Epic Games - https://www.unrealengine.com/marketplace/en-US/product/twinmotion-materials
+
+ - _Triplex House Villa_ by 1D.STUDIO - https://www.unrealengine.com/marketplace/en-US/product/big-triplex-house-villa
+
+
+### Landscape
 
 #### Landscape references
 
