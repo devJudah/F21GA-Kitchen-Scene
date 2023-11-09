@@ -11,6 +11,7 @@
     - [Toaster Animation](#toaster-animation)
     - [Sink Animation](#sink-animation)
 
+- [Landscape](#landscape)
 
 
 ## Object Importing
@@ -154,3 +155,18 @@ The water is also set to "Keep State" once the animation is done so that some wa
 - Creating a Simple Fluid Simulation in Blender and Prepping for Unreal Engine https://www.youtube.com/watch?v=YdWHMD3VhrE
 - Importing Alembic Geometry Cache [Fluid Simulation] into Unreal Engine 4 and 5 https://www.youtube.com/watch?v=qbaoRjjlul8
 - Quick Water Animation in Blender 3.0 https://www.youtube.com/watch?v=6dCcwAUQGC0
+
+
+<br /><br />
+
+
+## LandScape
+
+#### Landscape references
+
+- Ground, water and mountains are from _Unreal Engine 5 Beginner Tutorial - UE5 Starter Course_ by Unreal Sensei
+    - https://www.youtube.com/watch?v=k-zMkzmduqI
+    - https://www.unrealsensei.com/asset/ue5beginner
+
+- Trees are from _Stylized Nature Pack_ by Tiny Talisman Games - https://www.unrealengine.com/marketplace/en-US/product/stylized-pbr-nature-pack
+
