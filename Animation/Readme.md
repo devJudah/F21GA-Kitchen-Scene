@@ -198,7 +198,27 @@ More objects on the scene were extracted from some unreal marketleplace projects
 https://www.unrealengine.com/marketplace/en-US/product/twinmotion-materials
 https://www.unrealengine.com/marketplace/en-US/product/big-triplex-house-villa
 
+### Door
+First I followed a tutorial to animate the door:
+https://www.youtube.com/watch?v=O7vmp73ue4Y&t=63s
 
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Animation/ReadmeImages/screenshots_n/door_bp_door.png" alt="Bluprint" width="400"/>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Animation/ReadmeImages/screenshots_n/door_bp_tp.png" alt="Bluprint" width="400"/>
+
+But it didn't work, so I made an animation on Blender, following this tutorial:
+
+https://www.youtube.com/watch?v=8-p7JPtk6n0&t=87s
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Animation/ReadmeImages/screenshots_n/door_blender.png" alt="Blender" width="400"/>
+
+The animation worked but when I imported it in Unreal Engine, the software crashed.
+
+So I managed to do an animation with the sequencer, following these tutorials:
+
+https://www.youtube.com/watch?v=-aApmzxl874
+https://www.youtube.com/watch?v=vOfncpXxRh8
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Animation/ReadmeImages/screenshots_n/door_sequence.png" alt="Sequencer" width="400"/>
 
 ## LandScape
 
