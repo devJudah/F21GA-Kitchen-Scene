@@ -3,19 +3,18 @@
 ## Contents
 
 - [Object Importing](#object-importing)
+    - [Chairs](#chairs)
+    - [Cups & Dishes](#cups--dishes)
     - [Kettle and Toaster](#kettle-and-toaster)
     - [Sink](#sink)
     - [Storage Jars](#storage-jars)
-    - [Cups & Dishes](#cups-&-dishes)
-    - [Table & Fridge](#table-&-fridge)
-
+    - [Table & Fridge](#table--fridge)
 
 - [Animations](#animations)
-    - [Cooker Animation](#cooker-animation)
+    - [Cooker/Stove Animation](#cooker-animation)
+    - [Door Animation](#door-animation)
     - [Toaster Animation](#toaster-animation)
     - [Sink Animation](#sink-animation)
-    - [Stove/Cooker Animation](#cooker-animation)
-    - [Door Animation](#door-animation)
     - [Steam Animation](#steam-animation)
 
 - [World](#world)
@@ -24,6 +23,33 @@
 
 
 ## Object Importing
+
+### Chairs
+
+Models uploaded and loaded as fbx files with textures to Unreal Engine
+<br>
+<img src="ReadmeImages/Models/Chair/1.png" alt="chairUpload" width="600"/>
+<br />
+
+Modification of Wood Texture in Unreal Engine
+<br>
+<img src="ReadmeImages/Models/Chair/2.png" alt="chairTextureWood" width="600"/>
+<br><br>
+<img src="ReadmeImages/Models/Chair/3.png" alt="chairReady" width="600"/>
+
+<br /><br />
+
+### Cups & Dishes
+
+<br /><br />
+Models uploaded and loaded as fbx files with textures to Unreal Engine
+<br>
+<img src="ReadmeImages/Models/Cup/1.png" alt="cupUpload" width="600"/>
+<br /><br />
+<img src="ReadmeImages/Models/Cup/2.png" alt="cupUpload" width="600"/>
+
+
+<br /><br />
 
 ### Kettle and Toaster
 
@@ -106,29 +132,6 @@ The models are then ready to use.
 
 <br /><br />
 
-<br /><br />
-
-### Cups & Dishes
-Models uploaded and loaded as fbx files with textures to Unreal Engine
-<br>
-<img src="ReadmeImages/Models/Chair/1.png" alt="chairUpload" width="600"/>
-<br />
-
-Modification of Wood Texture in Unreal Engine
-<br>
-<img src="ReadmeImages/Models/Chair/2.png" alt="chairTextureWood" width="600"/>
-<br><br>
-<img src="ReadmeImages/Models/Chair/3.png" alt="chairReady" width="600"/>
-<br /><br />
-
-### Cups & Dishes
-
-<br /><br />
-Models uploaded and loaded as fbx files with textures to Unreal Engine
-<br>
-<img src="ReadmeImages/Models/Cup/1.png" alt="cupUpload" width="600"/>
-<br /><br />
-<img src="ReadmeImages/Models/Cup/2.png" alt="cupUpload" width="600"/>
 
 ### Table & Fridge
 <br /><br />
@@ -146,6 +149,8 @@ Modification of Marble Texture in Unreal Engine
 <br>
 <br>
 <img src="ReadmeImages/Models/1.png" alt="modelsReady" width="600"/>
+
+<br /><br />
 
 
 ## Animations
@@ -171,6 +176,32 @@ Then the flame is fixed in to the stove
 #### Rendered image of the flame 
 
 <img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/e1e22afadc34f6411d3a0c8695248abf3d306e94/Animation/ReadmeImages/Fire/STOVE.gif" alt="Fire animation 3" width="600"/> 
+
+<br /><br />
+
+
+### Door animation
+First I followed a tutorial to animate the door:
+https://www.youtube.com/watch?v=O7vmp73ue4Y&t=63s
+
+<img src="ReadmeImages/screenshots_n/door_bp_door.png" alt="Bluprint" width="400"/>
+<img src="ReadmeImages/screenshots_n/door_bp_tp.png" alt="Bluprint" width="400"/>
+
+But it didn't work, so I made an animation on Blender, following this tutorial:
+
+https://www.youtube.com/watch?v=8-p7JPtk6n0&t=87s
+
+<img src="ReadmeImages/screenshots_n/door_blender.png" alt="Blender" width="400"/>
+
+The animation worked but when I imported it in Unreal Engine, the software crashed.
+
+So I managed to do an animation with the sequencer, following these tutorials:
+
+https://www.youtube.com/watch?v=-aApmzxl874
+https://www.youtube.com/watch?v=vOfncpXxRh8
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Animation/ReadmeImages/screenshots_n/door_sequence.png" alt="Sequencer" width="400"/>
+
 
 <br /><br />
 
@@ -235,15 +266,40 @@ The water is also set to "Keep State" once the animation is done so that some wa
 
 
 
+### Steam Animation
+<br /><br />
+Initial blender attempt, domain capture of steam emitting from model using wind mesh
+<br>
+<img src="ReadmeImages/Models/Steam/1.png" alt="steam1" width="600"/>
+<br>
+Rendered View (Cycles) 
+<br>
+<img src="ReadmeImages/Models/Steam/3.png" alt="steam3" width="600"/>
+<br>
+Due to the multiple unsuccessful attempts to redefine the animation domain from blender and render only the gas(steam particle) in unreal, I had to resort to creating the steam particles with Unreal Engine Niagara system:
+<br>
+<img src="ReadmeImages/Models/Steam/4.png" alt="steam4" width="600"/>
+<br>
+Steam particles in use:
+<br>
+<img src="ReadmeImages/Models/Steam/5.png" alt="steam5" width="600"/>
+
+
+<br /><br />
+
+
 ### Walkthrough Animation
 
 The walkthrough animation is consist of 5 small shorts in sequence master. First rendering was done using Premier Pro but due to size issue it was decided to use legacy.
-I
 
 <img src="Early Animation\KitchenScene.mp4" alt="Early Rendering" width="400"/>
+
 Used some skylighting and exponential fog to balance the density
+
 <img src="Early Animation\importing objects.png" width="400"/>
-Shots are built with 24fps(5 seconds each). Each is keyfram was set with camera transformation at different angles and look at tracking settings
+
+Shots are built with 24fps(5 seconds each). Each is keyframe was set with camera transformation at different angles and look at tracking settings
+
 <img src="Early Animation\shots.png" width="400"/>
 
 #### Walkthrough Shots
@@ -254,49 +310,6 @@ Shots are built with 24fps(5 seconds each). Each is keyfram was set with camera 
 <br /><br />
 
 
-### Door animation
-First I followed a tutorial to animate the door:
-https://www.youtube.com/watch?v=O7vmp73ue4Y&t=63s
-
-<img src="ReadmeImages/screenshots_n/door_bp_door.png" alt="Bluprint" width="400"/>
-<img src="ReadmeImages/screenshots_n/door_bp_tp.png" alt="Bluprint" width="400"/>
-
-But it didn't work, so I made an animation on Blender, following this tutorial:
-
-https://www.youtube.com/watch?v=8-p7JPtk6n0&t=87s
-
-<img src="ReadmeImages/screenshots_n/door_blender.png" alt="Blender" width="400"/>
-
-The animation worked but when I imported it in Unreal Engine, the software crashed.
-
-So I managed to do an animation with the sequencer, following these tutorials:
-
-https://www.youtube.com/watch?v=-aApmzxl874
-https://www.youtube.com/watch?v=vOfncpXxRh8
-
-<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Animation/ReadmeImages/screenshots_n/door_sequence.png" alt="Sequencer" width="400"/>
-
-
-<br /><br />
-
-### Steam Animation
-<br /><br />
-Initial blender attempt, domain capture of steam emmiting from model using wind mesh
-<br>
-<img src="ReadmeImages/Models/Steam/1.png" alt="steam1" width="600"/>
-<br>
-Rendered View (Cycles) 
-<br>
-<img src="ReadmeImages/Models/Steam/3.png" alt="steam3" width="600"/>
-<br>
-Due to the multiple unsuccessful attempts to redefine the animation domain from blender and render only the gas(steam particle) in unreal, i had to resort to creating the steam particls with Unreal Engine Niagara system: 
-<br>
-<img src="ReadmeImages/Models/Steam/4.png" alt="steam4" width="600"/>
-<br>
-Steam particles in use:
-<br>
-<img src="ReadmeImages/Models/Steam/5.png" alt="steam5" width="600"/>
-<br><br>
 ## World
 
 ### Interior
