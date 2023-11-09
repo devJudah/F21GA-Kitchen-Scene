@@ -212,6 +212,10 @@ The walkthrough animation is consist of 5 small shorts in sequence master. First
 I
 
 <img src="Early Animation\KitchenScene.mp4" alt="Early Rendering" width="400"/>
+Used some skylighting and exponential fog to balance the density
+<img src="Early Animation\importing objects.png" width="400"/>
+Shots are built with 24fps(5 seconds each). Each is keyfram was set with camera transformation at different angles and look at tracking settings
+<img src="Early Animation\shots.png" width="400"/>
 
 #### Walkthrough Shots
 
