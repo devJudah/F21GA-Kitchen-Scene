@@ -10,7 +10,7 @@
 - [Object Animations](#object-animations)
     - [Toaster Animation](#toaster-animation)
     - [Sink Animation](#sink-animation)
-
+    - [Stove/Cooker Animation](#cooker-animation)
 - [Landscape](#landscape)
 
 
@@ -156,6 +156,11 @@ The water is also set to "Keep State" once the animation is done so that some wa
 - Importing Alembic Geometry Cache [Fluid Simulation] into Unreal Engine 4 and 5 https://www.youtube.com/watch?v=qbaoRjjlul8
 - Quick Water Animation in Blender 3.0 https://www.youtube.com/watch?v=6dCcwAUQGC0
 
+### Cooker Animation 
+
+A flame is created inside the cooker/stove and is animated using Blender 
+
+<img src="Animation/ReadmeImages/Fire/Fire 1.png" alt="Fire animation 1" width="600"/> 
 
 <br /><br />
 
