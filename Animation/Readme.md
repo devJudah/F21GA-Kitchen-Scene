@@ -109,14 +109,37 @@ The models are then ready to use.
 <br /><br />
 
 ### Cups & Dishes
+Models uploaded and loaded as fbx files with textures to Unreal Engine
+<img src="ReadmeImages/Models/Chair/1.png" alt="chairUpload" width="600"/>
+<br />
 
+Modification of Wood Texture in Unreal Engine
+<img src="ReadmeImages/Models/Chair/2.png" alt="chairTextureWood" width="600"/>
+<br>
+<img src="ReadmeImages/Models/Chair/3.png" alt="chairReady" width="600"/>
 <br /><br />
 
+### Cups & Dishes
+
 <br /><br />
+Models uploaded and loaded as fbx files with textures to Unreal Engine
+<img src="ReadmeImages/Models/Cup/1.png" alt="cupUpload" width="600"/>
+<br /><br />
+<img src="ReadmeImages/Models/Cup/2.png" alt="cupUpload" width="600"/>
 
 ### Table & Fridge
-
 <br /><br />
+Models uploaded and loaded as fbx files with textures to Unreal Engine
+<img src="ReadmeImages/Models/Table/1.png" alt="tableUpload" width="600"/>
+<img src="ReadmeImages/Models/Table/2.png" alt="tableUpload" width="600"/>
+<img src="ReadmeImages/Models/Fridge/1.png" alt="fridgeUpload" width="600"/>
+<br>
+Modification of Marble Texture in Unreal Engine
+<img src="ReadmeImages/Models/Fridge/2.png" alt="fridgeTextureMarble" width="600"/>
+<br>
+<img src="ReadmeImages/Models/Fridge/3.png" alt="fridgeUploadReady" width="600"/>
+<br>
+<img src="ReadmeImages/Models/1.png" alt="modelsReady" width="600"/>
 
 
 ## Animations
@@ -251,8 +274,12 @@ https://www.youtube.com/watch?v=vOfncpXxRh8
 <br /><br />
 
 ### Steam Animation
-
 <br /><br />
+Initial blender attempt, domain capture of steam emmiting from model using wind mesh
+<img src="ReadmeImages/Models/Steam/1.png" alt="steam1" width="600"/>
+<br>
+Rendered View (Cycles) 
+<img src="ReadmeImages/Models/Steam/3.png" alt="steam3" width="600"/>
 
 ## World
 
