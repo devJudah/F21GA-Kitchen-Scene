@@ -174,6 +174,10 @@ Then the flame is fixed in to the stove
 
 <img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/63baaf0bc04c768bd371fa4484fe8e67537c7dbb/Animation/ReadmeImages/Fire/Fire%20Image.png" alt="Fire animation 3" width="600"/> 
 
+#### Rendered image of the flame 
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/e1e22afadc34f6411d3a0c8695248abf3d306e94/Animation/ReadmeImages/Fire/STOVE.gif" alt="Fire animation 3" width="600"/> 
+
 <br /><br />
 
 #### Walkthrough Shots
