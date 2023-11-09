@@ -48,6 +48,17 @@ Models uploaded and loaded as fbx files with textures to Unreal Engine
 <img src="ReadmeImages/Models/Cup/1.png" alt="cupUpload" width="600"/>
 <br /><br />
 <img src="ReadmeImages/Models/Cup/2.png" alt="cupUpload" width="600"/>
+<br><br>
+Adding Ceramic Textures to Cup Model
+<br>
+<img src="ReadmeImages/Models/Cup/4.png" alt="cupUpload" width="600"/>
+<br><br>
+<img src="ReadmeImages/Models/Cup/5.png" alt="dishUpload" width="600"/>
+<br><br>
+Viewing Ceramic Textures on Dish Model
+<br>
+<img src="ReadmeImages/Models/Cup/6.png" alt="dishUpload" width="600"/>
+<br><br>
 
 
 <br /><br />
@@ -299,6 +310,8 @@ Due to the multiple unsuccessful attempts to redefine the animation domain from 
 Steam particles in use:
 <br>
 <img src="ReadmeImages/Models/Steam/5.png" alt="steam5" width="600"/>
+<br /><br />
+<img src="ReadmeImages/Models/Cup/3.png" alt="steam5" width="600"/>
 <br /><br />
 
 ### Fridge Animation (with blueprints)
