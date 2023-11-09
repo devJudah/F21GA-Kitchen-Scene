@@ -288,7 +288,15 @@ Initial blender attempt, domain capture of steam emmiting from model using wind 
 Rendered View (Cycles) 
 <br>
 <img src="ReadmeImages/Models/Steam/3.png" alt="steam3" width="600"/>
-
+<br>
+Due to the multiple unsuccessful attempts to redefine the animation domain from blender and render only the gas(steam particle) in unreal, i had to resort to creating the steam particls with Unreal Engine Niagara system: 
+<br>
+<img src="ReadmeImages/Models/Steam/4.png" alt="steam4" width="600"/>
+<br>
+Steam particles in use:
+<br>
+<img src="ReadmeImages/Models/Steam/5.png" alt="steam5" width="600"/>
+<br><br>
 ## World
 
 ### Interior
