@@ -222,7 +222,9 @@ To create the toast popping animation, sequencer is used to keyframe in the tran
 
 <img src="ReadmeImages/screenshots_n/toaster_sequencer_1.png" alt="Toaster Sequencer" width="1000"/>
 
-The toaster lever and toast are first moved down. Then after some time the toast and lever are moved back up, with the toast popping further out of the toaster. More key frames were added for the rotation of the toast and moving it back down into the toaster.
+The toaster lever and toast are first moved down. Then after some time the toast and lever are moved back up, with the toast popping further out of the toaster. Initially, the idea was to pop the toast out and have physics activate to allow it to fall in a natural way. However, in Unreal Engine 5.3, there is a bug that does not allow for physics to be turned off and on in the Sequencer ([Unreal Engine Issues](https://issues.unrealengine.com/issue/UE-195506)), and so the falling animation was also done through Sequencer key frames.
+
+Key frames were added for the rotation of the toast and moving it back down into the toaster.
 
 Camera movement and focus is done in a similar way, using Sequencer.
 
