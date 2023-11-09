@@ -299,6 +299,24 @@ Due to the multiple unsuccessful attempts to redefine the animation domain from 
 Steam particles in use:
 <br>
 <img src="ReadmeImages/Models/Steam/5.png" alt="steam5" width="600"/>
+<br /><br />
+
+### Fridge Animation (with blueprints)
+Event graph for opening and closing of the fridge door with blueprints
+<br>
+<img src="ReadmeImages/Models/Fridge/3.png" alt="fridge" width="600"/>
+<br /><br />
+<img src="ReadmeImages/Models/Fridge/4.png" alt="fridge" width="600"/>
+<br /><br />
+<img src="ReadmeImages/Models/Fridge/5.png" alt="fridge" width="600"/>
+<br /><br />
+Creating Sequence to capture motion with Level Sequence and CineCameraActor
+<br>
+<img src="ReadmeImages/Models/Fridge/6.png" alt="fridge" width="600"/>
+<br /><br />
+
+<img src="ReadmeImages/Models/Fridge/7.png" alt="fridge" width="600"/>
+<br /><br />
 
 
 <br /><br />
