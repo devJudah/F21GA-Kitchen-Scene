@@ -6,6 +6,9 @@
     - [Kettle and Toaster](#kettle-and-toaster)
     - [Sink](#sink)
     - [Storage Jars](#storage-jars)
+    - [Cups & Dishes](#cups-&-dishes)
+    - [Table & Fridge](#table-&-fridge)
+
 
 - [Animations](#animations)
     - [Cooker Animation](#cooker-animation)
@@ -13,6 +16,7 @@
     - [Sink Animation](#sink-animation)
     - [Stove/Cooker Animation](#cooker-animation)
     - [Door Animation](#door-animation)
+    - [Steam Animation](#steam-animation)
 
 - [World](#world)
     - [Interior](#interior)
@@ -99,6 +103,18 @@ The models are then ready to use.
 
 <img src="ReadmeImages/screenshots_n/SJ_3_textures_fixed.png" alt="Storage fixed" width="600"/>
 
+
+<br /><br />
+
+<br /><br />
+
+### Cups & Dishes
+
+<br /><br />
+
+<br /><br />
+
+### Table & Fridge
 
 <br /><br />
 
@@ -227,6 +243,10 @@ https://www.youtube.com/watch?v=vOfncpXxRh8
 
 <img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/main/Animation/ReadmeImages/screenshots_n/door_sequence.png" alt="Sequencer" width="400"/>
 
+
+<br /><br />
+
+### Steam Animation
 
 <br /><br />
 
