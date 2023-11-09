@@ -16,6 +16,7 @@
     - [Toaster Animation](#toaster-animation)
     - [Sink Animation](#sink-animation)
     - [Steam Animation](#steam-animation)
+    - [Fire Animation](#Fire-animation)
 
 - [World](#world)
     - [Interior](#interior)
