@@ -135,6 +135,7 @@ Models uploaded and loaded as fbx files with textures to Unreal Engine
 Models uploaded and loaded as fbx files with textures to Unreal Engine
 <br>
 <img src="ReadmeImages/Models/Table/1.png" alt="tableUpload" width="600"/>
+<br>
 Modification of Marble Texture in Unreal Engine
 <br>
 <img src="ReadmeImages/Models/Table/2.png" alt="tableUpload" width="600"/>
@@ -143,7 +144,6 @@ Modification of Marble Texture in Unreal Engine
 <br>
 <img src="ReadmeImages/Models/Fridge/2.png" alt="fridgeTextureMarble" width="600"/>
 <br>
-<img src="ReadmeImages/Models/Fridge/3.png" alt="fridgeUploadReady" width="600"/>
 <br>
 <img src="ReadmeImages/Models/1.png" alt="modelsReady" width="600"/>
 
