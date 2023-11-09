@@ -10,7 +10,7 @@
 - [Object Animations](#object-animations)
     - [Toaster Animation](#toaster-animation)
     - [Sink Animation](#sink-animation)
-
+    - [Stove/Cooker Animation](#cooker-animation)
 - [Landscape](#landscape)
 
 
@@ -156,6 +156,23 @@ The water is also set to "Keep State" once the animation is done so that some wa
 - Importing Alembic Geometry Cache [Fluid Simulation] into Unreal Engine 4 and 5 https://www.youtube.com/watch?v=qbaoRjjlul8
 - Quick Water Animation in Blender 3.0 https://www.youtube.com/watch?v=6dCcwAUQGC0
 
+### Cooker Animation 
+
+A flame is created inside the cooker/stove and is animated using Blender 
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/7c981a15f2f168b38a8d6cdac298939a6c29695b/Animation/ReadmeImages/Fire/Fire%201.png" alt="Fire animation 1" width="600"/> 
+
+Nodes are created my mapping the texture in the blender and is shown below 
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/63baaf0bc04c768bd371fa4484fe8e67537c7dbb/Animation/ReadmeImages/Fire/Fire%20Texture.png" alt="Fire animation 2" width="600"/> 
+
+After creating a single flame it is multipled in to seravla and is kept in a rotatonal axis created a round image
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/63baaf0bc04c768bd371fa4484fe8e67537c7dbb/Animation/ReadmeImages/Fire/Fire%20complete%20flame%20.png" alt="Fire animation 3" width="600"/> 
+
+Then the flame is fixed in to the stove 
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/63baaf0bc04c768bd371fa4484fe8e67537c7dbb/Animation/ReadmeImages/Fire/Fire%20Image.png" alt="Fire animation 3" width="600"/> 
 
 <br /><br />
 
