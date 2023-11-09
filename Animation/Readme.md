@@ -159,6 +159,25 @@ The water is also set to "Keep State" once the animation is done so that some wa
 
 <br /><br />
 
+#### Walkthrough Shots
+
+- Importing blender export to FBX and importing in unreal https://www.youtube.com/watch?v=KtPYTaCcCNU
+- Adding keyframs, adjusting camera, creating shots https://www.youtube.com/watch?v=5jHhIah8H7U
+
+<br /><br />
+### Walkthrough Animation
+
+The walkthrough animation is consist of 5 small shorts in sequence master. First rendering was done using Premier Pro but due to size issue it was decided to use legacy.
+I
+
+<img src="Early Animation\KitchenScene.mp4" alt="Early Rendering" width="400"/>
+
+More objects on the scene were extracted from some unreal marketleplace projects
+
+https://www.unrealengine.com/marketplace/en-US/product/twinmotion-materials
+https://www.unrealengine.com/marketplace/en-US/product/big-triplex-house-villa
+
+
 
 ## LandScape
 
