@@ -117,7 +117,7 @@ Models uploaded and loaded as fbx files with textures to Unreal Engine
 Modification of Wood Texture in Unreal Engine
 <br>
 <img src="ReadmeImages/Models/Chair/2.png" alt="chairTextureWood" width="600"/>
-<br>
+<br><br>
 <img src="ReadmeImages/Models/Chair/3.png" alt="chairReady" width="600"/>
 <br /><br />
 
@@ -135,10 +135,11 @@ Models uploaded and loaded as fbx files with textures to Unreal Engine
 Models uploaded and loaded as fbx files with textures to Unreal Engine
 <br>
 <img src="ReadmeImages/Models/Table/1.png" alt="tableUpload" width="600"/>
-<img src="ReadmeImages/Models/Table/2.png" alt="tableUpload" width="600"/>
-<img src="ReadmeImages/Models/Fridge/1.png" alt="fridgeUpload" width="600"/>
-<br>
 Modification of Marble Texture in Unreal Engine
+<br>
+<img src="ReadmeImages/Models/Table/2.png" alt="tableUpload" width="600"/>
+<br>
+<img src="ReadmeImages/Models/Fridge/1.png" alt="fridgeUpload" width="600"/>
 <br>
 <img src="ReadmeImages/Models/Fridge/2.png" alt="fridgeTextureMarble" width="600"/>
 <br>
