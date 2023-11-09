@@ -306,7 +306,7 @@ Steam particles in use:
 
 ### Walkthrough Animation
 
-The walkthrough animation is consist of 5 small shorts in sequence master. First rendering was done using Premier Pro but due to size issue it was decided to use legacy.
+The walkthrough animation is consist of 5 small shorts in sequence master. First rendering was done using Premier Pro but due too much time consumption it was decided to use legacy. 
 
 <img src="Early Animation\KitchenScene.mp4" alt="Early Rendering" width="400"/>
 
@@ -317,6 +317,14 @@ Used some skylighting and exponential fog to balance the density
 Shots are built with 24fps(5 seconds each). Each is keyframe was set with camera transformation at different angles and look at tracking settings
 
 <img src="Early Animation\shots.png" width="400"/>
+
+Could not import the marble and wood texture from the blender as it was too complex. So, the texture from walls and floors was extracted from twin motion materials.. Referenced below
+
+<img src="Early Animation\walls_texturs.png" width="400"/>
+
+Also By default LOD is set to auto. I tried adjusting to 1 or 2 according to the objects, making sure it doesn't affect quality too much 
+
+<img src="Early Animation\LOD.png" width="400"/>
 
 #### Walkthrough Shots
 
