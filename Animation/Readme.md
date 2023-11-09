@@ -160,7 +160,7 @@ The water is also set to "Keep State" once the animation is done so that some wa
 
 A flame is created inside the cooker/stove and is animated using Blender 
 
-<img src="Animation/ReadmeImages/Fire/Fire 1.png" alt="Fire animation 1" width="600"/> 
+<img src="[Animation/ReadmeImages/Fire/Fire 1.png](https://github.com/devJudah/F21GA-Kitchen-Scene/blob/7c981a15f2f168b38a8d6cdac298939a6c29695b/Animation/ReadmeImages/Fire/Fire%201.png)" alt="Fire animation 1" width="600"/> 
 
 <br /><br />
 
