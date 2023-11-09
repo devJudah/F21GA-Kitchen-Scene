@@ -266,7 +266,20 @@ The water is also set to "Keep State" once the animation is done so that some wa
 
 <br /><br />
 
-
+### Fire Animation
+<br /><br />
+Tried Creating a Niagara file for the fire 
+<br>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/17ff6c051d252423ee640f223dbb3ace5b982ca3/Animation/ReadmeImages/Unreal%20fire/flame/flame.png" alt="fire1" width="600"/>
+<br>
+Particle configurations 
+<br>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/98e884ccb6b77ab442a06431b3aac1d7784b852e/Animation/ReadmeImages/Unreal%20fire/flame/flame%202.png" alt="fire4" width="600"/>
+<br>
+fire inside the stove particles in use:
+<br>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/98e884ccb6b77ab442a06431b3aac1d7784b852e/Animation/ReadmeImages/Unreal%20fire/flame/flame%20final.png" alt="fire5" width="600"/>
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/e18533bf6302c5101ffabe2aaa2570ffb64b1aa1/Animation/ReadmeImages/Unreal%20fire/flame/Fire%20final.png" alt="fire6" width="600"/>
 
 ### Steam Animation
 <br /><br />
