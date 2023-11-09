@@ -11,6 +11,7 @@
     - [Toaster Animation](#toaster-animation)
     - [Sink Animation](#sink-animation)
     - [Stove/Cooker Animation](#cooker-animation)
+    - [Door Animation](#door-animation)
 - [Landscape](#landscape)
 
 
@@ -198,7 +199,7 @@ More objects on the scene were extracted from some unreal marketleplace projects
 https://www.unrealengine.com/marketplace/en-US/product/twinmotion-materials
 https://www.unrealengine.com/marketplace/en-US/product/big-triplex-house-villa
 
-### Door
+### Door animation
 First I followed a tutorial to animate the door:
 https://www.youtube.com/watch?v=O7vmp73ue4Y&t=63s
 
