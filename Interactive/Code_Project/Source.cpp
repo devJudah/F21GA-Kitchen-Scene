@@ -121,11 +121,11 @@ int main()
 
 	const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor()); // Grab reference to monitor
 	// If going full screen set size to match monitor
-	windowWidth = mode->width; windowHeight = mode->height; //fullscreen
-	window = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), glfwGetPrimaryMonitor(), NULL); // fullscreen
+	// windowWidth = mode->width; windowHeight = mode->height; //fullscreen
+	// window = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), glfwGetPrimaryMonitor(), NULL); // fullscreen
 
 	// Create our Window
-	// window = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), NULL, NULL);
+	window = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), NULL, NULL);
 	if (!window) // Test if Window or OpenGL context creation failed
 	{
 		cout << "Could not initialise GLFW...";
