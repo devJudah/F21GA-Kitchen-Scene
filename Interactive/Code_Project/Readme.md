@@ -1,1 +1,4 @@
-# 2-3 minute screen capture video showing application running plus interactions
+# F21GA - Animation
+
+## Running note
+Please move files from .vscode/defaults/ into .vscode and change paths as required.
