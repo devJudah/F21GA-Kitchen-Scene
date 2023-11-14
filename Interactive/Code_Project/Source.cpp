@@ -37,6 +37,9 @@ using namespace glm;
 #include "src/Content.hpp"		// Setup content loader and drawing functions - https://github.com/KhronosGroup/glTF - https://github.com/syoyo/tinygltf 
 #include "src/Debugger.hpp"		// Setup debugger functions.
 
+// More includes!
+#include "src/CameraController.hpp"		// Camera controller code
+
 
 
 // Main fuctions
@@ -77,23 +80,23 @@ auto windowWidth = 800;								// Window width
 auto windowHeight = 800;								// Window height
 auto running(true);							  		// Are we still running our main loop
 mat4 projMatrix;							 		// Our Projection Matrix
-vec3 cameraPosition = vec3(0.0f, 0.0f, 5.0f);		// Where is our camera
-vec3 cameraFront = vec3(0.0f, 0.0f, -1.0f);			// Camera front vector
-vec3 cameraUp = vec3(0.0f, 1.0f, 0.0f);				// Camera up vector
 auto aspect = (float)windowWidth / (float)windowHeight;	// Window aspect ration
-auto fovy = 45.0f;									// Field of view (y axis)
 bool keyStatus[1024];								// Track key strokes
 auto currentTime = 0.0f;							// Framerate
 auto deltaTime = 0.0f;								// time passed
 auto lastTime = 0.0f;								// Used to calculate Frame rate
+
+auto fovy = 45.0f;									// Field of view (y axis)
+// vec3 cameraPosition = vec3(0.0f, 0.0f, 5.0f);		// Where is our camera
+// vec3 cameraFront = vec3(0.0f, 0.0f, -1.0f);			// Camera front vector
+// vec3 cameraUp = vec3(0.0f, 1.0f, 0.0f);				// Camera up vector
+CameraController camera;							// Camera
 
 // Camera movement
 // See lecture slides and https://learnopengl.com/code_viewer_gh.php?code=src/1.getting_started/7.3.camera_mouse_zoom/camera_mouse_zoom.cpp
 bool mouseMoved = false;							// If the mouse has been moved yet
 float lastX = 0.0f;									// 
 float lastY = 0.0f;									//
-float yaw = -90.0f;									//
-float pitch = 0.0f;									//
 
 Pipeline pipeline;									// Add one pipeline plus some shaders.
 Content content;									// Add one content loader (+drawing).
@@ -268,6 +271,9 @@ void startup()
 	// Calculate proj_matrix for the first time.
 	aspect = (float)windowWidth / (float)windowHeight;
 	projMatrix = glm::perspective(glm::radians(fovy), aspect, 0.1f, 1000.0f);
+
+	// Camera settings
+	// camera.canFly_Off();	// Stop player moving from the floor
 }
 
 void update()
@@ -276,16 +282,12 @@ void update()
 	if (keyStatus[GLFW_KEY_RIGHT]) modelRotation.y -= 0.05f;
 	if (keyStatus[GLFW_KEY_UP]) modelRotation.x += 0.05f;
 	if (keyStatus[GLFW_KEY_DOWN]) modelRotation.x -= 0.05f;
-	if (keyStatus[GLFW_KEY_W]) modelPosition.z += 0.10f;
-	if (keyStatus[GLFW_KEY_S]) modelPosition.z -= 0.10f;
 	
 	// Camera movement
-	GLfloat cameraSpeed = 1.0f * deltaTime;
-
-	if (keyStatus[GLFW_KEY_W]) cameraPosition += cameraSpeed * cameraFront;
-	if (keyStatus[GLFW_KEY_S]) cameraPosition -= cameraSpeed * cameraFront;
-	if (keyStatus[GLFW_KEY_A]) cameraPosition -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-	if (keyStatus[GLFW_KEY_D]) cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+	if (keyStatus[GLFW_KEY_W]) camera.keyPressed(camera_movement::FORWARD, deltaTime);
+	if (keyStatus[GLFW_KEY_S]) camera.keyPressed(camera_movement::BACKWARD, deltaTime);
+	if (keyStatus[GLFW_KEY_A]) camera.keyPressed(camera_movement::LEFT, deltaTime);
+	if (keyStatus[GLFW_KEY_D]) camera.keyPressed(camera_movement::RIGHT, deltaTime);
 
 
 	if (keyStatus[GLFW_KEY_R]) pipeline.ReloadShaders();
@@ -317,9 +319,7 @@ void render()
 	glUseProgram(pipeline.pipe.program);
 
 	// Setup camera
-	glm::mat4 viewMatrix = glm::lookAt(cameraPosition,				 // eye
-									   cameraPosition + cameraFront, // centre
-									   cameraUp);					 // up
+	glm::mat4 viewMatrix = camera.GetViewMatrix();
 
 	// Do some translations, rotations and scaling
 	// glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(modelPosition.x+rX, modelPosition.y+rY, modelPosition.z+rZ));
@@ -372,8 +372,8 @@ void ui()
 		ImGui::Text("Performance: %.3fms/Frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::Text("Pipeline: %s", pipeline.pipe.error?"ERROR":"OK");
 		// Camera info
-		ImGui::Text("Camera position: %.3f, %.3d, %.3f", cameraPosition.x, cameraPosition.y, cameraPosition.z);
-		ImGui::Text("Camera front: %.3f, %.3d, %.3f", cameraFront.x, cameraFront.y, cameraFront.z);
+		ImGui::Text("Camera position: %.3f, %.3d, %.3f", camera.Position.x, camera.Position.y, camera.Position.z);
+		ImGui::Text("Camera front: %.3f, %.3d, %.3f", camera.Front.x, camera.Front.y, camera.Front.z);
 	}
 	ImGui::End();
 
@@ -417,37 +417,24 @@ void onMouseMoveCallback(GLFWwindow *window, double x, double y)
 	int mouseX = static_cast<int>(x);
 	int mouseY = static_cast<int>(y);
 
-	// Camera code from lecture slides.
+	// Camera code from lecture slides (See Lab 05).
 	// Also see - https://learnopengl.com/code_viewer_gh.php?code=src/1.getting_started/7.3.camera_mouse_zoom/camera_mouse_zoom.cpp
+	// Test if the mouse has moved before or not
 	if (!mouseMoved) {
 		lastX = mouseX;
 		lastY = mouseY;
 		mouseMoved = true;
 	}
 
+	// Calculate how far the mouse has moved
 	GLfloat xoffset = mouseX - lastX;
 	GLfloat yoffset = lastY - mouseY;
 
 	lastX = mouseX; 
 	lastY = mouseY;
 
-	GLfloat sensitivity = 0.05;
-	xoffset *= sensitivity; 
-	yoffset *= sensitivity;
-
-	yaw += xoffset; 
-	pitch += yoffset;
-
-	// 
-	if (pitch > 89.0f) pitch = 89.0f;
-	if (pitch < -89.0f) pitch = -89.0f;
-
-	glm::vec3 front;
-	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	front.y = sin(glm::radians(pitch));
-	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-
-	cameraFront = glm::normalize(front);
+	// Update the camera based on mouse movement
+	camera.mouseMovement(xoffset, yoffset);
 }
 
 void onMouseWheelCallback(GLFWwindow *window, double xoffset, double yoffset)
