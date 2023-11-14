@@ -288,6 +288,8 @@ void update()
 	if (keyStatus[GLFW_KEY_S]) camera.keyPressed(camera_movement::BACKWARD, deltaTime);
 	if (keyStatus[GLFW_KEY_A]) camera.keyPressed(camera_movement::LEFT, deltaTime);
 	if (keyStatus[GLFW_KEY_D]) camera.keyPressed(camera_movement::RIGHT, deltaTime);
+	if (keyStatus[GLFW_KEY_Q]) camera.keyPressed(camera_movement::UP, deltaTime);
+	if (keyStatus[GLFW_KEY_E]) camera.keyPressed(camera_movement::DOWN, deltaTime);
 
 
 	if (keyStatus[GLFW_KEY_R]) pipeline.ReloadShaders();

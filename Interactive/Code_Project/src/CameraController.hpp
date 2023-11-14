@@ -21,7 +21,9 @@ enum camera_movement {
 	FORWARD,
 	BACKWARD,
 	LEFT,
-	RIGHT
+	RIGHT,
+	UP,
+	DOWN
 };
 
 // Default values
@@ -108,6 +110,10 @@ class CameraController
 			Position -= glm::normalize(glm::cross(Front, Up)) * velocity;
 		if(direction == RIGHT)
 			Position += glm::normalize(glm::cross(Front, Up)) * velocity;
+		if(direction == UP)
+			Position += velocity * Up;
+		if(direction == DOWN)
+			Position -= velocity * Up;
 		
 		// Check to see if the camera should remain on the ground
 		if(!canFly)
