@@ -41,6 +41,7 @@ using namespace glm;
 #include "src/CameraController.hpp"		// Camera controller code
 #include "src/ModelObject.hpp"			// Wrapper for model data
 #include "src/ShaderObject.hpp"			// Wrapper for shader data
+#include "src/ShadowMap.hpp"			// For rendering shadows
 
 
 // Main fuctions
@@ -112,14 +113,13 @@ int selectedModel = 0;
 map<string, ShaderObject> shaders;
 
 // Lights
-glm::vec3 lightPos = glm::vec3(0.0f, 3.0f, 0.0f);
+glm::vec3 lightPos = glm::vec3(0.0f, 8.0f, -1.0f);
 GLfloat k_ambient = 1.0f;
-glm::vec3 color_ambient = glm::vec3(0.9f, 0.9f, 0.9f);
-GLfloat k_diffuse = 1.0f;
-glm::vec3 color_diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
-GLfloat k_specular = 1.0f;
-glm::vec3 color_specular = glm::vec3(0.5f, 0.5f, 0.5f);
-GLfloat shininess = 32.0f;
+
+// Depth map stuff (used for calculating shows) - https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
+unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024; // Controls the quality of the shadows
+ShadowMap shadow_m;
+
 
 // Movement test
 float rX = 0.0f;
@@ -270,19 +270,52 @@ void startup()
 
 	cout << endl << "Loading content..." << endl;	
 
+
 	// Create and load shader info
+
+	// Shadow shader
+	ShaderObject s_shadow = ShaderObject("s_shadow");
+	s_shadow.pipeline.CreatePipeline();
+	s_shadow.pipeline.LoadShaders("shaders/vs_shadow_map.glsl", "shaders/fs_shadow_map.glsl");
+
+	shaders[s_shadow.ShaderID] = s_shadow;
+
+
+	// Simple depth
+	ShaderObject s_simple_depth = ShaderObject("s_simple_depth");
+	s_simple_depth.pipeline.CreatePipeline();
+	s_simple_depth.pipeline.LoadShaders("shaders/vs_simple_depth.glsl", "shaders/fs_simple_depth.glsl");
+
+	shaders[s_simple_depth.ShaderID] = s_simple_depth;
+
+
+	// Default shader
 	ShaderObject s_default = ShaderObject("s_default");
 	s_default.pipeline.CreatePipeline();
 	s_default.pipeline.LoadShaders("shaders/vs_model_basic.glsl", "shaders/fs_model_basic.glsl");
 
 	shaders[s_default.ShaderID] = s_default;
+	
+	
+	// Models
 
-	// Light shader
-	ShaderObject s_lights = ShaderObject("s_lights");
-	s_lights.pipeline.CreatePipeline();
-	s_lights.pipeline.LoadShaders("shaders/vs_light_basic.glsl", "shaders/fs_light_basic.glsl");
+	ModelObject floor = ModelObject(
+						"floor", 
+						"assets/floor.gltf",
+						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(5.0f, 1.0f, 5.0f),
+						"s_default"
+						);
 
-	shaders[s_lights.ShaderID] = s_lights;
+	floor.SetMaterialProperties(64);
+
+	// This is really terrible
+	shaders["s_default"].RegisterModel(floor.ModelID);
+	models[floor.ModelID] = floor;
+	modelSelectableID.push_back(floor.ModelID);
+	
+
 
 	// Model - Dog
 	ModelObject obj1 = ModelObject(
@@ -290,9 +323,11 @@ void startup()
 						"assets/dog.gltf",
 						glm::vec3(-2.0f, 0.0f, 0.0f),
 						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(1.0f, 1.0f, 1.0f),
 						"s_default"
 						);
 
+	obj1.SetMaterialProperties(64);
 	// This is really terrible
 	shaders["s_default"].RegisterModel(obj1.ModelID);
 	models[obj1.ModelID] = obj1;
@@ -303,10 +338,13 @@ void startup()
 	ModelObject obj2 = ModelObject(
 						"t_tetro", 
 						"assets/t_tetro.gltf",
-						glm::vec3(2.0f, 0.0f, 0.0f),
+						glm::vec3(2.0f, 1.0f, 0.0f),
 						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(1.0f, 1.0f, 1.0f),
 						"s_default"
 						);
+
+	obj2.SetMaterialProperties(64);
 
 	shaders["s_default"].RegisterModel(obj2.ModelID);
 	models[obj2.ModelID] = obj2;
@@ -316,27 +354,17 @@ void startup()
 	ModelObject obj3 = ModelObject(
 						"straight_tetro", 
 						"assets/straight_tetro.gltf",
-						glm::vec3(0.0f, 0.0f, 2.0f),
+						glm::vec3(0.0f, 1.0f, 2.0f),
 						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(1.0f, 1.0f, 1.0f),
 						"s_default"
 						);
+
+	obj3.SetMaterialProperties(64);
 
 	shaders["s_default"].RegisterModel(obj3.ModelID);
 	models[obj3.ModelID] = obj3;
 	modelSelectableID.push_back(obj3.ModelID);
-
-
-	ModelObject obj4 = ModelObject(
-						"light1", 
-						"assets/ball.gltf",
-						glm::vec3(0.0f, 3.0f, 0.0f),
-						glm::vec3(0.0f, 0.0f, 0.0f),
-						"s_lights"
-						);
-
-	shaders["s_lights"].RegisterModel(obj4.ModelID);
-	models[obj4.ModelID] = obj4;
-	modelSelectableID.push_back(obj4.ModelID);
 
 	// A few optimizations.
 	glFrontFace(GL_CCW);
@@ -355,6 +383,14 @@ void startup()
 
 	// Camera settings
 	// camera.canFly_Off();	// Stop player moving from the floor
+
+	// Shadow startup
+	shadow_m.Initialise(SHADOW_WIDTH, SHADOW_HEIGHT);
+
+	// Use shader
+	glUseProgram(shaders["s_shadow"].pipeline.pipe.program);
+	glUniform1i(glGetUniformLocation(shaders["s_shadow"].pipeline.pipe.program, "diffuseTexture"), 0);
+	glUniform1i(glGetUniformLocation(shaders["s_shadow"].pipeline.pipe.program, "shadowMap"), 1);
 }
 
 void update()
@@ -403,68 +439,103 @@ void render()
 	glm::vec4 grayLilac = glm::vec4(0.831f, 0.792f, 0.803f, 1.0f);
 	glm::vec4 darkGray = glm::vec4(0.05f, 0.05f, 0.05f, 1.0f);
 	glm::vec4 backgroundColor = darkGray;
-	glClearBufferfv(GL_COLOR, 0, &backgroundColor[0]);
+	// glClearBufferfv(GL_COLOR, 0, &backgroundColor[0]);
 
 	// Clear deep buffer
-	static const GLfloat one = 1.0f;
-	glClearBufferfv(GL_DEPTH, 0, &one);
+	// static const GLfloat one = 1.0f;
+	//glClearBufferfv(GL_DEPTH, 0, &one);
+
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	//glClearColor(0.831f, 0.792f, 0.803f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Enable blend
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	// TODO: Move these into their own light class/object
+	// Code from https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
+	glm::mat4 lightProjection, lightView;
+	glm::mat4 lightSpaceMatrix;
+	// How close/far away to process the shadows
+	float near_plane = 1.0f, far_plane = 20.0f;
+	//lightProjection = glm::perspective(glm::radians(45.0f), (GLfloat)SHADOW_WIDTH / (GLfloat)SHADOW_HEIGHT, near_plane, far_plane); 
+	lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+	lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
+	
+	lightSpaceMatrix = lightProjection * lightView;
+
+	// Render scene from light's point of view
+	shaders["s_simple_depth"].Use();
+	shaders["s_simple_depth"].setMat4("lightSpace_matrix", lightSpaceMatrix);
+
+	// Activate the shadow map, we are going to use this to render the scene
+	shadow_m.SetActive();
+        
+	for(const string modelID : modelSelectableID) {
+
+		// Model matrix (calculates translations, rotations, scale)
+		glm::mat4 modelMatrix = models[modelID].GetModelMatrix();
+		
+		shaders["s_simple_depth"].setMat4("model_matrix", modelMatrix);
+		
+		//glActiveTexture(GL_TEXTURE0);
+		//glBindTexture(GL_TEXTURE_2D, models[modelID].content.texid);
+
+		models[modelID].content.DrawModel(models[modelID].content.vaoAndEbos, models[modelID].content.model);
+	}
+
+	// Reset buffers, so we can render the scene normally
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	
+	glViewport(0, 0, windowWidth, windowHeight);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
 	// Setup camera
 	glm::mat4 viewMatrix = camera.GetViewMatrix();
 
-	// Process each model
-	for(const auto& [shaderID, shader] : shaders) {
+	// Shader to use
+	shaders["s_shadow"].Use();
 
-		// Use our shader programs
-		glUseProgram(shader.pipeline.pipe.program);
-		
-		// Set general shader values
-		// Lights
-		glUniform4f(glGetUniformLocation(shader.pipeline.pipe.program, "viewPosition"), camera.Position.x, camera.Position.y, camera.Position.z, 1.0);
-		glUniform4f(glGetUniformLocation(shader.pipeline.pipe.program, "lightPosition"), lightPos.x, lightPos.y, lightPos.z, 1.0);
-		glUniform1f(glGetUniformLocation(shader.pipeline.pipe.program, "k_ambient"), k_ambient);
-		glUniform4f(glGetUniformLocation(shader.pipeline.pipe.program, "color_ambient"), color_ambient.r, color_ambient.g, color_ambient.b, 1.0);
-		glUniform1f(glGetUniformLocation(shader.pipeline.pipe.program, "k_diffuse"), k_diffuse);
-		glUniform4f(glGetUniformLocation(shader.pipeline.pipe.program, "color_diffuse"), color_diffuse.r, color_diffuse.g, color_diffuse.b, 1.0);
-		glUniform1f(glGetUniformLocation(shader.pipeline.pipe.program, "k_specular"), k_specular);
-		glUniform4f(glGetUniformLocation(shader.pipeline.pipe.program, "color_specular"), color_specular.r, color_specular.g, color_specular.b, 1.0);
-		glUniform1f(glGetUniformLocation(shader.pipeline.pipe.program, "shininess"), shininess);
-		
-		// Values from https://learnopengl.com/Lighting/Light-casters and https://wiki.ogre3d.org/tiki-index.php?page=-Point+Light+Attenuation
-		glUniform1f(glGetUniformLocation(shader.pipeline.pipe.program, "atten_constant"), 1.0f);
-		glUniform1f(glGetUniformLocation(shader.pipeline.pipe.program, "atten_linear"), 0.09f);
-		glUniform1f(glGetUniformLocation(shader.pipeline.pipe.program, "atten_quadratic"), 0.032f);
+	for(const string modelID : modelSelectableID) {
 
-
-		glUniform1f(glGetUniformLocation(shader.pipeline.pipe.program, "brightness"), k_ambient);
-
-		// For each model this shader has registered
-		for(string modelID : shader.RegisteredModelIDs) {
-			// Model matrix (calculates translations, rotations, scale)
-			glm::mat4 modelMatrix = models[modelID].GetModelMatrix();
-
-			glm::mat4 mv_matrix = viewMatrix * modelMatrix;
-
-			
-			glUniformMatrix4fv(glGetUniformLocation(shader.pipeline.pipe.program, "model_matrix"), 1, GL_FALSE, &modelMatrix[0][0]);
-			glUniformMatrix4fv(glGetUniformLocation(shader.pipeline.pipe.program, "view_matrix"), 1, GL_FALSE, &viewMatrix[0][0]);
-			glUniformMatrix4fv(glGetUniformLocation(shader.pipeline.pipe.program, "proj_matrix"), 1, GL_FALSE, &projMatrix[0][0]);
-
-			glBindTexture(GL_TEXTURE_2D, models[modelID].content.texid);
-
-			// Debug option to show triangles
-			// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-			models[modelID].content.DrawModel(models[modelID].content.vaoAndEbos, models[modelID].content.model);
-		}
-		
-
-	}
+		// Model matrix (calculates translations, rotations, scale)
+		glm::mat4 modelMatrix = models[modelID].GetModelMatrix();
 	
+		// Set various shader properties
+		shaders["s_shadow"].setMat4("model_matrix", modelMatrix);
+		shaders["s_shadow"].setMat4("view_matrix", viewMatrix);
+		shaders["s_shadow"].setMat4("proj_matrix", projMatrix);
+		shaders["s_shadow"].setMat4("lightSpace_matrix", lightSpaceMatrix);
+
+		shaders["s_shadow"].setVec3("viewPosition", camera.Position);
+		shaders["s_shadow"].setVec3("lightPosition", lightPos);
+
+		shaders["s_shadow"].setVec3("lightColor", vec3(0.3));
+		shaders["s_shadow"].setFloat("k_ambient", k_ambient);
+		shaders["s_shadow"].setFloat("k_diffuse", 1.0f);
+		shaders["s_shadow"].setFloat("k_specular", 1.0f);
+		shaders["s_shadow"].setFloat("shininess", models[modelID].Shininess);
+
+		// Values from https://learnopengl.com/Lighting/Light-casters and https://wiki.ogre3d.org/tiki-index.php?page=-Point+Light+Attenuation
+		shaders["s_shadow"].setFloat("atten_constant", 1.0f);
+		shaders["s_shadow"].setFloat("atten_linear", 0.045f);
+		shaders["s_shadow"].setFloat("atten_quadratic", 0.0075f);
+
+		// Model textures
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, models[modelID].content.texid);
+
+		// Shadows
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, shadow_m.DepthMap);
+
+		// Debug option to show triangles
+		// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+		models[modelID].content.DrawModel(models[modelID].content.vaoAndEbos, models[modelID].content.model);
+	}
 	
 	#if defined(__APPLE__)
 		glCheckError();
@@ -496,7 +567,7 @@ void ui()
 	ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
 	bool *p_open = NULL;
 	if (ImGui::Begin("Info", nullptr, window_flags)) {
-		ImGui::Text("About: 3D Graphics and Animation 2023/24"); // ImGui::Separator();
+		// ImGui::Text("About: 3D Graphics and Animation 2023/24"); // ImGui::Separator();
 		ImGui::Text("Performance: %.3fms/Frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::Text("Pipeline: %s", shaders[models[modelSelectableID[selectedModel]].MshaderID].pipeline.pipe.error?"ERROR":"OK");
 		// Camera info
@@ -505,7 +576,7 @@ void ui()
 		// Model info
 		ImGui::Text("Selected model: ID: %s", modelSelectableID[selectedModel].c_str());
 		// Light info
-		ImGui::Text("Ambient constant: %.3f, Ambient colour: (%.3f, %.3f, %.3f)", k_ambient, color_ambient.x, color_ambient.y, color_ambient.z);
+		ImGui::Text("Ambient constant: %.3f", k_ambient);
 	}
 	ImGui::End();
 

@@ -3,7 +3,7 @@
 
 ModelObject::ModelObject() {};
 
-ModelObject::ModelObject(string modelID, string modelPath, glm::vec3 initialPosition, glm::vec3 initialRotation, string shaderID)
+ModelObject::ModelObject(string modelID, string modelPath, glm::vec3 initialPosition, glm::vec3 initialRotation, glm::vec3 scale, string shaderID)
 {   
     ModelID = modelID;
 
@@ -14,10 +14,10 @@ ModelObject::ModelObject(string modelID, string modelPath, glm::vec3 initialPosi
     Position = initialPosition;
 	Rotation = initialRotation;
 
-    Scale = glm::vec3(1.0f, 1.0f, 1.0f);
+    Scale = scale;
 }
 
-ModelObject::ModelObject(string modelID, string modelPath, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, string shaderID)
+ModelObject::ModelObject(string modelID, string modelPath, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ, string shaderID)
 {
     ModelID = modelID;
 
@@ -28,7 +28,7 @@ ModelObject::ModelObject(string modelID, string modelPath, float posX, float pos
     Position = glm::vec3(posX, posY, posZ);
 	Rotation = glm::vec3(rotX, rotY, rotZ);
 
-    Scale = glm::vec3(1.0f, 1.0f, 1.0f);
+    Scale = glm::vec3(scaleX, scaleY, scaleZ);
 }
 
 glm::mat4 ModelObject::GetModelMatrix()
@@ -40,4 +40,9 @@ glm::mat4 ModelObject::GetModelMatrix()
     modelMatrix = glm::rotate(modelMatrix, Rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
 	modelMatrix = glm::scale(modelMatrix, Scale);
     return modelMatrix;
+}
+
+void ModelObject::SetMaterialProperties(float shininess)
+{
+    Shininess = shininess;
 }

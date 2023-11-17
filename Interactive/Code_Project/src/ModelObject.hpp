@@ -1,3 +1,12 @@
+/**
+ * Properties of the model objects
+ * 
+ * Has the model Content for loading/rendering
+ * Position, rotation and scale
+ * Material properties: ambient, diffuse, specular and shininess
+ * 
+*/
+
 #pragma once
 
 
@@ -5,7 +14,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 
-#include "Pipeline.hpp"
 #include "Content.hpp"
 #include "ShaderObject.hpp"
 
@@ -30,6 +38,10 @@ class ModelObject
         glm::vec3 Rotation;    // Model rotation
         glm::vec3 Scale;       // Model scale
 
+        // Material properties
+        // TODO: Add more things here? Make multiple materials for the same object? Or maybe a PBR model?
+        float Shininess;
+
 
         ModelObject();
 
@@ -37,15 +49,19 @@ class ModelObject
                     string modelPath, 
                     glm::vec3 initialPosition, 
                     glm::vec3 initialRotation,
+                    glm::vec3 scale,
                     string shaderID);
 
         ModelObject(string modelID, 
                     string modelPath, 
                     float posX, float posY, float posZ, 
                     float rotX, float rotY, float rotZ,
+                    float scaleX, float scaleY, float scaleZ,
                     string shaderID);
 
         glm::mat4 GetModelMatrix();
+
+        void SetMaterialProperties(float shininess);
 
 
     private:

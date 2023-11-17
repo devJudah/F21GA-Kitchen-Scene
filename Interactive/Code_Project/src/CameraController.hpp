@@ -27,7 +27,7 @@ enum camera_movement {
 };
 
 // Default values
-const float MOVEMENT_SPEED = 1.0f;   // How fast the camera moves left, right, forward, back
+const float MOVEMENT_SPEED = 3.0f;   // How fast the camera moves left, right, forward, back
 const float LOOK_SENSITIVITY = 0.1f; // How fast the camera pans around
 const float FOV_Y = 45.0f;           // Default field of view (y axis)
 const float YAW = -90.0f;            // Starting yaw value (-90 so we start facing "forward")

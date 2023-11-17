@@ -26,8 +26,21 @@ class ShaderObject {
 
         // Constructor
         ShaderObject();
-        
+
         ShaderObject(string shaderID);
+
+        // Follows a similar idea to https://learnopengl.com/ see: shader.h - https://learnopengl.com/code_viewer_gh.php?code=includes/learnopengl/shader.h
+
+        // Sets gl to use the pipeline program
+        void Use();
+
+        void setInt(string name, int value);
+
+        void setFloat(string name, float value);
+
+        void setVec3(string name, glm::vec3 value);
+
+        void setMat4(string name, glm::mat4 value);
 
         // Which models are using this shader
         void RegisterModel(string modelID);
