@@ -15,6 +15,10 @@
 class ShadowMap
 {
     public:
+        
+        // TODO: Getter for this so it can't be changed?
+        unsigned int ShadowWidth;
+        unsigned int ShadowHeight;
 
         GLuint DepthMapFBO;
         GLuint DepthMap;
@@ -28,10 +32,7 @@ class ShadowMap
     
     private:
 
-        // Probably won't change the width and height again?
-
-        unsigned int ShadowWidth;
-        unsigned int ShadowHeight;
+        
 
 
 };

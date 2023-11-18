@@ -42,10 +42,28 @@ class ShaderObject {
 
         void setMat4(string name, glm::mat4 value);
 
+        /**
+         * Light properties helper functions
+         * TODO: Move this to another class? They don't quite fit here
+        */
+        void setLightStructInt(string name, int vIndex, int value);
+
+        void setLightStructFloat(string name, int vIndex, float value);
+
+        void setLightStructVec3(string name, int vIndex, glm::vec3 value);
+
+        void setLightStructMat4(string name, int vIndex, glm::mat4 value);
+
+
         // Which models are using this shader
         void RegisterModel(string modelID);
 
         // Remove a model
         void RemoveModel(string modelID);
+
+
+    private:
+
+        string LightStructNameHelper(string name, int vIndex);
 
 };

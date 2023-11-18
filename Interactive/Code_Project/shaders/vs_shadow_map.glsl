@@ -8,17 +8,23 @@ layout (location = 2) in vec2 in_texCoords;
 
 out vec2 TexCoords;
 
+// This sets the make number of possible lights - should ideally match this to how many lights there are
+const int NUM_LIGHTS = 2;
+
 out VS_OUT {
     vec3 FragPos;
     vec3 Normal;
     vec2 TexCoords;
-    vec4 FragPosLightSpace;
+    vec4 FragPosLightSpace[NUM_LIGHTS];
 } vs_out;
 
 uniform mat4 proj_matrix;
 uniform mat4 view_matrix;
 uniform mat4 model_matrix;
-uniform mat4 lightSpace_matrix;
+
+uniform mat4 lightSpace_matrix[NUM_LIGHTS];
+
+uniform int num_lights;
 
 void main()
 {   
@@ -29,6 +35,8 @@ void main()
 
     vs_out.FragPos = vec3(model_matrix * vec4(in_vertex, 1.0));
     
-    vs_out.FragPosLightSpace = lightSpace_matrix * vec4(vs_out.FragPos, 1.0);
+    for(int i = 0; i < num_lights; i++) {
+        vs_out.FragPosLightSpace[i] = lightSpace_matrix[i] * vec4(vs_out.FragPos, 1.0);
+    }
     
 }
