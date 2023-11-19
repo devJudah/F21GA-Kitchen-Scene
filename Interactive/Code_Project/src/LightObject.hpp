@@ -44,6 +44,9 @@ class LightObject
         float orth_bottom = -10.0f;
         float orth_top = 10.0f;
 
+        float perspective_fov = 45.0f;
+
+
         LightObject();
 
         LightObject(glm::vec3 lightPosition, glm::vec3 lightColor);

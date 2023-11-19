@@ -61,7 +61,7 @@ glm::mat4 LightObject::GetLightProjectionMatrix(GLfloat shadowWidth, GLfloat sha
         return glm::ortho(orth_left, orth_right, orth_bottom, orth_top, near_plane, far_plane);
     }
     else {
-        return glm::perspective(glm::radians(45.0f), (GLfloat) shadowWidth / (GLfloat) shadowHeight, near_plane, far_plane);
+        return glm::perspective(glm::radians(perspective_fov), (GLfloat) shadowWidth / (GLfloat) shadowHeight, near_plane, far_plane);
     }
 }
 

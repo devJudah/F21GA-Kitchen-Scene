@@ -25,6 +25,9 @@ void ContentInitialisation::LoadShaders(map<string, ShaderObject> &shaders)
 
 void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<string> &modelSelectableID)
 {
+    // Note that changing this won't change positions
+    glm::vec3 gScale = glm::vec3(0.4, 0.4, 0.4);
+
     ModelObject floor = ModelObject(
 						"floor", 
 						"assets/floor.gltf",
@@ -45,7 +48,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 								"assets/wall_window.gltf",
 								glm::vec3(0.0f, 0.0f, 0.0f),
 								glm::vec3(0.0f, 0.0f, 0.0f),
-								glm::vec3(0.5f, 0.5f, 0.5f),
+								gScale,
 								"s_shadow"
 							);
 
@@ -60,7 +63,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 								"assets/wall_door.gltf",
 								glm::vec3(0.0f, 0.0f, 0.0f),
 								glm::vec3(0.0f, 0.0f, 0.0f),
-								glm::vec3(0.5f, 0.5f, 0.5f),
+								gScale,
 								"s_shadow"
 							);
 
@@ -75,7 +78,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 								"assets/wall_back.gltf",
 								glm::vec3(0.0f, 0.0f, 0.0f),
 								glm::vec3(0.0f, 0.0f, 0.0f),
-								glm::vec3(0.5f, 0.5f, 0.5f),
+								gScale,
 								"s_shadow"
 							);
 
@@ -90,7 +93,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 								"assets/wall_front.gltf",
 								glm::vec3(0.0f, 0.0f, 0.0f),
 								glm::vec3(0.0f, 0.0f, 0.0f),
-								glm::vec3(0.5f, 0.5f, 0.5f),
+								gScale,
 								"s_shadow"
 							);
 
@@ -105,7 +108,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 								"assets/roof.gltf",
 								glm::vec3(0.0f, 0.0f, 0.0f),
 								glm::vec3(0.0f, 0.0f, 0.0f),
-								glm::vec3(0.5f, 0.5f, 0.5f),
+								gScale,
 								"s_shadow"
 							);
 
@@ -114,24 +117,65 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	models[roof.ModelID] = roof;
 	modelSelectableID.push_back(roof.ModelID);
 
+    // Lights (models, not lights themselves!)
+    ModelObject ceiling_light_1 = ModelObject(
+								"ceiling_light_1", 
+								"assets/ceiling_light.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								gScale,
+								"s_shadow"
+							);
+
+	ceiling_light_1.SetMaterialProperties(64);
+
+	models[ceiling_light_1.ModelID] = ceiling_light_1;
+	modelSelectableID.push_back(ceiling_light_1.ModelID);
+
+    ModelObject ceiling_light_bulb_1 = ModelObject(
+                                    "ceiling_light_bulb_1", 
+                                    "assets/ceiling_light_bulb.gltf",
+                                    glm::vec3(0.0f, 0.0f, 0.0f),
+                                    glm::vec3(0.0f, 0.0f, 0.0f),
+                                    gScale,
+                                    "s_shadow"
+							    );
+
+	ceiling_light_bulb_1.SetMaterialProperties(64);
+    ceiling_light_bulb_1.castShadow = false;
+
+	models[ceiling_light_bulb_1.ModelID] = ceiling_light_bulb_1;
+	modelSelectableID.push_back(ceiling_light_bulb_1.ModelID);
 
 
-	// Model - Dog
-	ModelObject obj1 = ModelObject(
-						"Dog", 
-						"assets/dog.gltf",
-						glm::vec3(-2.0f, 0.0f, 0.0f),
-						//glm::vec3(25.0f, 12.0f, 3.0f),
-						glm::vec3(0.0f, 0.0f, 0.0f),
-						glm::vec3(1.0f, 1.0f, 1.0f),
-						"s_shadow"
-						);
+    ModelObject ceiling_light_2 = ModelObject(
+                                    "ceiling_light_2", 
+                                    "assets/ceiling_light.gltf",
+                                    glm::vec3(-6.0f, 0.0f, 0.0f),
+                                    glm::vec3(0.0f, 0.0f, 0.0f),
+                                    gScale,
+                                    "s_shadow"
+                                );
 
-	obj1.SetMaterialProperties(64);
-	// This is really terrible
-	models[obj1.ModelID] = obj1;
-	modelSelectableID.push_back(obj1.ModelID);
-	// End of dog
+	ceiling_light_2.SetMaterialProperties(64);
+
+	models[ceiling_light_2.ModelID] = ceiling_light_2;
+	modelSelectableID.push_back(ceiling_light_2.ModelID);
+
+    ModelObject ceiling_light_bulb_2 = ModelObject(
+                                        "ceiling_light_bulb_2", 
+                                        "assets/ceiling_light_bulb.gltf",
+                                        glm::vec3(-6.0f, 0.0f, 0.0f),
+                                        glm::vec3(0.0f, 0.0f, 0.0f),
+                                        gScale,
+                                        "s_shadow"
+                                    );
+
+	ceiling_light_bulb_2.SetMaterialProperties(64);
+    ceiling_light_bulb_2.castShadow = false;
+
+	models[ceiling_light_bulb_2.ModelID] = ceiling_light_bulb_2;
+	modelSelectableID.push_back(ceiling_light_bulb_2.ModelID);
 
 	// Bottom Cab
 	ModelObject obj_bCab = ModelObject(
@@ -139,7 +183,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 								"assets/bottom_cabinet.gltf",
 								glm::vec3(0.0f, 0.0f, 0.0f),
 								glm::vec3(0.0f, 0.0f, 0.0f),
-								glm::vec3(0.5f, 0.5f, 0.5f),
+								gScale,
 								"s_shadow"
 							);
 
@@ -192,20 +236,40 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	models[obj_toast_2.ModelID] = obj_toast_2;
 	modelSelectableID.push_back(obj_toast_2.ModelID);
 
+
+
+    // Model - Dog
+	ModelObject obj1 = ModelObject(
+						"Dog", 
+						"assets/dog.gltf",
+						glm::vec3(-2.0f, 0.0f, 0.0f),
+						//glm::vec3(25.0f, 12.0f, 3.0f),
+						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(1.0f, 1.0f, 1.0f),
+						"s_shadow"
+						);
+
+	obj1.SetMaterialProperties(64);
+	// This is really terrible
+	models[obj1.ModelID] = obj1;
+	modelSelectableID.push_back(obj1.ModelID);
+	// End of dog
+
 }
 
 void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
-{
+{   
+    
     LightObject light_sun = LightObject(
 								glm::vec3(22.0f, 13.0f, 3.0f),
 								glm::vec3(0.0f),
 								glm::vec3(0.0, 1.0, 0.0),
 								1.0f,
-								55.0f,
+								50.0f, //55.0f,
 								true,
 								glm::vec3(0.3),
-								0.6f,
-								1.0f,  0.007f,  0.0002f
+								0.3f,
+								1.0f, 0.007f, 0.0002f
 							);
 	light_sun.orth_left = -20.0f;
 	light_sun.orth_right = 20.0f;
@@ -214,19 +278,34 @@ void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
 
 	lights_s.push_back(light_sun);
 	
-	/*
-	LightObject light2 = LightObject(
-								glm::vec3(0.0f, 8.0f, 5.0f),
+	
+	LightObject light1 = LightObject(
+								glm::vec3(5.35f, 9.5f, 0.0f),
 								glm::vec3(0.0f),
 								glm::vec3(0.0, 1.0, 0.0),
-								1.0f,
+								0.5f,
 								20.0f,
 								false,
 								glm::vec3(0.3),
 								0.3f,
-								1.0f, 0.045f, 0.0075f
+								1.0f, 0.09, 0.032
 							);
+    light1.perspective_fov = 150.0f;
+	lights_s.push_back(light1);
 
+    LightObject light2 = LightObject(
+								glm::vec3(-0.650f, 9.5f, 0.0f),
+								glm::vec3(0.0f),
+								glm::vec3(0.0, 1.0, 0.0),
+								0.5f,
+								20.0f,
+								false,
+								glm::vec3(0.3),
+								0.3f,
+								1.0f, 0.09, 0.032
+							);
+    light2.perspective_fov = 150.0f;
 	lights_s.push_back(light2);
-	*/
+    
+	
 }

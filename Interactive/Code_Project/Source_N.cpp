@@ -290,11 +290,15 @@ void startup()
 	shadow_m_1.Initialise(SHADOW_WIDTH, SHADOW_HEIGHT);
 	shadowMaps.push_back(shadow_m_1);
 
-	/*
+	
 	ShadowMap shadow_m_2;
 	shadow_m_2.Initialise(SHADOW_WIDTH, SHADOW_HEIGHT);
 	shadowMaps.push_back(shadow_m_2);
-	*/
+
+	ShadowMap shadow_m_3;
+	shadow_m_3.Initialise(SHADOW_WIDTH, SHADOW_HEIGHT);
+	shadowMaps.push_back(shadow_m_3);
+	
 
 	/**
 	 * TODO: Abstract/wrapper this in a nicer way
@@ -361,11 +365,13 @@ void update()
 
 	
 	//
+	/*
 	if (keyStatus[GLFW_KEY_T]) {
-		camera.Position = lights_s[1].lightPosition;
-		camera.Front = lights_s[1].lightDirection;
-		camera.Up = lights_s[1].lightUp;
+		camera.Position = lights_s[0].lightPosition;
+		camera.Front = lights_s[0].lightDirection;
+		camera.Up = lights_s[0].lightUp;
 	}
+	*/
 
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
@@ -547,8 +553,6 @@ void ui()
 		ImGui::Text("Position: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Position.x, models[modelSelectableID[selectedModel]].Position.y, models[modelSelectableID[selectedModel]].Position.z);
 		ImGui::Text("Rotation: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Rotation.x, models[modelSelectableID[selectedModel]].Rotation.y, models[modelSelectableID[selectedModel]].Rotation.z);
 		ImGui::Text("Scale: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Scale.x, models[modelSelectableID[selectedModel]].Scale.y, models[modelSelectableID[selectedModel]].Scale.z);
-		// Light info
-		//ImGui::Text("Ambient constant: %.3f",  lights_s[0].k_ambient);
 	}
 	ImGui::End();
 
