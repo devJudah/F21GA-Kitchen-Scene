@@ -104,6 +104,7 @@ float lastY = 0.0f;									//
 Debugger debugger;									// Add one debugger to use for callbacks ( Win64 - openGLDebugCallback() ) or manual calls ( Apple - glCheckError() ) 
 
 bool showWireFrame = false;		// Debug option to show glPolygonMode
+bool lightViewDebug = false;
 
 // Hold all the models
 map<string, ModelObject> models;
@@ -364,14 +365,6 @@ void update()
 	if (keyStatus[GLFW_KEY_E]) camera.keyPressed(camera_movement::DOWN, deltaTime);
 
 	
-	//
-	/*
-	if (keyStatus[GLFW_KEY_T]) {
-		camera.Position = lights_s[0].lightPosition;
-		camera.Front = lights_s[0].lightDirection;
-		camera.Up = lights_s[0].lightUp;
-	}
-	*/
 
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
@@ -553,6 +546,10 @@ void ui()
 		ImGui::Text("Position: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Position.x, models[modelSelectableID[selectedModel]].Position.y, models[modelSelectableID[selectedModel]].Position.z);
 		ImGui::Text("Rotation: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Rotation.x, models[modelSelectableID[selectedModel]].Rotation.y, models[modelSelectableID[selectedModel]].Rotation.z);
 		ImGui::Text("Scale: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Scale.x, models[modelSelectableID[selectedModel]].Scale.y, models[modelSelectableID[selectedModel]].Scale.z);
+		// Light info
+		ImGui::Text("Light Dir: %.3f, %.3f, %.3f", lights_s[0].lightDirection.x, lights_s[0].lightDirection.y, lights_s[0].lightDirection.z);
+		ImGui::Text("Light FOV: %.3f", lights_s[0].perspective_fov);
+		ImGui::Text("Light near: %.3f Far: %.3f", lights_s[0].near_plane, lights_s[0].far_plane);
 	}
 	ImGui::End();
 
@@ -597,13 +594,76 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 	}
 
 	// Debug polygons on
-	if (keyStatus[GLFW_KEY_Z]) {
+	if (key == GLFW_KEY_Z && action == GLFW_PRESS) {
 		if (showWireFrame) {
 			showWireFrame = false;
 		} else {
 			showWireFrame = true;
 		}
 	}
+
+	
+	// Light view
+	int lightSelectedDB = 0;
+	if (key == GLFW_KEY_T && action == GLFW_PRESS) {
+		
+		if(lightViewDebug){ 
+			lightViewDebug = false;
+			// Reset stuff
+			projMatrix = glm::perspective(glm::radians(fovy), aspect, 0.1f, 1000.0f);
+			camera.Front = vec3(0.0f, 0.0f, -1.0f);
+			camera.Up = vec3(0.0, 1.0, 0.0);
+		} else {
+			lightViewDebug = true;
+			camera.Position = lights_s[lightSelectedDB].lightPosition;
+			camera.Front = lights_s[lightSelectedDB].lightDirection;
+			camera.Up = lights_s[lightSelectedDB].lightUp;
+			projMatrix = glm::perspective(glm::radians(lights_s[lightSelectedDB].perspective_fov), (GLfloat) SHADOW_WIDTH / (GLfloat) SHADOW_HEIGHT, lights_s[lightSelectedDB].near_plane, lights_s[lightSelectedDB].far_plane);
+		}
+		
+	}
+
+
+	if (key == GLFW_KEY_1 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].lightDirection.x--;
+	}
+	if (key == GLFW_KEY_2 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].lightDirection.x++;
+	}
+	if (key == GLFW_KEY_3 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].lightDirection.y--;
+	}
+	if (key == GLFW_KEY_4 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].lightDirection.y++;
+	}
+	if (key == GLFW_KEY_5 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].lightDirection.z--;
+	}
+	if (key == GLFW_KEY_6 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].lightDirection.z++;
+	}
+
+	if (key == GLFW_KEY_7 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].perspective_fov--;
+	}
+	if (key == GLFW_KEY_8 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].perspective_fov++;
+	}
+
+	if (key == GLFW_KEY_X && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].near_plane--;
+	}
+	if (key == GLFW_KEY_C && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].near_plane++;
+	}
+
+	if (key == GLFW_KEY_V && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].far_plane--;
+	}
+	if (key == GLFW_KEY_B && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].far_plane++;
+	}
+
 
 	/*
 		General keys

@@ -132,10 +132,14 @@ void main()
         vec3 diffuse = k_diffuse * diff * lights[i].lightColor;
 
         // Specular - Use the Blinn-Phong method to improve specular effect - https://learnopengl.com/Advanced-Lighting/Advanced-Lighting
-        vec3 viewDir = normalize(viewPosition - fs_in.FragPos);
-        vec3 halfwayDir = normalize(lightDir + viewDir);  
-        float spec = pow(max(dot(normal, halfwayDir), 0.0), shininess);
-        vec3 specular = k_specular * spec * lights[i].lightColor;
+        vec3 specular = vec3(0.0);
+        float NormalDotLightDir = dot(normal, lightDir);
+        if (NormalDotLightDir > 0.0) {
+            vec3 viewDir = normalize(viewPosition - fs_in.FragPos);
+            vec3 halfwayDir = normalize(lightDir + viewDir);  
+            float spec = pow(max(dot(normal, halfwayDir), 0.0), shininess);
+            specular = k_specular * spec * lights[i].lightColor;
+        }
 
         // Attenuation
         float distance = length(lights[i].lightPosition - fs_in.FragPos);

@@ -134,6 +134,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 
 
     // Lights (models, not lights themselves!)
+    /*
     ModelObject ceiling_light_1 = ModelObject(
 								"ceiling_light_1", 
 								"assets/ceiling_light.gltf",
@@ -162,6 +163,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 
 	models[ceiling_light_bulb_1.ModelID] = ceiling_light_bulb_1;
 	modelSelectableID.push_back(ceiling_light_bulb_1.ModelID);
+    */
 
 
     ModelObject ceiling_light_2 = ModelObject(
@@ -196,7 +198,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	// Bottom Cab
 	ModelObject obj_bCab = ModelObject(
 								"bottom_cabinet", 
-								"assets/bottom_cabinet.gltf",
+								"assets/bottom_cabinet_v3.gltf",
 								glm::vec3(0.0f, 0.0f, 0.0f),
 								glm::vec3(0.0f, 0.0f, 0.0f),
 								gScale,
@@ -268,6 +270,20 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	modelSelectableID.push_back(obj_toast_2.ModelID);
 
 
+    // Kettle
+    ModelObject obj_kettle = ModelObject(
+								"kettle", 
+								"assets/kettle.gltf",
+								glm::vec3(-4.5, 2.2, 1.9),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.2f, 0.2f, 0.2f),
+								"s_shadow"
+							);
+
+	obj_kettle.SetMaterialProperties(64);
+		
+	models[obj_kettle.ModelID] = obj_kettle;
+	modelSelectableID.push_back(obj_kettle.ModelID);
 
     // Model - Dog
 	ModelObject obj1 = ModelObject(
@@ -308,34 +324,35 @@ void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
 	light_sun.orth_top = 20.0f;
 
 	lights_s.push_back(light_sun);
-	
-	
+
+
 	LightObject light1 = LightObject(
 								glm::vec3(5.35f, 9.5f, 0.0f),
-								glm::vec3(0.0f),
-								glm::vec3(0.0, 1.0, 0.0),
+								glm::vec3(5.35f, 0.0f, 0.0f),
+								glm::vec3(0.0, 0.0, 1.0),
 								0.5f,
-								20.0f,
+								100.0f,
 								false,
 								glm::vec3(0.3),
 								0.3f,
 								1.0f, 0.09, 0.032
 							);
-    light1.perspective_fov = 150.0f;
+    light1.perspective_fov = 140.0f;
 	lights_s.push_back(light1);
+
 
     LightObject light2 = LightObject(
 								glm::vec3(-0.650f, 9.5f, 0.0f),
-								glm::vec3(0.0f),
-								glm::vec3(0.0, 1.0, 0.0),
+								glm::vec3(-0.650f, 0.0f, 0.0f),
+								glm::vec3(0.0, 0.0, 1.0),
 								0.5f,
-								20.0f,
+								100.0f,
 								false,
 								glm::vec3(0.3),
 								0.3f,
 								1.0f, 0.09, 0.032
 							);
-    light2.perspective_fov = 150.0f;
+    light2.perspective_fov = 140.0f;
 	lights_s.push_back(light2);
     
 	
