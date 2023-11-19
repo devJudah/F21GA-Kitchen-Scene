@@ -38,12 +38,8 @@ using namespace glm;
 #include "src/Debugger.hpp"		// Setup debugger functions.
 
 // More includes!
-#include "src/CameraController.hpp"			// Camera controller code
-#include "src/ModelObject.hpp"				// Wrapper for model data
-#include "src/ShaderObject.hpp"				// Wrapper for shader data
-#include "src/ShadowMap.hpp"				// For rendering shadows
-#include "src/LightObject.hpp"				// For light info
-#include "src/ContentInitialisation.hpp" 	// For loading shaders, models and lights
+#include "src/CameraController.hpp"		// Camera controller code
+
 
 
 // Main fuctions
@@ -80,8 +76,8 @@ void onMouseWheelCallback(GLFWwindow *window, double xoffset, double yoffset);
 
 // VARIABLES
 GLFWwindow *window; 								// Keep track of the window
-auto windowWidth = 1280;							// Window width					
-auto windowHeight = 960;							// Window height
+auto windowWidth = 800;								// Window width					
+auto windowHeight = 800;								// Window height
 auto running(true);							  		// Are we still running our main loop
 mat4 projMatrix;							 		// Our Projection Matrix
 auto aspect = (float)windowWidth / (float)windowHeight;	// Window aspect ration
@@ -90,8 +86,10 @@ auto currentTime = 0.0f;							// Framerate
 auto deltaTime = 0.0f;								// time passed
 auto lastTime = 0.0f;								// Used to calculate Frame rate
 
-auto fovy = 75.0f;									// Field of view (y axis)
-
+auto fovy = 45.0f;									// Field of view (y axis)
+// vec3 cameraPosition = vec3(0.0f, 0.0f, 5.0f);		// Where is our camera
+// vec3 cameraFront = vec3(0.0f, 0.0f, -1.0f);			// Camera front vector
+// vec3 cameraUp = vec3(0.0f, 1.0f, 0.0f);				// Camera up vector
 CameraController camera;							// Camera
 
 // Camera movement
@@ -100,31 +98,12 @@ bool mouseMoved = false;							// If the mouse has been moved yet
 float lastX = 0.0f;									// 
 float lastY = 0.0f;									//
 
-
+Pipeline pipeline;									// Add one pipeline plus some shaders.
+Content content;									// Add one content loader (+drawing).
 Debugger debugger;									// Add one debugger to use for callbacks ( Win64 - openGLDebugCallback() ) or manual calls ( Apple - glCheckError() ) 
 
-bool showWireFrame = false;		// Debug option to show glPolygonMode
-
-// Hold all the models
-map<string, ModelObject> models;
-
-// Holds modelsIDs which can be selected (probably all of them?) - Would rather iterate through map<> models but that doesn't seem to work well
-vector<string> modelSelectableID;
-int selectedModel = 0;
-
-// vector<ShaderObject> shaders;
-map<string, ShaderObject> shaders;
-
-// Lights with shadows
-vector<LightObject> lights_s;
-
-// Depth map stuff (used for calculating shows) - https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
-// unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024; // Controls the quality of the shadows
-unsigned int SHADOW_WIDTH = 4096, SHADOW_HEIGHT = 4096;
-
-// Shadow maps - Need one per light we want to create shadows for. NOTE!! Assumes they are in the same order as vector<LightObject> lights;
-vector<ShadowMap> shadowMaps;
-
+vec3 modelPosition;									// Model position
+vec3 modelRotation;									// Model rotation
 
 
 int main()
@@ -157,7 +136,7 @@ int main()
 		return -1;
 	} 
 
-	glfwSetWindowPos(window, 50, 50); // Place it in top corner for easy debugging.
+	glfwSetWindowPos(window, 10, 10); // Place it in top corner for easy debugging.
 	glfwMakeContextCurrent(window);	  // making the OpenGL context current
 
 	// GLAD: Load OpenGL function pointers - aka update specs to newest versions - plus test for errors.
@@ -197,7 +176,7 @@ int main()
 	#endif
 
 	glfwSwapInterval(1);			 // Ony render when synced (V SYNC) - https://www.tomsguide.com/features/what-is-vsync-and-should-you-turn-it-on-or-off
-	glfwWindowHint(GLFW_SAMPLES, 4); // Multisampling - covered in lectures - https://www.khronos.org/opengl/wiki/Multisampling
+	glfwWindowHint(GLFW_SAMPLES, 2); // Multisampling - covered in lectures - https://www.khronos.org/opengl/wiki/Multisampling
 
 	startup(); // Setup all necessary information for startup (aka. load texture, shaders, models, etc).
 
@@ -269,56 +248,14 @@ void startup()
 	cout << "RENDERER: " << (char *)glGetString(GL_RENDERER) << endl;	
 
 	cout << endl << "Loading content..." << endl;	
+	content.LoadGLTF("assets/dog.gltf");
 
-	ContentInitialisation contentInit;
+	pipeline.CreatePipeline();
+	pipeline.LoadShaders("shaders/vs_model.glsl", "shaders/fs_model.glsl");
 
-	// Create and load shader info
-	contentInit.LoadShaders(shaders);
-	
-	// Models
-	contentInit.LoadModels(models, modelSelectableID);
-	
-	/**
-	 * WARNING! Assume that the number of lights in lights_s equals the number of shadows created.
-	*/
-	// Lights
-	contentInit.LoadLightS(lights_s);
-
-
-	// Shadow startup
-	ShadowMap shadow_m_1;
-	shadow_m_1.Initialise(SHADOW_WIDTH, SHADOW_HEIGHT);
-	shadowMaps.push_back(shadow_m_1);
-
-	
-	ShadowMap shadow_m_2;
-	shadow_m_2.Initialise(SHADOW_WIDTH, SHADOW_HEIGHT);
-	shadowMaps.push_back(shadow_m_2);
-
-	ShadowMap shadow_m_3;
-	shadow_m_3.Initialise(SHADOW_WIDTH, SHADOW_HEIGHT);
-	shadowMaps.push_back(shadow_m_3);
-	
-
-	/**
-	 * TODO: Abstract/wrapper this in a nicer way
-	 * 
-	 * Configure shadow shader "s_shadow"
-	 * !!NOTE!! This sets the locations for the expected textures
-	*/
-	shaders["s_shadow"].Use();
-	glUniform1i(glGetUniformLocation(shaders["s_shadow"].pipeline.pipe.program, "tex"), 0); // 0 is the model texture
-	// Number of shadow maps expected
-	GLint shadowMap_values[shadowMaps.size()];
-	for(int i=0; i < shadowMaps.size(); i++){
-		// Start the index of shadowMap_values at 0, but the value should be offset since 0 is the model texture
-		shadowMap_values[i] = i+1;
-	}
-	glUniform1iv(glGetUniformLocation(shaders["s_shadow"].pipeline.pipe.program, "shadowMap"), shadowMaps.size(), shadowMap_values);
-
-
-	// Turn multi sampling (Anti-alias) on. Was probably on anyway by default
-	glEnable(GL_MULTISAMPLE);
+	// Start from the centre
+	modelPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+	modelRotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
 	// A few optimizations.
 	glFrontFace(GL_CCW);
@@ -336,24 +273,15 @@ void startup()
 	projMatrix = glm::perspective(glm::radians(fovy), aspect, 0.1f, 1000.0f);
 
 	// Camera settings
-	camera.fov_y = fovy;
 	// camera.canFly_Off();	// Stop player moving from the floor
-
 }
 
 void update()
 {
-	if (keyStatus[GLFW_KEY_LEFT]) models[modelSelectableID[selectedModel]].Rotation.y += 0.05f;
-	if (keyStatus[GLFW_KEY_RIGHT]) models[modelSelectableID[selectedModel]].Rotation.y -= 0.05f;
-	if (keyStatus[GLFW_KEY_UP]) models[modelSelectableID[selectedModel]].Rotation.x += 0.05f;
-	if (keyStatus[GLFW_KEY_DOWN]) models[modelSelectableID[selectedModel]].Rotation.x -= 0.05f;
-
-	if (keyStatus[GLFW_KEY_Y]) models[modelSelectableID[selectedModel]].Position.y += 0.05f;
-	if (keyStatus[GLFW_KEY_I]) models[modelSelectableID[selectedModel]].Position.y -= 0.05f;
-	if (keyStatus[GLFW_KEY_U]) models[modelSelectableID[selectedModel]].Position.x += 0.05f;
-	if (keyStatus[GLFW_KEY_J]) models[modelSelectableID[selectedModel]].Position.x -= 0.05f;
-	if (keyStatus[GLFW_KEY_H]) models[modelSelectableID[selectedModel]].Position.z += 0.05f;
-	if (keyStatus[GLFW_KEY_K]) models[modelSelectableID[selectedModel]].Position.z -= 0.05f;
+	if (keyStatus[GLFW_KEY_LEFT]) modelRotation.y += 0.05f;
+	if (keyStatus[GLFW_KEY_RIGHT]) modelRotation.y -= 0.05f;
+	if (keyStatus[GLFW_KEY_UP]) modelRotation.x += 0.05f;
+	if (keyStatus[GLFW_KEY_DOWN]) modelRotation.x -= 0.05f;
 	
 	// Camera movement
 	if (keyStatus[GLFW_KEY_W]) camera.keyPressed(camera_movement::FORWARD, deltaTime);
@@ -363,15 +291,8 @@ void update()
 	if (keyStatus[GLFW_KEY_Q]) camera.keyPressed(camera_movement::UP, deltaTime);
 	if (keyStatus[GLFW_KEY_E]) camera.keyPressed(camera_movement::DOWN, deltaTime);
 
-	
-	//
-	/*
-	if (keyStatus[GLFW_KEY_T]) {
-		camera.Position = lights_s[0].lightPosition;
-		camera.Front = lights_s[0].lightDirection;
-		camera.Up = lights_s[0].lightUp;
-	}
-	*/
+
+	if (keyStatus[GLFW_KEY_R]) pipeline.ReloadShaders();
 
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
@@ -385,132 +306,39 @@ void render()
 
 	// Clear colour buffer
 	glm::vec4 grayLilac = glm::vec4(0.831f, 0.792f, 0.803f, 1.0f);
-	glm::vec4 darkGray = glm::vec4(0.05f, 0.05f, 0.05f, 1.0f);
-	glm::vec4 skyBlue = glm::vec4(0.741f, 0.925f, 1.0f, 1.0f);
-	glm::vec4 backgroundColor = skyBlue;
+	glm::vec4 backgroundColor = grayLilac;
 	glClearBufferfv(GL_COLOR, 0, &backgroundColor[0]);
 
 	// Clear deep buffer
 	static const GLfloat one = 1.0f;
 	glClearBufferfv(GL_DEPTH, 0, &one);
 
-	// Alternative way to clear buffer. From https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
-	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	//glClearColor(0.831f, 0.792f, 0.803f, 1.0f);
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	// Enable blend
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-
-	// Render scene from light's point of view
-	shaders["s_simple_depth"].Use();
-
-	// Process each light's depth map
-	for(int i=0; i < lights_s.size(); i++) {
-
-		glm::mat4 lightProjection = lights_s[i].GetLightProjectionMatrix(shadowMaps[i].ShadowWidth, shadowMaps[i].ShadowHeight);
-		glm::mat4 lightView = lights_s[i].GetLightViewMatrix();
-		glm::mat4 lightSpaceMatrix = lightProjection * lightView;
-	
-		shaders["s_simple_depth"].setMat4("lightSpace_matrix", lightSpaceMatrix);
-
-		// Activate the shadow map, we are going to use this to render the scene
-		shadowMaps[i].SetActive();
-			
-		for(const string modelID : modelSelectableID) {
-			
-			// Skip this model if it does not cast a shadow
-			if(!models[modelID].castShadow) continue;
-
-			// Model matrix (calculates translations, rotations, scale)
-			glm::mat4 modelMatrix = models[modelID].GetModelMatrix();
-			
-			shaders["s_simple_depth"].setMat4("model_matrix", modelMatrix);
-
-			models[modelID].content.DrawModel(models[modelID].content.vaoAndEbos, models[modelID].content.model);
-		}
-
-	}
-
-	// Reset buffers, so we can render the scene normally
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	
-	glViewport(0, 0, windowWidth, windowHeight);
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearBufferfv(GL_COLOR, 0, &backgroundColor[0]);
-	glClearBufferfv(GL_DEPTH, 0, &one);
-
+	// Use our shader programs
+	glUseProgram(pipeline.pipe.program);
 
 	// Setup camera
 	glm::mat4 viewMatrix = camera.GetViewMatrix();
 
-	// Set the shader to use (TODO: Support for multiple shaders for each object?)
-	shaders["s_shadow"].Use();
-	shaders["s_shadow"].setInt("num_lights", lights_s.size());
+	// Do some translations, rotations and scaling
+	// glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(modelPosition.x+rX, modelPosition.y+rY, modelPosition.z+rZ));
+	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+	modelMatrix = glm::rotate(modelMatrix, modelRotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+	modelMatrix = glm::rotate(modelMatrix, modelRotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+	modelMatrix = glm::scale(modelMatrix, glm::vec3(1.2f, 1.2f, 1.2f));
 
-	// Set as many properties as we can before looping through models
-	for(int i=0; i < lights_s.size(); i++) {
+	glm::mat4 mv_matrix = viewMatrix * modelMatrix;
 
-		glm::mat4 lightProjection = lights_s[i].GetLightProjectionMatrix(shadowMaps[i].ShadowWidth, shadowMaps[i].ShadowHeight);
-		glm::mat4 lightView = lights_s[i].GetLightViewMatrix();
-		glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+	glUniformMatrix4fv(glGetUniformLocation(pipeline.pipe.program, "model_matrix"), 1, GL_FALSE, &modelMatrix[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(pipeline.pipe.program, "view_matrix"), 1, GL_FALSE, &viewMatrix[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(pipeline.pipe.program, "proj_matrix"), 1, GL_FALSE, &projMatrix[0][0]);
 
-		// Set lightSpaceMatrix array
-		stringstream ss;
-		ss << "lightSpace_matrix[" << i << "]";
-		shaders["s_shadow"].setMat4(ss.str(), lightSpaceMatrix);
+	glBindTexture(GL_TEXTURE_2D, content.texid);
 
-		// Set LightStruct array values - using a helper function
-		shaders["s_shadow"].setLightStructVec3("lightPosition", i, lights_s[i].lightPosition);
-		shaders["s_shadow"].setLightStructVec3("lightColor", i, lights_s[i].lightColor);
-		shaders["s_shadow"].setLightStructFloat("k_ambient", i, lights_s[i].k_ambient);
-		shaders["s_shadow"].setLightStructFloat("atten_constant", i, lights_s[i].atten_constant);
-		shaders["s_shadow"].setLightStructFloat("atten_linear", i, lights_s[i].atten_linear);
-		shaders["s_shadow"].setLightStructFloat("atten_quadratic", i, lights_s[i].atten_quadratic);
-
-		// Shadow depth maps
-		// NOTE: Starts from GL_TEXTURE1 as GL_TEXTURE0 is the model texture!
-		glActiveTexture(GL_TEXTURE1 + i);
-		glBindTexture(GL_TEXTURE_2D, shadowMaps[i].DepthMap);
-	}
-
-
-	shaders["s_shadow"].setMat4("view_matrix", viewMatrix);
-	shaders["s_shadow"].setMat4("proj_matrix", projMatrix);
-	shaders["s_shadow"].setVec3("viewPosition", camera.Position);
-
-	// Render the scene normally
-	for(const string modelID : modelSelectableID) {
-
-		// Model matrix (calculates translations, rotations, scale)
-		glm::mat4 modelMatrix = models[modelID].GetModelMatrix();
-	
-		// Set various shader properties
-		shaders["s_shadow"].setMat4("model_matrix", modelMatrix);
-
-		// TODO: Decide where k_diffuse and k_specular live should be (light or model)
-		shaders["s_shadow"].setFloat("k_diffuse", 1.0f);
-		shaders["s_shadow"].setFloat("k_specular", 1.0f);
-
-		// Model shininess
-		shaders["s_shadow"].setFloat("shininess", models[modelID].Shininess);
-
-		// Model textures
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, models[modelID].content.texid);
-
-
-		// Debug option to show triangles
-		if (showWireFrame) {
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Draw lines
-		} else {
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Draw normally
-		}
-
-		models[modelID].content.DrawModel(models[modelID].content.vaoAndEbos, models[modelID].content.model);
-	}
+	content.DrawModel(content.vaoAndEbos, content.model);
 	
 	#if defined(__APPLE__)
 		glCheckError();
@@ -542,17 +370,12 @@ void ui()
 	ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
 	bool *p_open = NULL;
 	if (ImGui::Begin("Info", nullptr, window_flags)) {
-		// ImGui::Text("About: 3D Graphics and Animation 2023/24"); // ImGui::Separator();
+		ImGui::Text("About: 3D Graphics and Animation 2023/24"); // ImGui::Separator();
 		ImGui::Text("Performance: %.3fms/Frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::Text("Pipeline: %s", shaders[models[modelSelectableID[selectedModel]].MshaderID].pipeline.pipe.error?"ERROR":"OK");
+		ImGui::Text("Pipeline: %s", pipeline.pipe.error?"ERROR":"OK");
 		// Camera info
 		ImGui::Text("Camera position: %.3f, %.3d, %.3f", camera.Position.x, camera.Position.y, camera.Position.z);
 		ImGui::Text("Camera front: %.3f, %.3d, %.3f", camera.Front.x, camera.Front.y, camera.Front.z);
-		// Model info
-		ImGui::Text("Selected model ID: %s", modelSelectableID[selectedModel].c_str());
-		ImGui::Text("Position: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Position.x, models[modelSelectableID[selectedModel]].Position.y, models[modelSelectableID[selectedModel]].Position.z);
-		ImGui::Text("Rotation: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Rotation.x, models[modelSelectableID[selectedModel]].Rotation.y, models[modelSelectableID[selectedModel]].Rotation.z);
-		ImGui::Text("Scale: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Scale.x, models[modelSelectableID[selectedModel]].Scale.y, models[modelSelectableID[selectedModel]].Scale.z);
 	}
 	ImGui::End();
 
@@ -577,37 +400,7 @@ void onResizeCallback(GLFWwindow *window, int w, int h)
 }
 
 void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
-{	
-	/*
-		Handle events that we just want 1 per key press
-	*/
-
-	// Model selection
-	if (key == GLFW_KEY_COMMA && action == GLFW_PRESS) {
-		if(selectedModel > 0) {
-			selectedModel--;
-		}
-	}
-
-	if (key == GLFW_KEY_PERIOD && action == GLFW_PRESS) {
-		int numModels = modelSelectableID.size();
-		if(selectedModel < numModels - 1) {
-			selectedModel++;
-		}
-	}
-
-	// Debug polygons on
-	if (keyStatus[GLFW_KEY_Z]) {
-		if (showWireFrame) {
-			showWireFrame = false;
-		} else {
-			showWireFrame = true;
-		}
-	}
-
-	/*
-		General keys
-	*/
+{
 	if (action == GLFW_PRESS)
 		keyStatus[key] = true;
 	else if (action == GLFW_RELEASE)
