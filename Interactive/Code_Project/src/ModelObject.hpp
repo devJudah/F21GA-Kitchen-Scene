@@ -42,6 +42,8 @@ class ModelObject
         // TODO: Add more things here? Make multiple materials for the same object? Or maybe a PBR model?
         float Shininess;
 
+        // Does the object block light
+        bool castShadow = true;
 
         ModelObject();
 

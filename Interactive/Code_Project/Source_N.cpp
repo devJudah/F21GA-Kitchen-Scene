@@ -89,7 +89,7 @@ auto currentTime = 0.0f;							// Framerate
 auto deltaTime = 0.0f;								// time passed
 auto lastTime = 0.0f;								// Used to calculate Frame rate
 
-auto fovy = 45.0f;									// Field of view (y axis)
+auto fovy = 75.0f;									// Field of view (y axis)
 
 CameraController camera;							// Camera
 
@@ -102,6 +102,7 @@ float lastY = 0.0f;									//
 
 Debugger debugger;									// Add one debugger to use for callbacks ( Win64 - openGLDebugCallback() ) or manual calls ( Apple - glCheckError() ) 
 
+bool showWireFrame = false;		// Debug option to show glPolygonMode
 
 // Hold all the models
 map<string, ModelObject> models;
@@ -117,16 +118,12 @@ map<string, ShaderObject> shaders;
 vector<LightObject> lights_s;
 
 // Depth map stuff (used for calculating shows) - https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
-unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024; // Controls the quality of the shadows
+// unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024; // Controls the quality of the shadows
+unsigned int SHADOW_WIDTH = 4096, SHADOW_HEIGHT = 4096;
 
 // Shadow maps - Need one per light we want to create shadows for. NOTE!! Assumes they are in the same order as vector<LightObject> lights;
 vector<ShadowMap> shadowMaps;
 
-
-// Movement test
-float rX = 0.0f;
-float rY = 0.0f;
-float rZ = 0.0f;
 
 
 int main()
@@ -159,7 +156,7 @@ int main()
 		return -1;
 	} 
 
-	glfwSetWindowPos(window, 10, 10); // Place it in top corner for easy debugging.
+	glfwSetWindowPos(window, 50, 50); // Place it in top corner for easy debugging.
 	glfwMakeContextCurrent(window);	  // making the OpenGL context current
 
 	// GLAD: Load OpenGL function pointers - aka update specs to newest versions - plus test for errors.
@@ -199,7 +196,7 @@ int main()
 	#endif
 
 	glfwSwapInterval(1);			 // Ony render when synced (V SYNC) - https://www.tomsguide.com/features/what-is-vsync-and-should-you-turn-it-on-or-off
-	glfwWindowHint(GLFW_SAMPLES, 2); // Multisampling - covered in lectures - https://www.khronos.org/opengl/wiki/Multisampling
+	glfwWindowHint(GLFW_SAMPLES, 4); // Multisampling - covered in lectures - https://www.khronos.org/opengl/wiki/Multisampling
 
 	startup(); // Setup all necessary information for startup (aka. load texture, shaders, models, etc).
 
@@ -298,7 +295,7 @@ void startup()
 						"assets/floor.gltf",
 						glm::vec3(0.0f, 0.0f, 0.0f),
 						glm::vec3(0.0f, 0.0f, 0.0f),
-						glm::vec3(5.0f, 1.0f, 5.0f),
+						glm::vec3(22.0f, 1.0f, 22.0f),
 						"s_shadow"
 						);
 
@@ -308,7 +305,82 @@ void startup()
 	shaders["s_default"].RegisterModel(floor.ModelID);
 	models[floor.ModelID] = floor;
 	modelSelectableID.push_back(floor.ModelID);
+
+	// Wall window
+	ModelObject wall_window = ModelObject(
+								"wall_window", 
+								"assets/wall_window.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.5f, 0.5f, 0.5f),
+								"s_shadow"
+							);
+
+	wall_window.SetMaterialProperties(64);
+	shaders["s_shadow"].RegisterModel(wall_window.ModelID);
+	models[wall_window.ModelID] = wall_window;
+	modelSelectableID.push_back(wall_window.ModelID);
 	
+	// Wall window
+	ModelObject wall_door = ModelObject(
+								"wall_door", 
+								"assets/wall_door.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.5f, 0.5f, 0.5f),
+								"s_shadow"
+							);
+
+	wall_door.SetMaterialProperties(64);
+	shaders["s_shadow"].RegisterModel(wall_door.ModelID);
+	models[wall_door.ModelID] = wall_door;
+	modelSelectableID.push_back(wall_door.ModelID);
+
+	// Wall back
+	ModelObject wall_back = ModelObject(
+								"wall_back", 
+								"assets/wall_back.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.5f, 0.5f, 0.5f),
+								"s_shadow"
+							);
+
+	wall_back.SetMaterialProperties(64);
+	shaders["s_shadow"].RegisterModel(wall_back.ModelID);
+	models[wall_back.ModelID] = wall_back;
+	modelSelectableID.push_back(wall_back.ModelID);
+
+	// Wall front
+	ModelObject wall_front = ModelObject(
+								"wall_front", 
+								"assets/wall_front.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.5f, 0.5f, 0.5f),
+								"s_shadow"
+							);
+
+	wall_front.SetMaterialProperties(64);
+	shaders["s_shadow"].RegisterModel(wall_front.ModelID);
+	models[wall_front.ModelID] = wall_front;
+	modelSelectableID.push_back(wall_front.ModelID);
+
+	// Roof
+	ModelObject roof = ModelObject(
+								"roof", 
+								"assets/roof.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.5f, 0.5f, 0.5f),
+								"s_shadow"
+							);
+
+	roof.SetMaterialProperties(64);
+	shaders["s_shadow"].RegisterModel(roof.ModelID);
+	models[roof.ModelID] = roof;
+	modelSelectableID.push_back(roof.ModelID);
+
 
 
 	// Model - Dog
@@ -316,6 +388,7 @@ void startup()
 						"Dog", 
 						"assets/dog.gltf",
 						glm::vec3(-2.0f, 0.0f, 0.0f),
+						//glm::vec3(25.0f, 12.0f, 3.0f),
 						glm::vec3(0.0f, 0.0f, 0.0f),
 						glm::vec3(1.0f, 1.0f, 1.0f),
 						"s_shadow"
@@ -328,7 +401,7 @@ void startup()
 	modelSelectableID.push_back(obj1.ModelID);
 	// End of dog
 
-
+	/*
 	ModelObject obj2 = ModelObject(
 						"t_tetro", 
 						"assets/t_tetro.gltf",
@@ -359,27 +432,96 @@ void startup()
 	shaders["s_default"].RegisterModel(obj3.ModelID);
 	models[obj3.ModelID] = obj3;
 	modelSelectableID.push_back(obj3.ModelID);
+	*/
+
+
+	// Bottom Cab
+	ModelObject obj_bCab = ModelObject(
+								"bottom_cabinet", 
+								"assets/bottom_cabinet.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.5f, 0.5f, 0.5f),
+								"s_shadow"
+							);
+
+	obj_bCab.SetMaterialProperties(64);
+	shaders["s_shadow"].RegisterModel(obj_bCab.ModelID);
+	models[obj_bCab.ModelID] = obj_bCab;
+	modelSelectableID.push_back(obj_bCab.ModelID);
+
+
+	ModelObject obj_toaster = ModelObject(
+								"toaster", 
+								"assets/toaster.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.5f, 0.5f, 0.5f),
+								"s_shadow"
+							);
+
+	obj_toaster.SetMaterialProperties(64);
+		
+	shaders["s_shadow"].RegisterModel(obj_toaster.ModelID);
+	models[obj_toaster.ModelID] = obj_toaster;
+	modelSelectableID.push_back(obj_toaster.ModelID);
+
+
+	ModelObject obj_toast_1 = ModelObject(
+								"toast_1", 
+								"assets/toast.gltf",
+								glm::vec3(0.170f, 0.700f, 0.025f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.95f, 0.95f, 0.95f),
+								"s_shadow"
+							);
+
+	obj_toast_1.SetMaterialProperties(64);
+
+	shaders["s_shadow"].RegisterModel(obj_toast_1.ModelID);
+	models[obj_toast_1.ModelID] = obj_toast_1;
+	modelSelectableID.push_back(obj_toast_1.ModelID);
+
+
+	ModelObject obj_toast_2 = ModelObject(
+								"toast_2", 
+								"assets/toast.gltf",
+								glm::vec3(-0.170f, 0.700f, 0.025f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.95f, 0.95f, 0.95f),
+								"s_shadow"
+							);
+
+	obj_toast_2.SetMaterialProperties(64);
+
+	shaders["s_shadow"].RegisterModel(obj_toast_2.ModelID);
+	models[obj_toast_2.ModelID] = obj_toast_2;
+	modelSelectableID.push_back(obj_toast_2.ModelID);
 
 
 	/**
 	 * WARNING! Assume that the number of lights in lights_s equals the number of shadows created.
 	*/
 	// Lights
-	LightObject light1 = LightObject(
-								glm::vec3(0.0f, 8.0f, -1.0f),
+	LightObject light_sun = LightObject(
+								glm::vec3(22.0f, 13.0f, 3.0f),
 								glm::vec3(0.0f),
 								glm::vec3(0.0, 1.0, 0.0),
 								1.0f,
-								20.0f,
+								55.0f,
 								true,
 								glm::vec3(0.3),
-								0.9f,
-								1.0f, 0.045f, 0.0075f
+								0.6f,
+								1.0f,  0.007f,  0.0002f
 							);
+	light_sun.orth_left = -20.0f;
+	light_sun.orth_right = 20.0f;
+	light_sun.orth_bottom = -20.0f;
+	light_sun.orth_top = 20.0f;
 
-	lights_s.push_back(light1);
+	lights_s.push_back(light_sun);
 	
-	
+	/*
 	LightObject light2 = LightObject(
 								glm::vec3(0.0f, 8.0f, 5.0f),
 								glm::vec3(0.0f),
@@ -388,20 +530,23 @@ void startup()
 								20.0f,
 								false,
 								glm::vec3(0.3),
-								0.9f,
+								0.3f,
 								1.0f, 0.045f, 0.0075f
 							);
 
 	lights_s.push_back(light2);
+	*/
 
 	// Shadow startup
 	ShadowMap shadow_m_1;
 	shadow_m_1.Initialise(SHADOW_WIDTH, SHADOW_HEIGHT);
 	shadowMaps.push_back(shadow_m_1);
 
+	/*
 	ShadowMap shadow_m_2;
 	shadow_m_2.Initialise(SHADOW_WIDTH, SHADOW_HEIGHT);
 	shadowMaps.push_back(shadow_m_2);
+	*/
 
 	/**
 	 * TODO: Abstract/wrapper this in a nicer way
@@ -420,6 +565,9 @@ void startup()
 	glUniform1iv(glGetUniformLocation(shaders["s_shadow"].pipeline.pipe.program, "shadowMap"), shadowMaps.size(), shadowMap_values);
 
 
+	// Turn multi sampling (Anti-alias) on. Was probably on anyway by default
+	glEnable(GL_MULTISAMPLE);
+
 	// A few optimizations.
 	glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
@@ -436,6 +584,7 @@ void startup()
 	projMatrix = glm::perspective(glm::radians(fovy), aspect, 0.1f, 1000.0f);
 
 	// Camera settings
+	camera.fov_y = fovy;
 	// camera.canFly_Off();	// Stop player moving from the floor
 
 }
@@ -462,6 +611,7 @@ void update()
 	if (keyStatus[GLFW_KEY_Q]) camera.keyPressed(camera_movement::UP, deltaTime);
 	if (keyStatus[GLFW_KEY_E]) camera.keyPressed(camera_movement::DOWN, deltaTime);
 
+	
 	//
 	if (keyStatus[GLFW_KEY_T]) {
 		camera.Position = lights_s[1].lightPosition;
@@ -482,7 +632,8 @@ void render()
 	// Clear colour buffer
 	glm::vec4 grayLilac = glm::vec4(0.831f, 0.792f, 0.803f, 1.0f);
 	glm::vec4 darkGray = glm::vec4(0.05f, 0.05f, 0.05f, 1.0f);
-	glm::vec4 backgroundColor = darkGray;
+	glm::vec4 skyBlue = glm::vec4(0.741f, 0.925f, 1.0f, 1.0f);
+	glm::vec4 backgroundColor = skyBlue;
 	glClearBufferfv(GL_COLOR, 0, &backgroundColor[0]);
 
 	// Clear deep buffer
@@ -515,6 +666,9 @@ void render()
 		shadowMaps[i].SetActive();
 			
 		for(const string modelID : modelSelectableID) {
+			
+			// Skip this model if it does not cast a shadow
+			if(!models[modelID].castShadow) continue;
 
 			// Model matrix (calculates translations, rotations, scale)
 			glm::mat4 modelMatrix = models[modelID].GetModelMatrix();
@@ -533,6 +687,7 @@ void render()
 	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearBufferfv(GL_COLOR, 0, &backgroundColor[0]);
 	glClearBufferfv(GL_DEPTH, 0, &one);
+
 
 	// Setup camera
 	glm::mat4 viewMatrix = camera.GetViewMatrix();
@@ -594,7 +749,11 @@ void render()
 
 
 		// Debug option to show triangles
-		// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		if (showWireFrame) {
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Draw lines
+		} else {
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Draw normally
+		}
 
 		models[modelID].content.DrawModel(models[modelID].content.vaoAndEbos, models[modelID].content.model);
 	}
@@ -636,7 +795,10 @@ void ui()
 		ImGui::Text("Camera position: %.3f, %.3d, %.3f", camera.Position.x, camera.Position.y, camera.Position.z);
 		ImGui::Text("Camera front: %.3f, %.3d, %.3f", camera.Front.x, camera.Front.y, camera.Front.z);
 		// Model info
-		ImGui::Text("Selected model: ID: %s", modelSelectableID[selectedModel].c_str());
+		ImGui::Text("Selected model ID: %s", modelSelectableID[selectedModel].c_str());
+		ImGui::Text("Position: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Position.x, models[modelSelectableID[selectedModel]].Position.y, models[modelSelectableID[selectedModel]].Position.z);
+		ImGui::Text("Rotation: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Rotation.x, models[modelSelectableID[selectedModel]].Rotation.y, models[modelSelectableID[selectedModel]].Rotation.z);
+		ImGui::Text("Scale: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Scale.x, models[modelSelectableID[selectedModel]].Scale.y, models[modelSelectableID[selectedModel]].Scale.z);
 		// Light info
 		//ImGui::Text("Ambient constant: %.3f",  lights_s[0].k_ambient);
 	}
@@ -664,7 +826,11 @@ void onResizeCallback(GLFWwindow *window, int w, int h)
 
 void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {	
-	// Handle events that we just want 1 per key press
+	/*
+		Handle events that we just want 1 per key press
+	*/
+
+	// Model selection
 	if (key == GLFW_KEY_COMMA && action == GLFW_PRESS) {
 		if(selectedModel > 0) {
 			selectedModel--;
@@ -678,7 +844,18 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 		}
 	}
 
-	// General keys
+	// Debug polygons on
+	if (keyStatus[GLFW_KEY_Z]) {
+		if (showWireFrame) {
+			showWireFrame = false;
+		} else {
+			showWireFrame = true;
+		}
+	}
+
+	/*
+		General keys
+	*/
 	if (action == GLFW_PRESS)
 		keyStatus[key] = true;
 	else if (action == GLFW_RELEASE)

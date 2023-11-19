@@ -11,7 +11,7 @@
 out vec4 FragColor;
 
 // This sets the make number of possible lights - should ideally match this to how many lights there are
-const int NUM_LIGHTS = 2;
+const int NUM_LIGHTS = 4;
 
 in VS_OUT {
     vec3 FragPos;
@@ -162,6 +162,10 @@ void main()
 
     // Add total lighting together with colour
     totalLighting *= color;
+
+    // Gamma correction. TODO: Move this into option
+    float gamma = 2.2;
+    totalLighting = pow(totalLighting, vec3(1.0/gamma));
 
     // Final result
     FragColor = vec4(totalLighting, 1.0);
