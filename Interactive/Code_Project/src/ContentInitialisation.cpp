@@ -1,0 +1,232 @@
+#include "ContentInitialisation.hpp"
+
+
+ContentInitialisation::ContentInitialisation() {}
+
+
+void ContentInitialisation::LoadShaders(map<string, ShaderObject> &shaders)
+{
+    // Shadow shader
+	ShaderObject s_shadow = ShaderObject("s_shadow");
+	s_shadow.pipeline.CreatePipeline();
+	s_shadow.pipeline.LoadShaders("shaders/vs_shadow_map.glsl", "shaders/fs_shadow_map.glsl");
+
+	shaders[s_shadow.ShaderID] = s_shadow;
+
+
+	// Simple depth - To generate depth maps for shadows
+	ShaderObject s_simple_depth = ShaderObject("s_simple_depth");
+	s_simple_depth.pipeline.CreatePipeline();
+	s_simple_depth.pipeline.LoadShaders("shaders/vs_simple_depth.glsl", "shaders/fs_simple_depth.glsl");
+
+	shaders[s_simple_depth.ShaderID] = s_simple_depth;
+
+}
+
+void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<string> &modelSelectableID)
+{
+    ModelObject floor = ModelObject(
+						"floor", 
+						"assets/floor.gltf",
+						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(22.0f, 1.0f, 22.0f),
+						"s_shadow"
+						);
+
+	floor.SetMaterialProperties(64);
+
+	models[floor.ModelID] = floor;
+	modelSelectableID.push_back(floor.ModelID);
+
+	// Wall window
+	ModelObject wall_window = ModelObject(
+								"wall_window", 
+								"assets/wall_window.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.5f, 0.5f, 0.5f),
+								"s_shadow"
+							);
+
+	wall_window.SetMaterialProperties(64);
+
+	models[wall_window.ModelID] = wall_window;
+	modelSelectableID.push_back(wall_window.ModelID);
+	
+	// Wall window
+	ModelObject wall_door = ModelObject(
+								"wall_door", 
+								"assets/wall_door.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.5f, 0.5f, 0.5f),
+								"s_shadow"
+							);
+
+	wall_door.SetMaterialProperties(64);
+
+	models[wall_door.ModelID] = wall_door;
+	modelSelectableID.push_back(wall_door.ModelID);
+
+	// Wall back
+	ModelObject wall_back = ModelObject(
+								"wall_back", 
+								"assets/wall_back.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.5f, 0.5f, 0.5f),
+								"s_shadow"
+							);
+
+	wall_back.SetMaterialProperties(64);
+
+	models[wall_back.ModelID] = wall_back;
+	modelSelectableID.push_back(wall_back.ModelID);
+
+	// Wall front
+	ModelObject wall_front = ModelObject(
+								"wall_front", 
+								"assets/wall_front.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.5f, 0.5f, 0.5f),
+								"s_shadow"
+							);
+
+	wall_front.SetMaterialProperties(64);
+
+	models[wall_front.ModelID] = wall_front;
+	modelSelectableID.push_back(wall_front.ModelID);
+
+	// Roof
+	ModelObject roof = ModelObject(
+								"roof", 
+								"assets/roof.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.5f, 0.5f, 0.5f),
+								"s_shadow"
+							);
+
+	roof.SetMaterialProperties(64);
+
+	models[roof.ModelID] = roof;
+	modelSelectableID.push_back(roof.ModelID);
+
+
+
+	// Model - Dog
+	ModelObject obj1 = ModelObject(
+						"Dog", 
+						"assets/dog.gltf",
+						glm::vec3(-2.0f, 0.0f, 0.0f),
+						//glm::vec3(25.0f, 12.0f, 3.0f),
+						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(1.0f, 1.0f, 1.0f),
+						"s_shadow"
+						);
+
+	obj1.SetMaterialProperties(64);
+	// This is really terrible
+	models[obj1.ModelID] = obj1;
+	modelSelectableID.push_back(obj1.ModelID);
+	// End of dog
+
+	// Bottom Cab
+	ModelObject obj_bCab = ModelObject(
+								"bottom_cabinet", 
+								"assets/bottom_cabinet.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.5f, 0.5f, 0.5f),
+								"s_shadow"
+							);
+
+	obj_bCab.SetMaterialProperties(64);
+	models[obj_bCab.ModelID] = obj_bCab;
+	modelSelectableID.push_back(obj_bCab.ModelID);
+
+
+	ModelObject obj_toaster = ModelObject(
+								"toaster", 
+								"assets/toaster.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.5f, 0.5f, 0.5f),
+								"s_shadow"
+							);
+
+	obj_toaster.SetMaterialProperties(64);
+		
+	models[obj_toaster.ModelID] = obj_toaster;
+	modelSelectableID.push_back(obj_toaster.ModelID);
+
+
+	ModelObject obj_toast_1 = ModelObject(
+								"toast_1", 
+								"assets/toast.gltf",
+								glm::vec3(0.170f, 0.700f, 0.025f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.95f, 0.95f, 0.95f),
+								"s_shadow"
+							);
+
+	obj_toast_1.SetMaterialProperties(64);
+
+	models[obj_toast_1.ModelID] = obj_toast_1;
+	modelSelectableID.push_back(obj_toast_1.ModelID);
+
+
+	ModelObject obj_toast_2 = ModelObject(
+								"toast_2", 
+								"assets/toast.gltf",
+								glm::vec3(-0.170f, 0.700f, 0.025f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.95f, 0.95f, 0.95f),
+								"s_shadow"
+							);
+
+	obj_toast_2.SetMaterialProperties(64);
+
+	models[obj_toast_2.ModelID] = obj_toast_2;
+	modelSelectableID.push_back(obj_toast_2.ModelID);
+
+}
+
+void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
+{
+    LightObject light_sun = LightObject(
+								glm::vec3(22.0f, 13.0f, 3.0f),
+								glm::vec3(0.0f),
+								glm::vec3(0.0, 1.0, 0.0),
+								1.0f,
+								55.0f,
+								true,
+								glm::vec3(0.3),
+								0.6f,
+								1.0f,  0.007f,  0.0002f
+							);
+	light_sun.orth_left = -20.0f;
+	light_sun.orth_right = 20.0f;
+	light_sun.orth_bottom = -20.0f;
+	light_sun.orth_top = 20.0f;
+
+	lights_s.push_back(light_sun);
+	
+	/*
+	LightObject light2 = LightObject(
+								glm::vec3(0.0f, 8.0f, 5.0f),
+								glm::vec3(0.0f),
+								glm::vec3(0.0, 1.0, 0.0),
+								1.0f,
+								20.0f,
+								false,
+								glm::vec3(0.3),
+								0.3f,
+								1.0f, 0.045f, 0.0075f
+							);
+
+	lights_s.push_back(light2);
+	*/
+}
