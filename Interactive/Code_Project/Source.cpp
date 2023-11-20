@@ -482,7 +482,11 @@ void render()
 	shaders["s_shadow"].setVec3("viewPosition", camera.Position);
 
 	// Render the scene normally
-	for(const string modelID : modelSelectableID) {
+	//for(const string modelID : modelSelectableID) {
+	for(const auto& [modelID, model_s] : models) {
+
+		// Check if this model should be rendered normally
+		if(models[modelID].renderModel == false) continue;
 
 		// Model matrix (calculates translations, rotations, scale)
 		glm::mat4 modelMatrix = models[modelID].GetModelMatrix();

@@ -25,16 +25,23 @@ void ContentInitialisation::LoadShaders(map<string, ShaderObject> &shaders)
 
 void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<string> &modelSelectableID)
 {
-    // Note that changing this won't change positions
+    // Overall scale factor for items imported directly from kitchen scene.
+	// Note that changing this won't change positions, so those have to be changed individually!
     glm::vec3 gScale = glm::vec3(0.3, 0.3, 0.3);
 
+	/* Syntax for loading an object:
+		Create a ModelObject with ModelObject(unique_id, path_to_asset_gltf, position, rotation, scale, shader to use)
+		Optionally set the material properties with SetMaterialProperties()
+		Add the model to the models dictionary.
+		If the model should be selectable to be rotated/moved, add the ID to modelSelectableID (NOTE: Currently everything is selectable for debugging)
+	*/
 
     ModelObject floor = ModelObject(
 						"floor", 
 						"assets/floor.gltf",
+						glm::vec3(2.0f, 0.0f, 1.3f),
 						glm::vec3(0.0f, 0.0f, 0.0f),
-						glm::vec3(0.0f, 0.0f, 0.0f),
-						glm::vec3(22.0f, 1.0f, 22.0f),
+						glm::vec3(12.0f, 1.0f, 12.0f),
 						"s_shadow"
 						);
 

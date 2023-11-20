@@ -42,8 +42,14 @@ class ModelObject
         // TODO: Add more things here? Make multiple materials for the same object? Or maybe a PBR model?
         float Shininess;
 
+        
         // Does the object block light
         bool castShadow = true;
+
+        // TODO: Should this be a 'turn off' for this object shadows and everything?
+        // Should the object be rendered - note it could still cast a shadow without being rendered?
+        bool renderModel = true;
+        
 
         ModelObject();
 
