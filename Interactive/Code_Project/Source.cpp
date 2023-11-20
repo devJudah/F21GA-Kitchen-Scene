@@ -127,6 +127,10 @@ unsigned int SHADOW_WIDTH = 4096, SHADOW_HEIGHT = 4096;
 vector<ShadowMap> shadowMaps;
 
 
+// How fast objects can be moved around the scene
+float objectMovSpeed = 0.5f;
+
+
 
 int main()
 {
@@ -343,18 +347,20 @@ void startup()
 }
 
 void update()
-{
-	if (keyStatus[GLFW_KEY_LEFT]) models[modelSelectableID[selectedModel]].Rotation.y += 0.05f;
-	if (keyStatus[GLFW_KEY_RIGHT]) models[modelSelectableID[selectedModel]].Rotation.y -= 0.05f;
-	if (keyStatus[GLFW_KEY_UP]) models[modelSelectableID[selectedModel]].Rotation.x += 0.05f;
-	if (keyStatus[GLFW_KEY_DOWN]) models[modelSelectableID[selectedModel]].Rotation.x -= 0.05f;
+{	
+	
 
-	if (keyStatus[GLFW_KEY_Y]) models[modelSelectableID[selectedModel]].Position.y += 0.05f;
-	if (keyStatus[GLFW_KEY_I]) models[modelSelectableID[selectedModel]].Position.y -= 0.05f;
-	if (keyStatus[GLFW_KEY_U]) models[modelSelectableID[selectedModel]].Position.x += 0.05f;
-	if (keyStatus[GLFW_KEY_J]) models[modelSelectableID[selectedModel]].Position.x -= 0.05f;
-	if (keyStatus[GLFW_KEY_H]) models[modelSelectableID[selectedModel]].Position.z += 0.05f;
-	if (keyStatus[GLFW_KEY_K]) models[modelSelectableID[selectedModel]].Position.z -= 0.05f;
+	if (keyStatus[GLFW_KEY_LEFT]) models[modelSelectableID[selectedModel]].Rotation.y += objectMovSpeed * deltaTime;
+	if (keyStatus[GLFW_KEY_RIGHT]) models[modelSelectableID[selectedModel]].Rotation.y -= objectMovSpeed * deltaTime;
+	if (keyStatus[GLFW_KEY_UP]) models[modelSelectableID[selectedModel]].Rotation.x += objectMovSpeed * deltaTime;
+	if (keyStatus[GLFW_KEY_DOWN]) models[modelSelectableID[selectedModel]].Rotation.x -= objectMovSpeed * deltaTime;
+
+	if (keyStatus[GLFW_KEY_Y]) models[modelSelectableID[selectedModel]].Position.y += objectMovSpeed * deltaTime;
+	if (keyStatus[GLFW_KEY_I]) models[modelSelectableID[selectedModel]].Position.y -= objectMovSpeed * deltaTime;
+	if (keyStatus[GLFW_KEY_U]) models[modelSelectableID[selectedModel]].Position.x += objectMovSpeed * deltaTime;
+	if (keyStatus[GLFW_KEY_J]) models[modelSelectableID[selectedModel]].Position.x -= objectMovSpeed * deltaTime;
+	if (keyStatus[GLFW_KEY_H]) models[modelSelectableID[selectedModel]].Position.z += objectMovSpeed * deltaTime;
+	if (keyStatus[GLFW_KEY_K]) models[modelSelectableID[selectedModel]].Position.z -= objectMovSpeed * deltaTime;
 	
 	// Camera movement
 	if (keyStatus[GLFW_KEY_W]) camera.keyPressed(camera_movement::FORWARD, deltaTime);
@@ -444,6 +450,7 @@ void render()
 	shaders["s_shadow"].setInt("num_lights", lights_s.size());
 
 	// Set as many properties as we can before looping through models
+	// TODO: Can this be moved into the above loop? Just doing lights x2 here (ok for small number of lights I imagine)
 	for(int i=0; i < lights_s.size(); i++) {
 
 		glm::mat4 lightProjection = lights_s[i].GetLightProjectionMatrix(shadowMaps[i].ShadowWidth, shadowMaps[i].ShadowHeight);
@@ -541,15 +548,19 @@ void ui()
 		// Camera info
 		ImGui::Text("Camera position: %.3f, %.3d, %.3f", camera.Position.x, camera.Position.y, camera.Position.z);
 		ImGui::Text("Camera front: %.3f, %.3d, %.3f", camera.Front.x, camera.Front.y, camera.Front.z);
+		//
+		ImGui::Separator();
+		ImGui::Text("Object Mov Speed: %.3f", objectMovSpeed);
 		// Model info
 		ImGui::Text("Selected model ID: %s", modelSelectableID[selectedModel].c_str());
 		ImGui::Text("Position: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Position.x, models[modelSelectableID[selectedModel]].Position.y, models[modelSelectableID[selectedModel]].Position.z);
 		ImGui::Text("Rotation: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Rotation.x, models[modelSelectableID[selectedModel]].Rotation.y, models[modelSelectableID[selectedModel]].Rotation.z);
 		ImGui::Text("Scale: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Scale.x, models[modelSelectableID[selectedModel]].Scale.y, models[modelSelectableID[selectedModel]].Scale.z);
 		// Light info
-		ImGui::Text("Light Dir: %.3f, %.3f, %.3f", lights_s[0].lightDirection.x, lights_s[0].lightDirection.y, lights_s[0].lightDirection.z);
-		ImGui::Text("Light FOV: %.3f", lights_s[0].perspective_fov);
-		ImGui::Text("Light near: %.3f Far: %.3f", lights_s[0].near_plane, lights_s[0].far_plane);
+		int lightSelectedDB = 1;
+		ImGui::Text("Light Dir: %.3f, %.3f, %.3f", lights_s[lightSelectedDB].lightDirection.x, lights_s[lightSelectedDB].lightDirection.y, lights_s[lightSelectedDB].lightDirection.z);
+		ImGui::Text("Light FOV: %.3f", lights_s[lightSelectedDB].perspective_fov);
+		ImGui::Text("Light near: %.3f Far: %.3f", lights_s[lightSelectedDB].near_plane, lights_s[lightSelectedDB].far_plane);
 	}
 	ImGui::End();
 
@@ -579,6 +590,18 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 		Handle events that we just want 1 per key press
 	*/
 
+	// Model speed
+	if (key == GLFW_KEY_O && action == GLFW_PRESS) {
+		objectMovSpeed += 0.05;
+	}
+
+	if (key == GLFW_KEY_L && action == GLFW_PRESS) {
+		objectMovSpeed -= 0.05;
+		if(objectMovSpeed < 0) {
+			objectMovSpeed = 0;
+		}
+	}
+
 	// Model selection
 	if (key == GLFW_KEY_COMMA && action == GLFW_PRESS) {
 		if(selectedModel > 0) {
@@ -604,7 +627,7 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 
 	
 	// Light view
-	int lightSelectedDB = 0;
+	int lightSelectedDB = 1;
 	if (key == GLFW_KEY_T && action == GLFW_PRESS) {
 		
 		if(lightViewDebug){ 

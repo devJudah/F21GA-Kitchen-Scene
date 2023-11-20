@@ -131,10 +131,12 @@ void main()
         float diff = max(dot(lightDir, normal), 0.0);
         vec3 diffuse = k_diffuse * diff * lights[i].lightColor;
 
-        // Specular - Use the Blinn-Phong method to improve specular effect - https://learnopengl.com/Advanced-Lighting/Advanced-Lighting
+        // Test if we are on the right side of the object to do a specular highlight
+        // See: https://stackoverflow.com/questions/61166762/opengl-phong-lighting-specular-highlight-is-wrong/61167359#61167359
         vec3 specular = vec3(0.0);
         float NormalDotLightDir = dot(normal, lightDir);
         if (NormalDotLightDir > 0.0) {
+             // Specular - Use the Blinn-Phong method to improve specular effect - https://learnopengl.com/Advanced-Lighting/Advanced-Lighting
             vec3 viewDir = normalize(viewPosition - fs_in.FragPos);
             vec3 halfwayDir = normalize(lightDir + viewDir);  
             float spec = pow(max(dot(normal, halfwayDir), 0.0), shininess);

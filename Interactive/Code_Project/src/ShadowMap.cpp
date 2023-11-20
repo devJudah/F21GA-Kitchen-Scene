@@ -16,7 +16,9 @@ ShadowMap::ShadowMap()
 }
 
 void ShadowMap::Initialise(unsigned int shadowWidth, unsigned int shadowHeight)
-{
+{   
+    // This section of code is from LearnOpenGL - https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
+    
     // Save the width/height for later
     ShadowWidth = shadowWidth;
     ShadowHeight = shadowHeight;

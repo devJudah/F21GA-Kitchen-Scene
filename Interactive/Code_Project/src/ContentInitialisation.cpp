@@ -26,7 +26,8 @@ void ContentInitialisation::LoadShaders(map<string, ShaderObject> &shaders)
 void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<string> &modelSelectableID)
 {
     // Note that changing this won't change positions
-    glm::vec3 gScale = glm::vec3(0.4, 0.4, 0.4);
+    glm::vec3 gScale = glm::vec3(0.3, 0.3, 0.3);
+
 
     ModelObject floor = ModelObject(
 						"floor", 
@@ -134,11 +135,10 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 
 
     // Lights (models, not lights themselves!)
-    /*
     ModelObject ceiling_light_1 = ModelObject(
 								"ceiling_light_1", 
 								"assets/ceiling_light.gltf",
-								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(1.25f, 0.0f, 0.0f),
 								glm::vec3(0.0f, 0.0f, 0.0f),
 								gScale,
 								"s_shadow"
@@ -152,7 +152,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
     ModelObject ceiling_light_bulb_1 = ModelObject(
                                     "ceiling_light_bulb_1", 
                                     "assets/ceiling_light_bulb.gltf",
-                                    glm::vec3(0.0f, 0.0f, 0.0f),
+                                    glm::vec3(1.25f, 0.0f, 0.0f),
                                     glm::vec3(0.0f, 0.0f, 0.0f),
                                     gScale,
                                     "s_shadow"
@@ -163,13 +163,13 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 
 	models[ceiling_light_bulb_1.ModelID] = ceiling_light_bulb_1;
 	modelSelectableID.push_back(ceiling_light_bulb_1.ModelID);
-    */
+    
 
 
     ModelObject ceiling_light_2 = ModelObject(
                                     "ceiling_light_2", 
                                     "assets/ceiling_light.gltf",
-                                    glm::vec3(-6.0f, 0.0f, 0.0f),
+                                    glm::vec3(-4.0f, 0.0f, 0.0f),
                                     glm::vec3(0.0f, 0.0f, 0.0f),
                                     gScale,
                                     "s_shadow"
@@ -183,7 +183,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
     ModelObject ceiling_light_bulb_2 = ModelObject(
                                         "ceiling_light_bulb_2", 
                                         "assets/ceiling_light_bulb.gltf",
-                                        glm::vec3(-6.0f, 0.0f, 0.0f),
+                                        glm::vec3(-4.0f, 0.0f, 0.0f),
                                         glm::vec3(0.0f, 0.0f, 0.0f),
                                         gScale,
                                         "s_shadow"
@@ -228,9 +228,9 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	ModelObject obj_toaster = ModelObject(
 								"toaster", 
 								"assets/toaster.gltf",
-								glm::vec3(0.0f, 0.0f, 0.0f),
-								glm::vec3(0.0f, 0.0f, 0.0f),
-								glm::vec3(0.5f, 0.5f, 0.5f),
+								glm::vec3(-3.4, 1.65, -3.05),
+								glm::vec3(0.0f, 0.1f, 0.0f),
+								glm::vec3(0.21f, 0.21f, 0.21f),
 								"s_shadow"
 							);
 
@@ -243,9 +243,9 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	ModelObject obj_toast_1 = ModelObject(
 								"toast_1", 
 								"assets/toast.gltf",
-								glm::vec3(0.170f, 0.700f, 0.025f),
-								glm::vec3(0.0f, 0.0f, 0.0f),
-								glm::vec3(0.95f, 0.95f, 0.95f),
+								glm::vec3(-3.47, 1.96, -3.03),
+								glm::vec3(0.0f, 0.1f, 0.0f),
+								glm::vec3(0.4f, 0.4f, 0.4f),
 								"s_shadow"
 							);
 
@@ -254,13 +254,12 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	models[obj_toast_1.ModelID] = obj_toast_1;
 	modelSelectableID.push_back(obj_toast_1.ModelID);
 
-
 	ModelObject obj_toast_2 = ModelObject(
 								"toast_2", 
 								"assets/toast.gltf",
-								glm::vec3(-0.170f, 0.700f, 0.025f),
-								glm::vec3(0.0f, 0.0f, 0.0f),
-								glm::vec3(0.95f, 0.95f, 0.95f),
+								glm::vec3(-3.33, 1.96, -3.05),
+								glm::vec3(0.0f, 0.1f, 0.0f),
+								glm::vec3(0.4f, 0.4f, 0.4f),
 								"s_shadow"
 							);
 
@@ -268,13 +267,14 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 
 	models[obj_toast_2.ModelID] = obj_toast_2;
 	modelSelectableID.push_back(obj_toast_2.ModelID);
+	
 
 
     // Kettle
     ModelObject obj_kettle = ModelObject(
 								"kettle", 
 								"assets/kettle.gltf",
-								glm::vec3(-4.5, 2.2, 1.9),
+								glm::vec3(-3.45, 1.65, 1.35),
 								glm::vec3(0.0f, 0.0f, 0.0f),
 								glm::vec3(0.2f, 0.2f, 0.2f),
 								"s_shadow"
@@ -289,7 +289,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	ModelObject obj1 = ModelObject(
 						"Dog", 
 						"assets/dog.gltf",
-						glm::vec3(-2.0f, 0.0f, 0.0f),
+						glm::vec3(0.0f, 0.0f, 0.0f),
 						//glm::vec3(25.0f, 12.0f, 3.0f),
 						glm::vec3(0.0f, 0.0f, 0.0f),
 						glm::vec3(1.0f, 1.0f, 1.0f),
@@ -312,7 +312,7 @@ void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
 								glm::vec3(0.0f),
 								glm::vec3(0.0, 1.0, 0.0),
 								1.0f,
-								50.0f, //55.0f,
+								45.0f, //55.0f,
 								true,
 								glm::vec3(0.3),
 								0.3f,
@@ -327,11 +327,11 @@ void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
 
 
 	LightObject light1 = LightObject(
-								glm::vec3(5.35f, 9.5f, 0.0f),
-								glm::vec3(5.35f, 0.0f, 0.0f),
+								glm::vec3(5.4f, 7.1f, 0.0f),
+								glm::vec3(5.4f, 0.0f, 0.0f),
 								glm::vec3(0.0, 0.0, 1.0),
 								0.5f,
-								100.0f,
+								20.0f, //100.0f,
 								false,
 								glm::vec3(0.3),
 								0.3f,
@@ -342,11 +342,11 @@ void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
 
 
     LightObject light2 = LightObject(
-								glm::vec3(-0.650f, 9.5f, 0.0f),
-								glm::vec3(-0.650f, 0.0f, 0.0f),
+								glm::vec3(-0.65f, 7.1, 0.0f),
+								glm::vec3(-0.65f, 0.0f, 0.0f),
 								glm::vec3(0.0, 0.0, 1.0),
 								0.5f,
-								100.0f,
+								20.0f, //100.0f,
 								false,
 								glm::vec3(0.3),
 								0.3f,
