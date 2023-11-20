@@ -67,6 +67,14 @@ Then the object is exported as a glTF file using the following settings.
 <img src="Readme_Images/models/kettle_export_settings.png" alt="Export settings" height="600"/>
 
 
+### References
+
+- Metallic texture - https://www.youtube.com/watch?v=YRKIAdMYcr0
+
+- Texture baking
+    - https://www.youtube.com/watch?v=Se8GdHptD4A
+    - https://www.youtube.com/watch?v=B2kFeMBBBjc
+
 
 <br /><br />
 
