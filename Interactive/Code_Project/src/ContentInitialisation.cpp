@@ -21,7 +21,21 @@ void ContentInitialisation::LoadShaders(map<string, ShaderObject> &shaders)
 
 	shaders[s_simple_depth.ShaderID] = s_simple_depth;
 
+	// Single colour - For stencil testing outline
+	ShaderObject s_singleColor = ShaderObject("s_singleColor");
+	s_singleColor.pipeline.CreatePipeline();
+	s_singleColor.pipeline.LoadShaders("shaders/vs_stencil.glsl", "shaders/fs_stencil.glsl");
+
+	shaders[s_singleColor.ShaderID] = s_singleColor;
 }
+
+void ContentInitialisation::InitialiseShaders(map<string, ShaderObject> &shaders)
+{
+	//Set single colour shader colour
+	shaders["s_singleColor"].Use();
+	shaders["s_singleColor"].setVec4("singleColor", glm::vec4(0.94, 0.62, 0.373, 1.0));
+}
+
 
 void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<string> &modelSelectableID)
 {
@@ -292,6 +306,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	models[obj_kettle.ModelID] = obj_kettle;
 	modelSelectableID.push_back(obj_kettle.ModelID);
 
+
     // Model - Dog
 	ModelObject obj1 = ModelObject(
 						"Dog", 
@@ -308,6 +323,8 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	models[obj1.ModelID] = obj1;
 	modelSelectableID.push_back(obj1.ModelID);
 	// End of dog
+
+
 
 }
 
@@ -349,8 +366,8 @@ void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
 
 
     LightObject light2 = LightObject(
-								glm::vec3(-0.65f, 7.1, 0.0f),
-								glm::vec3(-0.65f, 0.0f, 0.0f),
+								glm::vec3(0.03f, 7.1, 0.0f),
+								glm::vec3(0.03f, 0.0f, 0.0f),
 								glm::vec3(0.0, 0.0, 1.0),
 								0.5f,
 								20.0f, //100.0f,

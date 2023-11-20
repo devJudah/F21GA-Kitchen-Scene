@@ -17,6 +17,9 @@ class ContentInitialisation
         // Load shaders into &shaders
         void LoadShaders(map<string, ShaderObject> &shaders);
 
+        // Set any default shader values
+        void InitialiseShaders(map<string, ShaderObject> &shaders);
+
         // Load models into &models and &modelSelectableID
         void LoadModels(map<string, ModelObject> &models, vector<string> &modelSelectableID);
         

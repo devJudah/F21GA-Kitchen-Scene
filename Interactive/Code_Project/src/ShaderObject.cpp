@@ -28,6 +28,11 @@ void ShaderObject::setVec3(string name, glm::vec3 value)
     glUniform3fv(glGetUniformLocation(pipeline.pipe.program, name.c_str()), 1, &value[0]);
 }
 
+void ShaderObject::setVec4(string name, glm::vec4 value)
+{
+    glUniform4fv(glGetUniformLocation(pipeline.pipe.program, name.c_str()), 1, &value[0]);
+}
+
 void ShaderObject::setMat4(string name, glm::mat4 value)
 {
     glUniformMatrix4fv(glGetUniformLocation(pipeline.pipe.program, name.c_str()), 1, GL_FALSE, &value[0][0]);

@@ -113,6 +113,10 @@ map<string, ModelObject> models;
 vector<string> modelSelectableID;
 int selectedModel = 0;
 
+// Border scale factor (how big the border around selected objects should be)
+bool showModelHighlight = false;
+float highLightBorderScaleFactor = 1.2f;
+
 // vector<ShaderObject> shaders;
 map<string, ShaderObject> shaders;
 
@@ -129,6 +133,7 @@ vector<ShadowMap> shadowMaps;
 
 // How fast objects can be moved around the scene
 float objectMovSpeed = 0.5f;
+
 
 
 
@@ -279,6 +284,9 @@ void startup()
 
 	// Create and load shader info
 	contentInit.LoadShaders(shaders);
+
+	// Initialise any shaders that have some basic values
+	contentInit.InitialiseShaders(shaders);
 	
 	// Models
 	contentInit.LoadModels(models, modelSelectableID);
@@ -332,6 +340,12 @@ void startup()
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
+
+	// Stencil test enabled - For object outlining. See: https://learnopengl.com/Advanced-OpenGL/Stencil-testing
+	glEnable(GL_STENCIL_TEST);
+	// Sets what to do when the stencil test fails (stencil test fails, stencil test passes BUT depth test failed, both pass)
+	// Want to replace values only when both pass
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE); 
 
 	// Get the correct size in pixels - E.g. if retina display or monitor scaling
 	glfwGetFramebufferSize(window, &windowWidth, &windowHeight);
@@ -387,16 +401,21 @@ void render()
 	glm::vec4 darkGray = glm::vec4(0.05f, 0.05f, 0.05f, 1.0f);
 	glm::vec4 skyBlue = glm::vec4(0.741f, 0.925f, 1.0f, 1.0f);
 	glm::vec4 backgroundColor = skyBlue;
+
+	/*
 	glClearBufferfv(GL_COLOR, 0, &backgroundColor[0]);
 
 	// Clear deep buffer
 	static const GLfloat one = 1.0f;
 	glClearBufferfv(GL_DEPTH, 0, &one);
+	*/
 
 	// Alternative way to clear buffer. From https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
 	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	//glClearColor(0.831f, 0.792f, 0.803f, 1.0f);
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.741f, 0.925f, 1.0f, 1.0f);
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	// Enable blend
 	glEnable(GL_BLEND);
@@ -437,9 +456,10 @@ void render()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	
 	glViewport(0, 0, windowWidth, windowHeight);
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearBufferfv(GL_COLOR, 0, &backgroundColor[0]);
-	glClearBufferfv(GL_DEPTH, 0, &one);
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	//glClearBufferfv(GL_COLOR, 0, &backgroundColor[0]);
+	//glClearBufferfv(GL_DEPTH, 0, &one);
 
 
 	// Setup camera
@@ -488,6 +508,15 @@ void render()
 		// Check if this model should be rendered normally
 		if(models[modelID].renderModel == false) continue;
 
+		// Check if we need to set the stencil mask for this object
+		if(modelID == modelSelectableID[selectedModel]) {
+			glStencilFunc(GL_ALWAYS, 1, 0xFF);
+			glStencilMask(0xFF); // If this is the model we want, we write to the stencil buffer
+		} else {
+			glStencilFunc(GL_ALWAYS, 0, 0xFF);
+			glStencilMask(0x00); // Otherwise don't write
+		}
+
 		// Model matrix (calculates translations, rotations, scale)
 		glm::mat4 modelMatrix = models[modelID].GetModelMatrix();
 	
@@ -513,7 +542,46 @@ void render()
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Draw normally
 		}
 
+		// Draw item
 		models[modelID].content.DrawModel(models[modelID].content.vaoAndEbos, models[modelID].content.model);
+	}
+
+	// Outline around object
+	// See https://learnopengl.com/Advanced-OpenGL/Stencil-testing for details
+	if (showModelHighlight) {
+
+		// Stencil test draw the outline of the object (last so it's on top of everything)
+		string stencilmodelID = modelSelectableID[selectedModel];
+
+		// Disable stencil and depth test for this draw
+		glStencilFunc(GL_NOTEQUAL, 1, 0xFF); 
+		glStencilMask(0x00);
+		glDisable(GL_DEPTH_TEST);
+
+		// Pick single colour shader and send data
+		shaders["s_singleColor"].Use();
+		shaders["s_singleColor"].setMat4("view_matrix", viewMatrix);
+		shaders["s_singleColor"].setMat4("proj_matrix", projMatrix);
+
+		// Save the objects scale
+		vec3 objScale = models[stencilmodelID].Scale;
+		// Scale object to be a bit bigger
+		models[stencilmodelID].Scale *= highLightBorderScaleFactor;
+
+		// Recalc model matrix now we've scaled it
+		mat4 modelMatrix = models[stencilmodelID].GetModelMatrix();
+		shaders["s_singleColor"].setMat4("model_matrix", modelMatrix);
+
+		// Draw model outline
+		models[stencilmodelID].content.DrawModel(models[stencilmodelID].content.vaoAndEbos, models[stencilmodelID].content.model);
+
+		// Reset stuff back to normal
+		models[stencilmodelID].Scale = objScale;
+		glStencilMask(0xFF);
+		glStencilFunc(GL_ALWAYS, 0, 0xFF);
+		glEnable(GL_DEPTH_TEST);
+		shaders["s_shadow"].Use();
+		// 
 	}
 	
 	#if defined(__APPLE__)
@@ -620,6 +688,15 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 		}
 	}
 
+	// Model highlight
+	if (key == GLFW_KEY_T && action == GLFW_PRESS) {
+		if (showModelHighlight) {
+			showModelHighlight = false;
+		} else {
+			showModelHighlight = true;
+		}
+	}
+
 	// Debug polygons on
 	if (key == GLFW_KEY_Z && action == GLFW_PRESS) {
 		if (showWireFrame) {
@@ -629,7 +706,7 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 		}
 	}
 
-	
+	/* Light debug
 	// Light view
 	int lightSelectedDB = 1;
 	if (key == GLFW_KEY_T && action == GLFW_PRESS) {
@@ -690,7 +767,7 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 	if (key == GLFW_KEY_B && action == GLFW_PRESS) {
 		lights_s[lightSelectedDB].far_plane++;
 	}
-
+	*/
 
 	/*
 		General keys
