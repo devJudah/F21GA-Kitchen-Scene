@@ -1,3 +1,10 @@
+/**
+ * Properties of lights
+ * 
+ * Has the various properties for perspective and orthographic lights
+ * 
+*/
+
 #include "LightObject.hpp"
 
 
