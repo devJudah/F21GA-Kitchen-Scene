@@ -22,6 +22,15 @@ class ModelObject
 {
     public:
 
+        enum MovDir {
+            FORWARD,
+            BACKWARD,
+            LEFT,
+            RIGHT,
+            UP,
+            DOWN
+        };
+
         // Should some of these be private with getters/setters?
 
         // ModelID - This should be unique! (no checks to make sure of this yet...)
@@ -70,6 +79,8 @@ class ModelObject
         glm::mat4 GetModelMatrix();
 
         void SetMaterialProperties(float shininess);
+
+        void Move(MovDir direction, float velocity, glm::vec3 front, glm::vec3 up);
 
 
     private:

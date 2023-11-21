@@ -16,15 +16,7 @@
 using namespace glm;
 
 
-// Possible movement options for camera
-enum camera_movement {
-	FORWARD,
-	BACKWARD,
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN
-};
+
 
 // Default values
 const float MOVEMENT_SPEED = 3.0f;   // How fast the camera moves left, right, forward, back
@@ -41,6 +33,16 @@ const float DEFAULT_CAMERA_HEIGHT = 1.0f;	// How high the camera is when it's lo
 class CameraController
 {
   public:
+	// Possible movement options for camera
+	enum camera_movement {
+		FORWARD,
+		BACKWARD,
+		LEFT,
+		RIGHT,
+		UP,
+		DOWN
+	};
+
 	// Basic camera variables
 	vec3 Position;
 	vec3 Front;

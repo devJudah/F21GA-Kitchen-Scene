@@ -384,20 +384,42 @@ void update()
 	if (keyStatus[GLFW_KEY_UP]) models[modelSelectableID[selectedModel]].Rotation.x += objectMovSpeed * deltaTime;
 	if (keyStatus[GLFW_KEY_DOWN]) models[modelSelectableID[selectedModel]].Rotation.x -= objectMovSpeed * deltaTime;
 
+	/*
 	if (keyStatus[GLFW_KEY_Y]) models[modelSelectableID[selectedModel]].Position.y += objectMovSpeed * deltaTime;
 	if (keyStatus[GLFW_KEY_I]) models[modelSelectableID[selectedModel]].Position.y -= objectMovSpeed * deltaTime;
-	if (keyStatus[GLFW_KEY_U]) models[modelSelectableID[selectedModel]].Position.x += objectMovSpeed * deltaTime;
-	if (keyStatus[GLFW_KEY_J]) models[modelSelectableID[selectedModel]].Position.x -= objectMovSpeed * deltaTime;
-	if (keyStatus[GLFW_KEY_H]) models[modelSelectableID[selectedModel]].Position.z += objectMovSpeed * deltaTime;
-	if (keyStatus[GLFW_KEY_K]) models[modelSelectableID[selectedModel]].Position.z -= objectMovSpeed * deltaTime;
+
+	if (keyStatus[GLFW_KEY_U]) {
+		// There's probably a better maths way to do this
+		float yPos = models[modelSelectableID[selectedModel]].Position.y;
+		models[modelSelectableID[selectedModel]].Position += (objectMovSpeed * deltaTime) * camera.Front;
+		models[modelSelectableID[selectedModel]].Position.y = yPos;
+	}
+	if (keyStatus[GLFW_KEY_J]) {
+		float yPos = models[modelSelectableID[selectedModel]].Position.y;
+		models[modelSelectableID[selectedModel]].Position -= (objectMovSpeed * deltaTime) * camera.Front;
+		models[modelSelectableID[selectedModel]].Position.y = yPos;
+	}
+	if (keyStatus[GLFW_KEY_H])  {
+		models[modelSelectableID[selectedModel]].Position -= (objectMovSpeed * deltaTime) * normalize(glm::cross(camera.Front, camera.Up));
+	} 
+	if (keyStatus[GLFW_KEY_K]) {
+		models[modelSelectableID[selectedModel]].Position += (objectMovSpeed * deltaTime) * normalize(glm::cross(camera.Front, camera.Up));
+	}
+	*/
+	if (keyStatus[GLFW_KEY_Y]) models[modelSelectableID[selectedModel]].Move(ModelObject::DOWN, objectMovSpeed * deltaTime, camera.Front, camera.Up);
+	if (keyStatus[GLFW_KEY_I]) models[modelSelectableID[selectedModel]].Move(ModelObject::UP, objectMovSpeed * deltaTime, camera.Front, camera.Up);
+	if (keyStatus[GLFW_KEY_U]) models[modelSelectableID[selectedModel]].Move(ModelObject::FORWARD, objectMovSpeed * deltaTime, camera.Front, camera.Up);
+	if (keyStatus[GLFW_KEY_J]) models[modelSelectableID[selectedModel]].Move(ModelObject::BACKWARD, objectMovSpeed * deltaTime, camera.Front, camera.Up);
+	if (keyStatus[GLFW_KEY_H]) models[modelSelectableID[selectedModel]].Move(ModelObject::LEFT, objectMovSpeed * deltaTime, camera.Front, camera.Up);
+	if (keyStatus[GLFW_KEY_K]) models[modelSelectableID[selectedModel]].Move(ModelObject::RIGHT, objectMovSpeed * deltaTime, camera.Front, camera.Up);
 	
 	// Camera movement
-	if (keyStatus[GLFW_KEY_W]) camera.keyPressed(camera_movement::FORWARD, deltaTime);
-	if (keyStatus[GLFW_KEY_S]) camera.keyPressed(camera_movement::BACKWARD, deltaTime);
-	if (keyStatus[GLFW_KEY_A]) camera.keyPressed(camera_movement::LEFT, deltaTime);
-	if (keyStatus[GLFW_KEY_D]) camera.keyPressed(camera_movement::RIGHT, deltaTime);
-	if (keyStatus[GLFW_KEY_Q]) camera.keyPressed(camera_movement::UP, deltaTime);
-	if (keyStatus[GLFW_KEY_E]) camera.keyPressed(camera_movement::DOWN, deltaTime);
+	if (keyStatus[GLFW_KEY_W]) camera.keyPressed(CameraController::FORWARD, deltaTime);
+	if (keyStatus[GLFW_KEY_S]) camera.keyPressed(CameraController::BACKWARD, deltaTime);
+	if (keyStatus[GLFW_KEY_A]) camera.keyPressed(CameraController::LEFT, deltaTime);
+	if (keyStatus[GLFW_KEY_D]) camera.keyPressed(CameraController::RIGHT, deltaTime);
+	if (keyStatus[GLFW_KEY_Q]) camera.keyPressed(CameraController::UP, deltaTime);
+	if (keyStatus[GLFW_KEY_E]) camera.keyPressed(CameraController::DOWN, deltaTime);
 
 	if (keyStatus[GLFW_KEY_R]) {
 		if(!toastPop1.isRunning()) {

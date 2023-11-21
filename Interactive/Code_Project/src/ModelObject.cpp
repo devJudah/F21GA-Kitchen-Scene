@@ -46,3 +46,32 @@ void ModelObject::SetMaterialProperties(float shininess)
 {
     Shininess = shininess;
 }
+
+// Move object in direction. Based on front and up (assumed normalised)
+void ModelObject::Move(MovDir direction, float velocity, glm::vec3 front, glm::vec3 up)
+{
+    if(direction == MovDir::FORWARD) {
+        // There's probably a better maths way to do this
+		float yPos = Position.y;
+		Position += velocity * front;
+		Position.y = yPos;
+    }
+    if(direction == MovDir::BACKWARD) {
+        // There's probably a better maths way to do this
+		float yPos = Position.y;
+		Position -= velocity * front;
+		Position.y = yPos;
+    }
+    if(direction == MovDir::LEFT) {
+		Position -= velocity * glm::normalize(glm::cross(front, up));
+    }
+    if(direction == MovDir::RIGHT) {
+		Position += velocity * glm::normalize(glm::cross(front, up));
+    }
+    if(direction == MovDir::UP) {
+		Position += velocity * up;
+    }
+    if(direction == MovDir::DOWN) {
+		Position -= velocity * up;
+    }
+}
