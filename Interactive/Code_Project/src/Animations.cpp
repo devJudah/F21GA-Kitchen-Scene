@@ -45,17 +45,23 @@ bool ToastPop::isRunning()
     return animationRunning;
 }
 
-
-bool ToastPop::Tick(ModelObject &toast, float deltaTime)
-{   
+void ToastPop::Start(ModelObject &toast)
+{
     // If the animation isn't running, start it
     if (!animationRunning) 
     {
-        animationRunning = true;
+        this->animationRunning = true;
         this->currentPosition = startPosition;
         this->currentRotation = startRotation;
     }
+}
 
+bool ToastPop::Tick(ModelObject &toast, float deltaTime)
+{   
+    if (!animationRunning) {
+        return animationRunning;
+    }
+    
     // Move the toast
     t += animationSpeed * deltaTime;
 

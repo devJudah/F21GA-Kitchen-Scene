@@ -50,6 +50,7 @@ using namespace glm;
 // Main fuctions
 void startup();
 void update();
+void animations();
 void render();
 void ui();
 void endProgram();
@@ -375,7 +376,7 @@ void startup()
 void update()
 {	
 	
-
+	// Key press updates
 	if (keyStatus[GLFW_KEY_LEFT]) models[modelSelectableID[selectedModel]].Rotation.y += objectMovSpeed * deltaTime;
 	if (keyStatus[GLFW_KEY_RIGHT]) models[modelSelectableID[selectedModel]].Rotation.y -= objectMovSpeed * deltaTime;
 	if (keyStatus[GLFW_KEY_UP]) models[modelSelectableID[selectedModel]].Rotation.x += objectMovSpeed * deltaTime;
@@ -398,21 +399,31 @@ void update()
 
 	if (keyStatus[GLFW_KEY_R]) {
 		if(!toastPop1.isRunning()) {
-			toastPop1.Tick(models["toast_1"], deltaTime);
-			toastPop2.Tick(models["toast_2"], deltaTime);
+			toastPop1.Start(models["toast_1"]);
+			toastPop2.Start(models["toast_2"]);
+			//toastPop1.Tick(models["toast_1"], deltaTime);
+			//toastPop2.Tick(models["toast_2"], deltaTime);
 		}
 	}
 
-	// Animation update
-	if (toastPop1.isRunning()) {
-		toastPop1.Tick(models["toast_1"], deltaTime);
-		toastPop2.Tick(models["toast_2"], deltaTime);
-	}
+	// Update any animations
+	animations();
 
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
+}
+
+void animations()
+{
+	// Process any animations
+
+	// Toast animation update - Assume 1 and 2 are both being run
+	if (toastPop1.isRunning()) {
+		toastPop1.Tick(models["toast_1"], deltaTime);
+		toastPop2.Tick(models["toast_2"], deltaTime);
+	}
 }
 
 void render()
@@ -519,10 +530,17 @@ void render()
 		glBindTexture(GL_TEXTURE_2D, shadowMaps[i].DepthMap);
 	}
 
-
+	// Shadow shader
+	shaders["s_shadow"].Use();
 	shaders["s_shadow"].setMat4("view_matrix", viewMatrix);
 	shaders["s_shadow"].setMat4("proj_matrix", projMatrix);
 	shaders["s_shadow"].setVec3("viewPosition", camera.Position);
+
+	// Light source shader
+	shaders["s_lightSource"].Use();
+	shaders["s_lightSource"].setMat4("view_matrix", viewMatrix);
+	shaders["s_lightSource"].setMat4("proj_matrix", projMatrix);
+	shaders["s_lightSource"].setFloat("brightness", 2.0); // TODO: Set brightness elsewhere / per object?
 
 	// Render the scene normally
 	//for(const string modelID : modelSelectableID) {
@@ -530,6 +548,9 @@ void render()
 
 		// Check if this model should be rendered normally
 		if(models[modelID].renderModel == false) continue;
+
+		// Set the current model shader to active
+		shaders[models[modelID].MshaderID].Use();
 
 		// Check if we need to set the stencil mask for this object
 		if(modelID == modelSelectableID[selectedModel]) {
@@ -542,16 +563,24 @@ void render()
 
 		// Model matrix (calculates translations, rotations, scale)
 		glm::mat4 modelMatrix = models[modelID].GetModelMatrix();
-	
-		// Set various shader properties
-		shaders["s_shadow"].setMat4("model_matrix", modelMatrix);
 
-		// TODO: Decide where k_diffuse and k_specular live should be (light or model)
-		shaders["s_shadow"].setFloat("k_diffuse", 1.0f);
-		shaders["s_shadow"].setFloat("k_specular", 1.0f);
+		// Check which shader we're currently using
+		// TODO: Think of a better way to handle different shaders
+		if (models[modelID].MshaderID == "s_shadow") {
+			// Set various shader properties
+			shaders["s_shadow"].setMat4("model_matrix", modelMatrix);
 
-		// Model shininess
-		shaders["s_shadow"].setFloat("shininess", models[modelID].Shininess);
+			// TODO: Decide where k_diffuse and k_specular live should be (light or model)
+			shaders["s_shadow"].setFloat("k_diffuse", 1.0f);
+			shaders["s_shadow"].setFloat("k_specular", 1.0f);
+
+			// Model shininess
+			shaders["s_shadow"].setFloat("shininess", models[modelID].Shininess);
+		}
+		else if(models[modelID].MshaderID == "s_lightSource") {
+			shaders["s_lightSource"].setMat4("model_matrix", modelMatrix);
+		}
+		
 
 		// Model textures
 		glActiveTexture(GL_TEXTURE0);
@@ -568,6 +597,7 @@ void render()
 		// Draw item
 		models[modelID].content.DrawModel(models[modelID].content.vaoAndEbos, models[modelID].content.model);
 	}
+
 
 	// Outline around object
 	// See https://learnopengl.com/Advanced-OpenGL/Stencil-testing for details
@@ -652,10 +682,13 @@ void ui()
 		ImGui::Text("Rotation: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Rotation.x, models[modelSelectableID[selectedModel]].Rotation.y, models[modelSelectableID[selectedModel]].Rotation.z);
 		ImGui::Text("Scale: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Scale.x, models[modelSelectableID[selectedModel]].Scale.y, models[modelSelectableID[selectedModel]].Scale.z);
 		// Light info
+		/*
 		int lightSelectedDB = 1;
 		ImGui::Text("Light Dir: %.3f, %.3f, %.3f", lights_s[lightSelectedDB].lightDirection.x, lights_s[lightSelectedDB].lightDirection.y, lights_s[lightSelectedDB].lightDirection.z);
 		ImGui::Text("Light FOV: %.3f", lights_s[lightSelectedDB].perspective_fov);
+		//ImGui::Text("Orths (BL, BR, B, T): %.3f, %.3f, %.3f, %.3f", lights_s[lightSelectedDB].orth_left, lights_s[lightSelectedDB].orth_right, lights_s[lightSelectedDB].orth_bottom, lights_s[lightSelectedDB].orth_top);
 		ImGui::Text("Light near: %.3f Far: %.3f", lights_s[lightSelectedDB].near_plane, lights_s[lightSelectedDB].far_plane);
+		*/
 	}
 	ImGui::End();
 
@@ -729,10 +762,13 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 		}
 	}
 
-	/* Light debug
+	// Light debug
+	/*
 	// Light view
 	int lightSelectedDB = 1;
-	if (key == GLFW_KEY_T && action == GLFW_PRESS) {
+
+	
+	if (key == GLFW_KEY_G && action == GLFW_PRESS) {
 		
 		if(lightViewDebug){ 
 			lightViewDebug = false;
@@ -747,10 +783,10 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 			camera.Up = lights_s[lightSelectedDB].lightUp;
 			projMatrix = glm::perspective(glm::radians(lights_s[lightSelectedDB].perspective_fov), (GLfloat) SHADOW_WIDTH / (GLfloat) SHADOW_HEIGHT, lights_s[lightSelectedDB].near_plane, lights_s[lightSelectedDB].far_plane);
 		}
-		
 	}
+	
 
-
+	
 	if (key == GLFW_KEY_1 && action == GLFW_PRESS) {
 		lights_s[lightSelectedDB].lightDirection.x--;
 	}
@@ -769,7 +805,36 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 	if (key == GLFW_KEY_6 && action == GLFW_PRESS) {
 		lights_s[lightSelectedDB].lightDirection.z++;
 	}
+	*/
 
+	/*
+	if (key == GLFW_KEY_1 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].orth_left--;
+	}
+	if (key == GLFW_KEY_2 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].orth_left++;
+	}
+	if (key == GLFW_KEY_3 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].orth_right--;
+	}
+	if (key == GLFW_KEY_4 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].orth_right++;
+	}
+	if (key == GLFW_KEY_5 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].orth_bottom--;
+	}
+	if (key == GLFW_KEY_6 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].orth_bottom++;
+	}
+	if (key == GLFW_KEY_7 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].orth_top--;
+	}
+	if (key == GLFW_KEY_8 && action == GLFW_PRESS) {
+		lights_s[lightSelectedDB].orth_top++;
+	}
+	*/
+
+	/*
 	if (key == GLFW_KEY_7 && action == GLFW_PRESS) {
 		lights_s[lightSelectedDB].perspective_fov--;
 	}

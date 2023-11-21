@@ -40,6 +40,8 @@ class ToastPop
 
         bool isRunning();
 
+        void Start(ModelObject &toast);
+
         bool Tick(ModelObject &toast, float deltaTime);
 
 

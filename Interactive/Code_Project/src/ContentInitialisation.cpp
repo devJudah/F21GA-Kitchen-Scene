@@ -27,6 +27,13 @@ void ContentInitialisation::LoadShaders(map<string, ShaderObject> &shaders)
 	s_singleColor.pipeline.LoadShaders("shaders/vs_stencil.glsl", "shaders/fs_stencil.glsl");
 
 	shaders[s_singleColor.ShaderID] = s_singleColor;
+
+	// Basic light bulb / lit object texture
+	ShaderObject s_lightSource = ShaderObject("s_lightSource");
+	s_lightSource.pipeline.CreatePipeline();
+	s_lightSource.pipeline.LoadShaders("shaders/vs_light_basic.glsl", "shaders/fs_light_basic.glsl");
+
+	shaders[s_lightSource.ShaderID] = s_lightSource;
 }
 
 void ContentInitialisation::InitialiseShaders(map<string, ShaderObject> &shaders)
@@ -176,7 +183,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
                                     glm::vec3(1.25f, 0.0f, 0.0f),
                                     glm::vec3(0.0f, 0.0f, 0.0f),
                                     gScale,
-                                    "s_shadow"
+                                    "s_lightSource"
 							    );
 
 	ceiling_light_bulb_1.SetMaterialProperties(64);
@@ -185,7 +192,6 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	models[ceiling_light_bulb_1.ModelID] = ceiling_light_bulb_1;
 	modelSelectableID.push_back(ceiling_light_bulb_1.ModelID);
     
-
 
     ModelObject ceiling_light_2 = ModelObject(
                                     "ceiling_light_2", 
@@ -207,7 +213,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
                                         glm::vec3(-4.0f, 0.0f, 0.0f),
                                         glm::vec3(0.0f, 0.0f, 0.0f),
                                         gScale,
-                                        "s_shadow"
+                                        "s_lightSource"
                                     );
 
 	ceiling_light_bulb_2.SetMaterialProperties(64);
@@ -215,6 +221,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 
 	models[ceiling_light_bulb_2.ModelID] = ceiling_light_bulb_2;
 	modelSelectableID.push_back(ceiling_light_bulb_2.ModelID);
+
 
 	// Bottom Cab
 	ModelObject obj_bCab = ModelObject(
@@ -336,6 +343,23 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	modelSelectableID.push_back(obj_kettle.ModelID);
 
 
+	/*
+	ModelObject obj_upperCab = ModelObject(
+								"upper_cabinet", 
+								"assets/Kitchen.gltf",
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(0.2f, 0.2f, 0.2f),
+								"s_shadow"
+							);
+
+	obj_upperCab.SetMaterialProperties(64);
+		
+	models[obj_upperCab.ModelID] = obj_upperCab;
+	modelSelectableID.push_back(obj_upperCab.ModelID);
+	*/
+
+
     // Model - Dog
 	ModelObject obj1 = ModelObject(
 						"Dog", 
@@ -364,17 +388,21 @@ void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
 								glm::vec3(22.0f, 13.0f, 3.0f),
 								glm::vec3(0.0f),
 								glm::vec3(0.0, 1.0, 0.0),
-								1.0f,
-								45.0f, //55.0f,
+								5.0f,
+								35.0f, // 45.0f, //55.0f,
 								true,
 								glm::vec3(0.3),
 								0.3f,
 								1.0f, 0.007f, 0.0002f
 							);
-	light_sun.orth_left = -20.0f;
-	light_sun.orth_right = 20.0f;
-	light_sun.orth_bottom = -20.0f;
-	light_sun.orth_top = 20.0f;
+	// light_sun.orth_left = -20.0f;
+	// light_sun.orth_right = 20.0f;
+	// light_sun.orth_bottom = -20.0f;
+	// light_sun.orth_top = 20.0f;
+	light_sun.orth_left = -15.0f;
+	light_sun.orth_right = 10.0f;
+	light_sun.orth_bottom = -10.0f;
+	light_sun.orth_top = 15.0f;
 
 	lights_s.push_back(light_sun);
 
