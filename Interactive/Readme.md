@@ -21,6 +21,10 @@
     - [Keyboard](#keyboard)
     - [UI](#ui)
 
+- [Animations](#animations)
+
+    - [Toast Popping](#toast-popping)
+
 - [References](#references)
 
 
@@ -29,11 +33,17 @@
 
 The basic steps to import most of the models are as follows.
 
-First, if any parts of a model are very thin or made out of a plane, they are solidified to avoid issues with culling.
+First, if there are any overlapping faces that may result in "Z-fighting", they are reduced to one face. Then, if there is any complex geometry, particularly geometry that is not triangles or quads, a triangle modifier is applied.
+
+<img src="Readme_Images/models/toaster_geo_tri_1.png" alt="Complex materials" width="400"/> <img src="Readme_Images/models/toaster_geo_tri_2.png" alt="Complex materials" width="400"/>
+
+Next, if any parts of a model are very thin or made out of a plane, they are solidified to avoid issues with culling.
 
 <img src="Readme_Images/models/model_solidify.png" alt="Solifiy" height="400"/>
 
-Next, since the light model used ([Phong lighting model](#phong-lighting-model)) does not support the complex material types possible in blender, any complex materials are made into a more simple version.
+If a model had issues that could not be resolved then they were partially remade with more straight forward geometry. For example, the lower cabinets. Any additional models can be found in `Interactive/Additional_blender_models/`.
+
+Then, since the light model used ([Phong lighting model](#phong-lighting-model)) does not support the complex material types possible in blender, any complex materials are made into a more simple version.
 
 <img src="Readme_Images/models/materials_1.png" alt="Complex materials" width="1000"/>
 
@@ -49,7 +59,7 @@ Then the model is UV unwrapped to this texture, and any overlapping parts are fi
 
 <img src="Readme_Images/models/materials_4_uv_unwrap.png" alt="Texture bake 2" width="800"/>
 
-Then the texture is baked, without the overall lighting
+Next the texture is baked, without the overall lighting
 
 <img src="Readme_Images/models/materials_5_texture_bake.png" alt="Texture bake 3" height="400"/>
 
@@ -91,19 +101,48 @@ Model placement, light placement?
 
 ### Phong lighting model
 
+
+#### References
+- _Advanced Lighting - Blinn-Phong_ from LearnOpenGL by Joey de Vries -  https://learnopengl.com/Advanced-Lighting/Advanced-Lighting
+- Specular highlight fix - https://stackoverflow.com/questions/61166762/opengl-phong-lighting-specular-highlight-is-wrong/61167359#61167359
+
 ### Attenuation
 
 ### Shadows
 
+
+#### References
+
+- _Shadow Mapping_ from LearnOpenGL by Joey de Vries - https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
+- _Basic Shadow Mapping // Intermediate OpenGL Series_ from ogldev.org by Etay Meiri - https://www.youtube.com/watch?v=kCCsko29pv0
+
 ### Multiple lights and shadows
 
+#### References
+- Lab 06 - Lights and materials
+- _Shadow Mapping_ from LearnOpenGL by Joey de Vries - https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
+- _Modern OpenGL 08 – Even More Lighting: Directional Lights, Spotlights, & Multiple Lights_ - "Multiple Lights" section by Tom Dalling - https://www.tomdalling.com/blog/modern-opengl/08-even-more-lighting-directional-lights-spotlights-multiple-lights/ 
 
+
+### Gamma
+
+
+#### Refrences
+- _Gamma Correction_ from Learn OpenGL by Joey de Vries - https://learnopengl.com/Advanced-Lighting/Gamma-Correction
 
 <br /><br />
 
 ## Additional Effects
 
-Other framebuffer effects or techniques?
+### Object highlights/outlines - Stencil Test
+
+To highlight the currently selected object, it is possible to turn on object outlines. This is done by using a stencil test. The implementation for the stencil test heavily uses the code and information from [Stencil testing - learnopengl.com](https://learnopengl.com/Advanced-OpenGL/).
+
+
+#### References
+
+- _Stencil testing_ from Learn OpenGL by Joey de Vries - https://learnopengl.com/Advanced-OpenGL/Stencil-testing
+- _OpenGL Tutorial 15 - Stencil Buffer & Outlining_ by Victor Gordan - https://www.youtube.com/watch?v=ngF9LWWxhd0
 
 
 <br /><br />
@@ -112,9 +151,22 @@ Other framebuffer effects or techniques?
 
 ### Mouse
 
+#### References
+
+- F21GA - Lab 05: Interaction, Cameras, Textures
+- _Camera_ from Learn OpenGL by Joey de Vries - https://learnopengl.com/Getting-started/Camera
+
 ### Keyboard
 
 ### UI
+
+
+## Animations
+
+### Toast popping
+
+#### References
+- _Chapter 22: Interpolation_ from Graphics Programming Compendium by Ian Dunn and Zoë Wood - https://graphicscompendium.com/opengl/22-interpolation
 
 
 <br /><br />
@@ -122,3 +174,4 @@ Other framebuffer effects or techniques?
 ## References
 
 Any other references / reference summary
+
