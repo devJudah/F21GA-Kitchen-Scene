@@ -260,7 +260,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	models[obj_toaster.ModelID] = obj_toaster;
 	modelSelectableID.push_back(obj_toaster.ModelID);
 
-
+	/*
 	ModelObject obj_toast_1 = ModelObject(
 								"toast_1", 
 								"assets/toast.gltf",
@@ -275,6 +275,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	models[obj_toast_1.ModelID] = obj_toast_1;
 	modelSelectableID.push_back(obj_toast_1.ModelID);
 
+	
 	ModelObject obj_toast_2 = ModelObject(
 								"toast_2", 
 								"assets/toast.gltf",
@@ -288,8 +289,36 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 
 	models[obj_toast_2.ModelID] = obj_toast_2;
 	modelSelectableID.push_back(obj_toast_2.ModelID);
-	
+	*/
 
+	ModelObject obj_toast_1 = ModelObject(
+								"toast_1", 
+								"assets/toast_gl3.gltf",
+								glm::vec3(-3.47, 2.20, -3.03),
+								glm::vec3(0.0f, 0.1f, 0.0f),
+								glm::vec3(1.0f, 1.0f, 1.0f),
+								"s_shadow"
+							);
+
+	obj_toast_1.SetMaterialProperties(4);
+
+	models[obj_toast_1.ModelID] = obj_toast_1;
+	modelSelectableID.push_back(obj_toast_1.ModelID);
+
+	
+	ModelObject obj_toast_2 = ModelObject(
+								"toast_2", 
+								"assets/toast_gl3.gltf",
+								glm::vec3(-3.33, 2.20, -3.05),
+								glm::vec3(0.0f, 0.1f, 0.0f),
+								glm::vec3(1.0f, 1.0f, 1.0f),
+								"s_shadow"
+							);
+
+	obj_toast_2.SetMaterialProperties(4);
+
+	models[obj_toast_2.ModelID] = obj_toast_2;
+	modelSelectableID.push_back(obj_toast_2.ModelID);
 
     // Kettle
     ModelObject obj_kettle = ModelObject(

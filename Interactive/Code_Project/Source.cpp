@@ -44,6 +44,7 @@ using namespace glm;
 #include "src/ShadowMap.hpp"				// For rendering shadows
 #include "src/LightObject.hpp"				// For light info
 #include "src/ContentInitialisation.hpp" 	// For loading shaders, models and lights
+#include "src/Animations.hpp"				// For small animations
 
 
 // Main fuctions
@@ -134,6 +135,10 @@ vector<ShadowMap> shadowMaps;
 // How fast objects can be moved around the scene
 float objectMovSpeed = 0.5f;
 
+
+// Animations
+ToastPop toastPop1;
+ToastPop toastPop2;
 
 
 
@@ -358,6 +363,13 @@ void startup()
 	camera.fov_y = fovy;
 	// camera.canFly_Off();	// Stop player moving from the floor
 
+
+	// Animation test
+	// TODO: Move this into another file
+	toastPop1.Initialise(models["toast_1"].Position, models["toast_1"].Rotation);
+	toastPop2.Initialise(models["toast_2"].Position, models["toast_2"].Rotation);
+	toastPop2.reverseSpin = true;
+
 }
 
 void update()
@@ -384,7 +396,18 @@ void update()
 	if (keyStatus[GLFW_KEY_Q]) camera.keyPressed(camera_movement::UP, deltaTime);
 	if (keyStatus[GLFW_KEY_E]) camera.keyPressed(camera_movement::DOWN, deltaTime);
 
-	
+	if (keyStatus[GLFW_KEY_R]) {
+		if(!toastPop1.isRunning()) {
+			toastPop1.Tick(models["toast_1"], deltaTime);
+			toastPop2.Tick(models["toast_2"], deltaTime);
+		}
+	}
+
+	// Animation update
+	if (toastPop1.isRunning()) {
+		toastPop1.Tick(models["toast_1"], deltaTime);
+		toastPop2.Tick(models["toast_2"], deltaTime);
+	}
 
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
