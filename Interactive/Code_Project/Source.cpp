@@ -141,7 +141,9 @@ float objectMovSpeed = 0.5f;
 ToastPop toastPop1;
 ToastPop toastPop2;
 
-
+//CYRIL light
+bool lightOn = false; // Initial state of the light, off by default
+int lightSelectedDB = 0;
 
 int main()
 {
@@ -405,6 +407,15 @@ void update()
 			//toastPop2.Tick(models["toast_2"], deltaTime);
 		}
 	}
+
+	//CYRIL light
+    if (lightOn) {
+        lights_s[lightSelectedDB].On(); // use the method On to light on
+		lights_s[lightSelectedDB].lightColor = glm::vec3(1.0f, 1.0f, 0.9f); // white and a bit yellow color to light on
+    } else {
+        lights_s[lightSelectedDB].Off(); // use the method Off to light off
+        lights_s[lightSelectedDB].lightColor = glm::vec3(0.0f, 0.0f, 0.0f); // black color to light off
+    }
 
 	// Update any animations
 	animations();
@@ -762,6 +773,12 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 		}
 	}
 
+	//CYRIL light
+	// Toggle light on/off with 'L' key
+	if (key == GLFW_KEY_L && action == GLFW_PRESS) {
+		lightOn = !lightOn; // Toggles light status
+	}
+
 	// Light debug
 	/*
 	// Light view
@@ -930,3 +947,4 @@ GLenum glCheckError_(const char *file, int line) // Debugger manual function for
 
 	return errorCode;
 }
+
