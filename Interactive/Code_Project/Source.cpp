@@ -80,6 +80,9 @@ void onMouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
 void onMouseMoveCallback(GLFWwindow *window, double x, double y);
 void onMouseWheelCallback(GLFWwindow *window, double xoffset, double yoffset);
 
+// Other helper functions
+void resetAllModelPositions();
+
 // VARIABLES
 GLFWwindow *window; 								// Keep track of the window
 auto windowWidth = 1280;							// Window width					
@@ -105,6 +108,8 @@ float lastY = 0.0f;									//
 bool enableMouseMovement = true;					// Can the mouse move the view
 bool mouseCapture = true;							// Capture mouse inside the window
 
+bool displayInfoBox = true;							// Show the bottom right info box
+
 
 Debugger debugger;									// Add one debugger to use for callbacks ( Win64 - openGLDebugCallback() ) or manual calls ( Apple - glCheckError() ) 
 
@@ -115,7 +120,7 @@ bool lightViewDebug = false;
 map<string, ModelObject> models;
 
 // Holds modelsIDs which can be selected (probably all of them?) - Would rather iterate through map<> models but that doesn't seem to work well
-vector<string> modelSelectableID;	// 
+vector<string> modelSelectableID;
 int selectedModel = 0;
 
 // Border scale factor (how big the border around selected objects should be)
@@ -137,7 +142,7 @@ vector<ShadowMap> shadowMaps;
 
 
 // How fast objects can be moved around the scene
-float objectMovSpeed = 0.5f;
+float objectMovSpeed = 1.0f;
 
 
 // Animations
@@ -664,52 +669,55 @@ void render()
 
 void ui()
 {
-	// Create a window called "My First Tool", with a menu bar.
-    if (ImGui::BeginMainMenuBar())
+	// Basic settings
+	ImGuiIO &io = ImGui::GetIO();
+	// 
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration; 	// NoTitleBa + NoResize + NoScrollbar + NoCollapse
+	window_flags |= ImGuiWindowFlags_AlwaysAutoResize;				
+	window_flags |= ImGuiWindowFlags_NoSavedSettings; 				
+	window_flags |= ImGuiWindowFlags_NoFocusOnAppearing; 			
+	window_flags |= ImGuiWindowFlags_NoNav;
+
+	// Top title bar
+	if (ImGui::BeginMainMenuBar())
     {
         if (ImGui::BeginMenu("File"))
         {
-            if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+            if (ImGui::MenuItem("Exit", "")) glfwSetWindowShouldClose(window, GLFW_TRUE);
             ImGui::EndMenu();
         }
-        if (ImGui::BeginMenu("Edit"))
+        if (ImGui::BeginMenu("Object"))
         {
-            if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
-            if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
-            ImGui::Separator();
-            if (ImGui::MenuItem("Cut", "CTRL+X")) {}
-            if (ImGui::MenuItem("Copy", "CTRL+C")) {}
-            if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+            if (ImGui::MenuItem("Reset all model positions", ""))  resetAllModelPositions();
+
+			if(showModelHighlight == true) {
+				if (ImGui::MenuItem("Hide Outlines", "T")) showModelHighlight = false;
+			} else {
+				if (ImGui::MenuItem("Show Outlines", "T")) showModelHighlight = true;
+			}
+            
+            ImGui::EndMenu();
+        }
+		if (ImGui::BeginMenu("Settings"))
+        {
+			if(displayInfoBox == true) {
+				if (ImGui::MenuItem("Hide info box", "")) displayInfoBox = false;
+			} else {
+				if (ImGui::MenuItem("Show info box", "")) displayInfoBox = true;
+			}
+	
+			if(showWireFrame == true) {
+				if (ImGui::MenuItem("Hide line view", "Z")) { showWireFrame = false; } 
+			} else {
+				if (ImGui::MenuItem("Show line view", "Z")) { showWireFrame = true; }
+			}
+
             ImGui::EndMenu();
         }
         ImGui::EndMainMenuBar();
     }
+
 	
-
-	// Edit a color stored as 4 floats
-	//ImGui::ColorEdit4("Color", my_color);
-
-	// Generate samples and plot them
-	float samples[100];
-	for (int n = 0; n < 100; n++)
-		samples[n] = sinf(n * 0.2f + ImGui::GetTime() * 1.5f);
-	ImGui::PlotLines("Samples", samples, 100);
-
-	// Display contents in a scrolling region
-	ImGui::TextColored(ImVec4(1,1,0,1), "Important Stuff");
-	ImGui::BeginChild("Scrolling");
-	for (int n = 0; n < 50; n++)
-		ImGui::Text("%04d: Some text", n);
-	ImGui::EndChild();
-	ImGui::End();
-
-
-	ImGuiIO &io = ImGui::GetIO();
-	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration; 
-	window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
-	window_flags |= ImGuiWindowFlags_NoSavedSettings; 
-	window_flags |= ImGuiWindowFlags_NoFocusOnAppearing; 
-	window_flags |= ImGuiWindowFlags_NoNav;
 
 	const auto PAD = 10.0f;
 	const ImGuiViewport *viewport = ImGui::GetMainViewport();
@@ -721,38 +729,56 @@ void ui()
 	window_pos_pivot.x = 1.0f;
 	window_pos_pivot.y = 1.0f;
 
-	ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
-	window_flags |= ImGuiWindowFlags_NoMove;
+	if(displayInfoBox == true) {
+		ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
+		window_flags |= ImGuiWindowFlags_NoMove;
 
-	ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
-	bool *p_open = NULL;
-	if (ImGui::Begin("Info", nullptr, window_flags)) {
-		// ImGui::Text("About: 3D Graphics and Animation 2023/24"); // ImGui::Separator();
-		ImGui::Text("Performance: %.3fms/Frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::Text("Pipeline: %s", shaders[models[modelSelectableID[selectedModel]].MshaderID].pipeline.pipe.error?"ERROR":"OK");
-		// Camera info
-		ImGui::Text("Camera position: %.3f, %.3d, %.3f", camera.Position.x, camera.Position.y, camera.Position.z);
-		ImGui::Text("Camera front: %.3f, %.3d, %.3f", camera.Front.x, camera.Front.y, camera.Front.z);
-		//
-		ImGui::Separator();
-		ImGui::Text("Object Mov Speed: %.3f", objectMovSpeed);
-		// Model info
-		ImGui::Text("Selected model ID: %s", modelSelectableID[selectedModel].c_str());
-		ImGui::Text("Position: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Position.x, models[modelSelectableID[selectedModel]].Position.y, models[modelSelectableID[selectedModel]].Position.z);
-		ImGui::Text("Rotation: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Rotation.x, models[modelSelectableID[selectedModel]].Rotation.y, models[modelSelectableID[selectedModel]].Rotation.z);
-		ImGui::Text("Scale: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Scale.x, models[modelSelectableID[selectedModel]].Scale.y, models[modelSelectableID[selectedModel]].Scale.z);
-		// Light info
-		/*
-		int lightSelectedDB = 1;
-		ImGui::Text("Light Dir: %.3f, %.3f, %.3f", lights_s[lightSelectedDB].lightDirection.x, lights_s[lightSelectedDB].lightDirection.y, lights_s[lightSelectedDB].lightDirection.z);
-		ImGui::Text("Light FOV: %.3f", lights_s[lightSelectedDB].perspective_fov);
-		//ImGui::Text("Orths (BL, BR, B, T): %.3f, %.3f, %.3f, %.3f", lights_s[lightSelectedDB].orth_left, lights_s[lightSelectedDB].orth_right, lights_s[lightSelectedDB].orth_bottom, lights_s[lightSelectedDB].orth_top);
-		ImGui::Text("Light near: %.3f Far: %.3f", lights_s[lightSelectedDB].near_plane, lights_s[lightSelectedDB].far_plane);
-		*/
+		ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
+		bool *p_open = NULL;
+		if (ImGui::Begin("Info", nullptr, window_flags)) {
+			// ImGui::Text("About: 3D Graphics and Animation 2023/24"); // ImGui::Separator();
+			ImGui::Text("Performance: %.3fms/Frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			ImGui::Text("Pipeline: %s", shaders[models[modelSelectableID[selectedModel]].MshaderID].pipeline.pipe.error?"ERROR":"OK");
+			// Camera info
+			// ImGui::Text("Camera position: %.3f, %.3d, %.3f", camera.Position.x, camera.Position.y, camera.Position.z);
+			// ImGui::Text("Camera front: %.3f, %.3d, %.3f", camera.Front.x, camera.Front.y, camera.Front.z);
+			//
+			ImGui::Separator();
+			ImGui::Text("Object Mov Speed: %.3f", objectMovSpeed);
+			// Model info
+			ImGui::Text("Selected model ID: %s", modelSelectableID[selectedModel].c_str());
+			ImGui::Text("Position: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Position.x, models[modelSelectableID[selectedModel]].Position.y, models[modelSelectableID[selectedModel]].Position.z);
+			ImGui::Text("Rotation: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Rotation.x, models[modelSelectableID[selectedModel]].Rotation.y, models[modelSelectableID[selectedModel]].Rotation.z);
+			ImGui::Text("Scale: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Scale.x, models[modelSelectableID[selectedModel]].Scale.y, models[modelSelectableID[selectedModel]].Scale.z);
+			// Light info
+			/*
+			int lightSelectedDB = 1;
+			ImGui::Text("Light Dir: %.3f, %.3f, %.3f", lights_s[lightSelectedDB].lightDirection.x, lights_s[lightSelectedDB].lightDirection.y, lights_s[lightSelectedDB].lightDirection.z);
+			ImGui::Text("Light FOV: %.3f", lights_s[lightSelectedDB].perspective_fov);
+			//ImGui::Text("Orths (BL, BR, B, T): %.3f, %.3f, %.3f, %.3f", lights_s[lightSelectedDB].orth_left, lights_s[lightSelectedDB].orth_right, lights_s[lightSelectedDB].orth_bottom, lights_s[lightSelectedDB].orth_top);
+			ImGui::Text("Light near: %.3f Far: %.3f", lights_s[lightSelectedDB].near_plane, lights_s[lightSelectedDB].far_plane);
+			*/
+		}
+		ImGui::End();
 	}
-	ImGui::End();
 
+
+	// Alert user to how the mouse can be recaptured
+	if (mouseCapture == false) {
+		// Set this top middle;
+		window_pos.y = work_pos.y + 8.0*PAD;
+		window_pos.x = (work_pos.x + work_size.x) - PAD;
+		ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
+		window_flags |= ImGuiWindowFlags_NoMove;
+		ImGui::SetNextWindowBgAlpha(0.0f);
+
+		if (ImGui::Begin("Mouse lock", nullptr, window_flags)) {
+			ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Press tab to lock mouse");
+		}
+		ImGui::End();
+	}
 	
+
 
 	// Rendering imgui
 	ImGui::Render();
@@ -1012,5 +1038,17 @@ GLenum glCheckError_(const char *file, int line) // Debugger manual function for
 	while ((errorCode = glGetError()) != GL_NO_ERROR) debugger.GlGetError(errorCode, file, line);
 
 	return errorCode;
+}
+
+/**
+ * Helper functions
+*/
+
+// Reset all selectable models to their default position
+void resetAllModelPositions()
+{
+	for(int i=0; i < modelSelectableID.size(); i++) {
+		models[modelSelectableID[i]].ResetTranslations();
+	}
 }
 

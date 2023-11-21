@@ -70,7 +70,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	objOutside.castShadow = false;
 	objOutside.SetMaterialProperties(0);
 	models[objOutside.ModelID] = objOutside;
-	modelSelectableID.push_back(objOutside.ModelID);
+	//modelSelectableID.push_back(objOutside.ModelID);
 
 	// Floor
     ModelObject floor = ModelObject(
