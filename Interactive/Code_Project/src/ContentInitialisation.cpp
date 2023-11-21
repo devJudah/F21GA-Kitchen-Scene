@@ -57,6 +57,22 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 		If the model should be selectable to be rotated/moved, add the ID to modelSelectableID (NOTE: Currently everything is selectable for debugging)
 	*/
 
+	// Outside image
+	ModelObject objOutside = ModelObject(
+						"outside_box", 
+						"assets/background_image.gltf",
+						glm::vec3(23.5f, 1.9f, 2.4f),
+						glm::vec3(0.0f, 1.52f, 0.0f),
+						glm::vec3(2.0f, 2.0f, 2.0f),
+						"s_shadow"
+						);
+
+	objOutside.castShadow = false;
+	objOutside.SetMaterialProperties(0);
+	models[objOutside.ModelID] = objOutside;
+	modelSelectableID.push_back(objOutside.ModelID);
+
+	// Floor
     ModelObject floor = ModelObject(
 						"floor", 
 						"assets/floor.gltf",
