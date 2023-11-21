@@ -102,6 +102,9 @@ bool mouseMoved = false;							// If the mouse has been moved yet
 float lastX = 0.0f;									// 
 float lastY = 0.0f;									//
 
+bool enableMouseMovement = true;					// Can the mouse move the view
+bool mouseCapture = true;							// Capture mouse inside the window
+
 
 Debugger debugger;									// Add one debugger to use for callbacks ( Win64 - openGLDebugCallback() ) or manual calls ( Apple - glCheckError() ) 
 
@@ -112,7 +115,7 @@ bool lightViewDebug = false;
 map<string, ModelObject> models;
 
 // Holds modelsIDs which can be selected (probably all of them?) - Would rather iterate through map<> models but that doesn't seem to work well
-vector<string> modelSelectableID;
+vector<string> modelSelectableID;	// 
 int selectedModel = 0;
 
 // Border scale factor (how big the border around selected objects should be)
@@ -369,6 +372,7 @@ void startup()
 
 	// Animation test
 	// TODO: Move this into another file
+	// !!WARNING!! This doesn't seem to stop if the model IDs here don't exist - so it will crash later in the render loop - be careful with model_ids!
 	toastPop1.Initialise(models["toast_1"].Position, models["toast_1"].Rotation);
 	toastPop2.Initialise(models["toast_2"].Position, models["toast_2"].Rotation);
 	toastPop2.reverseSpin = true;
@@ -660,6 +664,46 @@ void render()
 
 void ui()
 {
+	// Create a window called "My First Tool", with a menu bar.
+    if (ImGui::BeginMainMenuBar())
+    {
+        if (ImGui::BeginMenu("File"))
+        {
+            if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Edit"))
+        {
+            if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+            if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
+            ImGui::Separator();
+            if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+            if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+            if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+            ImGui::EndMenu();
+        }
+        ImGui::EndMainMenuBar();
+    }
+	
+
+	// Edit a color stored as 4 floats
+	//ImGui::ColorEdit4("Color", my_color);
+
+	// Generate samples and plot them
+	float samples[100];
+	for (int n = 0; n < 100; n++)
+		samples[n] = sinf(n * 0.2f + ImGui::GetTime() * 1.5f);
+	ImGui::PlotLines("Samples", samples, 100);
+
+	// Display contents in a scrolling region
+	ImGui::TextColored(ImVec4(1,1,0,1), "Important Stuff");
+	ImGui::BeginChild("Scrolling");
+	for (int n = 0; n < 50; n++)
+		ImGui::Text("%04d: Some text", n);
+	ImGui::EndChild();
+	ImGui::End();
+
+
 	ImGuiIO &io = ImGui::GetIO();
 	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration; 
 	window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
@@ -708,6 +752,8 @@ void ui()
 	}
 	ImGui::End();
 
+	
+
 	// Rendering imgui
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -733,6 +779,19 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 	/*
 		Handle events that we just want 1 per key press
 	*/
+	
+	// Toggle mouse mode
+	if (key == GLFW_KEY_TAB && action == GLFW_PRESS) {
+		if (mouseCapture) {
+			enableMouseMovement = false;
+			mouseCapture = false;
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		} else {
+			enableMouseMovement = true;
+			mouseCapture = true;
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		}
+	}
 
 	// Model speed
 	if (key == GLFW_KEY_O && action == GLFW_PRESS) {
@@ -896,28 +955,30 @@ void onMouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
 }
 
 void onMouseMoveCallback(GLFWwindow *window, double x, double y)
-{
-	int mouseX = static_cast<int>(x);
-	int mouseY = static_cast<int>(y);
+{	
+	if(enableMouseMovement) {
+		int mouseX = static_cast<int>(x);
+		int mouseY = static_cast<int>(y);
 
-	// Camera code from lecture slides (See Lab 05).
-	// Also see - https://learnopengl.com/code_viewer_gh.php?code=src/1.getting_started/7.3.camera_mouse_zoom/camera_mouse_zoom.cpp
-	// Test if the mouse has moved before or not
-	if (!mouseMoved) {
-		lastX = mouseX;
+		// Camera code from lecture slides (See Lab 05).
+		// Also see - https://learnopengl.com/code_viewer_gh.php?code=src/1.getting_started/7.3.camera_mouse_zoom/camera_mouse_zoom.cpp
+		// Test if the mouse has moved before or not
+		if (!mouseMoved) {
+			lastX = mouseX;
+			lastY = mouseY;
+			mouseMoved = true;
+		}
+
+		// Calculate how far the mouse has moved
+		GLfloat xoffset = mouseX - lastX;
+		GLfloat yoffset = lastY - mouseY;
+
+		lastX = mouseX; 
 		lastY = mouseY;
-		mouseMoved = true;
+
+		// Update the camera based on mouse movement
+		camera.mouseMovement(xoffset, yoffset);
 	}
-
-	// Calculate how far the mouse has moved
-	GLfloat xoffset = mouseX - lastX;
-	GLfloat yoffset = lastY - mouseY;
-
-	lastX = mouseX; 
-	lastY = mouseY;
-
-	// Update the camera based on mouse movement
-	camera.mouseMovement(xoffset, yoffset);
 }
 
 void onMouseWheelCallback(GLFWwindow *window, double xoffset, double yoffset)
