@@ -69,7 +69,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	floor.SetMaterialProperties(64);
 
 	models[floor.ModelID] = floor;
-	modelSelectableID.push_back(floor.ModelID);
+	//modelSelectableID.push_back(floor.ModelID);
 
 	// Wall window
 	ModelObject wall_window = ModelObject(
@@ -84,7 +84,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	wall_window.SetMaterialProperties(8);
 
 	models[wall_window.ModelID] = wall_window;
-	modelSelectableID.push_back(wall_window.ModelID);
+	//modelSelectableID.push_back(wall_window.ModelID);
 	
 	// Wall window
 	ModelObject wall_door = ModelObject(
@@ -99,7 +99,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	wall_door.SetMaterialProperties(8);
 
 	models[wall_door.ModelID] = wall_door;
-	modelSelectableID.push_back(wall_door.ModelID);
+	//modelSelectableID.push_back(wall_door.ModelID);
 
 	// Wall back
 	ModelObject wall_back = ModelObject(
@@ -114,7 +114,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	wall_back.SetMaterialProperties(8);
 
 	models[wall_back.ModelID] = wall_back;
-	modelSelectableID.push_back(wall_back.ModelID);
+	//modelSelectableID.push_back(wall_back.ModelID);
 
 	// Wall front
 	ModelObject wall_front = ModelObject(
@@ -129,7 +129,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	wall_front.SetMaterialProperties(8);
 
 	models[wall_front.ModelID] = wall_front;
-	modelSelectableID.push_back(wall_front.ModelID);
+	//modelSelectableID.push_back(wall_front.ModelID);
 
 	// Roof
 	ModelObject roof = ModelObject(
@@ -144,7 +144,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	roof.SetMaterialProperties(8);
 
 	models[roof.ModelID] = roof;
-	modelSelectableID.push_back(roof.ModelID);
+	//modelSelectableID.push_back(roof.ModelID);
 
     // Window Frame
 	ModelObject window_frame = ModelObject(
@@ -159,7 +159,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	window_frame.SetMaterialProperties(64);
 
 	models[window_frame.ModelID] = window_frame;
-	modelSelectableID.push_back(window_frame.ModelID);
+	//modelSelectableID.push_back(window_frame.ModelID);
 
 
     // Lights (models, not lights themselves!)
@@ -175,7 +175,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	ceiling_light_1.SetMaterialProperties(8);
 
 	models[ceiling_light_1.ModelID] = ceiling_light_1;
-	modelSelectableID.push_back(ceiling_light_1.ModelID);
+	//modelSelectableID.push_back(ceiling_light_1.ModelID);
 
     ModelObject ceiling_light_bulb_1 = ModelObject(
                                     "ceiling_light_bulb_1", 
@@ -190,7 +190,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
     ceiling_light_bulb_1.castShadow = false;
 
 	models[ceiling_light_bulb_1.ModelID] = ceiling_light_bulb_1;
-	modelSelectableID.push_back(ceiling_light_bulb_1.ModelID);
+	//modelSelectableID.push_back(ceiling_light_bulb_1.ModelID);
     
 
     ModelObject ceiling_light_2 = ModelObject(
@@ -205,7 +205,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	ceiling_light_2.SetMaterialProperties(8);
 
 	models[ceiling_light_2.ModelID] = ceiling_light_2;
-	modelSelectableID.push_back(ceiling_light_2.ModelID);
+	//modelSelectableID.push_back(ceiling_light_2.ModelID);
 
     ModelObject ceiling_light_bulb_2 = ModelObject(
                                         "ceiling_light_bulb_2", 
@@ -220,7 +220,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
     ceiling_light_bulb_2.castShadow = false;
 
 	models[ceiling_light_bulb_2.ModelID] = ceiling_light_bulb_2;
-	modelSelectableID.push_back(ceiling_light_bulb_2.ModelID);
+	//modelSelectableID.push_back(ceiling_light_bulb_2.ModelID);
 
 
 	// Bottom Cab
@@ -235,7 +235,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 
 	obj_bCab.SetMaterialProperties(16);
 	models[obj_bCab.ModelID] = obj_bCab;
-	modelSelectableID.push_back(obj_bCab.ModelID);
+	//modelSelectableID.push_back(obj_bCab.ModelID);
 
     // Sink
     ModelObject obj_sink = ModelObject(
@@ -249,7 +249,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 
 	obj_sink.SetMaterialProperties(128);
 	models[obj_sink.ModelID] = obj_sink;
-	modelSelectableID.push_back(obj_sink.ModelID);
+	//modelSelectableID.push_back(obj_sink.ModelID);
 
 
     // Toaster

@@ -15,6 +15,11 @@ ModelObject::ModelObject(string modelID, string modelPath, glm::vec3 initialPosi
 	Rotation = initialRotation;
 
     Scale = scale;
+
+    // Set defaults for later loading
+    DefaultPosition = Position;
+    DefaultRotation = Rotation;
+    DefaultScale = Scale;
 }
 
 ModelObject::ModelObject(string modelID, string modelPath, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ, string shaderID)
@@ -29,6 +34,13 @@ ModelObject::ModelObject(string modelID, string modelPath, float posX, float pos
 	Rotation = glm::vec3(rotX, rotY, rotZ);
 
     Scale = glm::vec3(scaleX, scaleY, scaleZ);
+
+    Scale = glm::vec3(0.0);
+    
+    // Set defaults for later loading
+    DefaultPosition = Position;
+    DefaultRotation = Rotation;
+    DefaultScale = Scale;
 }
 
 glm::mat4 ModelObject::GetModelMatrix()
@@ -74,4 +86,11 @@ void ModelObject::Move(MovDir direction, float velocity, glm::vec3 front, glm::v
     if(direction == MovDir::DOWN) {
 		Position -= velocity * up;
     }
+}
+
+void ModelObject::ResetTranslations()
+{
+    Position = DefaultPosition;
+    Rotation = DefaultRotation;
+    Scale = DefaultScale;
 }

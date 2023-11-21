@@ -384,28 +384,7 @@ void update()
 	if (keyStatus[GLFW_KEY_UP]) models[modelSelectableID[selectedModel]].Rotation.x += objectMovSpeed * deltaTime;
 	if (keyStatus[GLFW_KEY_DOWN]) models[modelSelectableID[selectedModel]].Rotation.x -= objectMovSpeed * deltaTime;
 
-	/*
-	if (keyStatus[GLFW_KEY_Y]) models[modelSelectableID[selectedModel]].Position.y += objectMovSpeed * deltaTime;
-	if (keyStatus[GLFW_KEY_I]) models[modelSelectableID[selectedModel]].Position.y -= objectMovSpeed * deltaTime;
-
-	if (keyStatus[GLFW_KEY_U]) {
-		// There's probably a better maths way to do this
-		float yPos = models[modelSelectableID[selectedModel]].Position.y;
-		models[modelSelectableID[selectedModel]].Position += (objectMovSpeed * deltaTime) * camera.Front;
-		models[modelSelectableID[selectedModel]].Position.y = yPos;
-	}
-	if (keyStatus[GLFW_KEY_J]) {
-		float yPos = models[modelSelectableID[selectedModel]].Position.y;
-		models[modelSelectableID[selectedModel]].Position -= (objectMovSpeed * deltaTime) * camera.Front;
-		models[modelSelectableID[selectedModel]].Position.y = yPos;
-	}
-	if (keyStatus[GLFW_KEY_H])  {
-		models[modelSelectableID[selectedModel]].Position -= (objectMovSpeed * deltaTime) * normalize(glm::cross(camera.Front, camera.Up));
-	} 
-	if (keyStatus[GLFW_KEY_K]) {
-		models[modelSelectableID[selectedModel]].Position += (objectMovSpeed * deltaTime) * normalize(glm::cross(camera.Front, camera.Up));
-	}
-	*/
+	// Object movement
 	if (keyStatus[GLFW_KEY_Y]) models[modelSelectableID[selectedModel]].Move(ModelObject::DOWN, objectMovSpeed * deltaTime, camera.Front, camera.Up);
 	if (keyStatus[GLFW_KEY_I]) models[modelSelectableID[selectedModel]].Move(ModelObject::UP, objectMovSpeed * deltaTime, camera.Front, camera.Up);
 	if (keyStatus[GLFW_KEY_U]) models[modelSelectableID[selectedModel]].Move(ModelObject::FORWARD, objectMovSpeed * deltaTime, camera.Front, camera.Up);
@@ -413,6 +392,9 @@ void update()
 	if (keyStatus[GLFW_KEY_H]) models[modelSelectableID[selectedModel]].Move(ModelObject::LEFT, objectMovSpeed * deltaTime, camera.Front, camera.Up);
 	if (keyStatus[GLFW_KEY_K]) models[modelSelectableID[selectedModel]].Move(ModelObject::RIGHT, objectMovSpeed * deltaTime, camera.Front, camera.Up);
 	
+	// Reset Objects position, rotation and scale
+	if (keyStatus[GLFW_KEY_R]) models[modelSelectableID[selectedModel]].ResetTranslations();
+
 	// Camera movement
 	if (keyStatus[GLFW_KEY_W]) camera.keyPressed(CameraController::FORWARD, deltaTime);
 	if (keyStatus[GLFW_KEY_S]) camera.keyPressed(CameraController::BACKWARD, deltaTime);
@@ -421,7 +403,9 @@ void update()
 	if (keyStatus[GLFW_KEY_Q]) camera.keyPressed(CameraController::UP, deltaTime);
 	if (keyStatus[GLFW_KEY_E]) camera.keyPressed(CameraController::DOWN, deltaTime);
 
-	if (keyStatus[GLFW_KEY_R]) {
+	
+
+	if (keyStatus[GLFW_KEY_G]) {
 		if(!toastPop1.isRunning()) {
 			toastPop1.Start(models["toast_1"]);
 			toastPop2.Start(models["toast_2"]);
@@ -504,7 +488,7 @@ void render()
 		// Activate the shadow map, we are going to use this to render the scene
 		shadowMaps[i].SetActive();
 			
-		for(const string modelID : modelSelectableID) {
+		for(const auto& [modelID, model_s] : models) {
 			
 			// Skip this model if it does not cast a shadow
 			if(!models[modelID].castShadow) continue;
@@ -576,7 +560,6 @@ void render()
 	shaders["s_lightSource"].setFloat("brightness", 2.0); // TODO: Set brightness elsewhere / per object?
 
 	// Render the scene normally
-	//for(const string modelID : modelSelectableID) {
 	for(const auto& [modelID, model_s] : models) {
 
 		// Check if this model should be rendered normally

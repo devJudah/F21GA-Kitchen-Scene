@@ -3,7 +3,7 @@
  * 
  * Has the model Content for loading/rendering
  * Position, rotation and scale
- * Material properties: ambient, diffuse, specular and shininess
+ * Material properties: shininess (should it have diffuse and specular as well?)
  * 
 */
 
@@ -47,6 +47,10 @@ class ModelObject
         glm::vec3 Rotation;    // Model rotation
         glm::vec3 Scale;       // Model scale
 
+        glm::vec3 DefaultPosition;    // Default Model position
+        glm::vec3 DefaultRotation;    // Default Model rotation
+        glm::vec3 DefaultScale;       // Default Model scale
+
         // Material properties
         // TODO: Add more things here? Make multiple materials for the same object? Or maybe a PBR model?
         float Shininess;
@@ -82,8 +86,12 @@ class ModelObject
 
         void Move(MovDir direction, float velocity, glm::vec3 front, glm::vec3 up);
 
+        // Reset the position, rotation and scale to defaults
+        void ResetTranslations();
+
 
     private:
 
+        
 
 };
