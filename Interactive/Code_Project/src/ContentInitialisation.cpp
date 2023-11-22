@@ -420,6 +420,52 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	models[obj_sjL2.ModelID] = obj_sjL2;
 	modelSelectableID.push_back(obj_sjL2.ModelID);
 
+	// Model - Cup
+	ModelObject cup = ModelObject(
+						"cup", 
+						"assets/cup.gltf",
+						glm::vec3(1.169f, 1.225f, 2.099f),
+						//glm::vec3(25.0f, 12.0f, 3.0f),
+						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(0.11f, 0.11f, 0.11f),
+						"s_shadow"
+						);
+					
+	cup.SetMaterialProperties(16);
+	
+	// This is really terrible
+	models[cup.ModelID] = cup;
+	modelSelectableID.push_back(cup.ModelID);
+
+	// Model - Table
+	ModelObject table = ModelObject(
+						"table", 
+						"assets/table.gltf",
+						glm::vec3(3.048f, 1.0f, 2.149f),
+						glm::vec3(0.0f, -1.6f, 0.0f),
+						glm::vec3(1.0f, 1.0f, 1.0f),
+						"s_shadow"
+						);
+					
+	table.SetMaterialProperties(16);
+	
+	// This is really terrible
+	models[table.ModelID] = table;
+	modelSelectableID.push_back(table.ModelID);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Model - Dog
 	ModelObject obj1 = ModelObject(
@@ -438,13 +484,13 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	modelSelectableID.push_back(obj1.ModelID);
 	// End of dog
 
-	/*
+	
 	// Upper cabinet
 	ModelObject obj_cab = ModelObject(
 		"cabin", 
 		"assets/cabinv5.gltf",
 		glm::vec3(7.624f, 3.783f, -3.066f), 	// New position, placed above the bottom cabinet
-		glm::vec3(3.200f, -3.128f, -3.142f), 	// Rotation
+		glm::vec3(0.0f, 0.0f, 0.0f), 	// Rotation
 		glm::vec3(0.8f, 0.8f, 0.8f),  			// Scale
 		"s_shadow"
 	);
@@ -457,9 +503,9 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	// front cabinet
 	ModelObject obj_cabfront = ModelObject(
 		"cabinfront", 
-		"assets/cabinfront.gltf",
-		glm::vec3(7.589f, 3.783f, -3.078f), 	// New position, placed above the bottom cabinet
-		glm::vec3(3.200f, -3.128f, -3.142f), 	// Rotation
+		"assets/cabinfrontv2.gltf",
+		glm::vec3(5.228, 3.773f, -2.055f), 	// New position, placed above the bottom cabinet
+		glm::vec3(0.002f, 0.0f, 0.0f), 	// Rotation
 		glm::vec3(0.8f, 0.8f, 0.8f),			// Scale
 		"s_shadow"
 	);
@@ -475,6 +521,7 @@ void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
 {   
     
     LightObject light_sun = LightObject(
+								"sun",
 								glm::vec3(22.0f, 13.0f, 3.0f),
 								glm::vec3(0.0f),
 								glm::vec3(0.0, 1.0, 0.0),
@@ -498,6 +545,7 @@ void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
 
 
 	LightObject light1 = LightObject(
+								"ceiling_1",
 								glm::vec3(5.4f, 7.1f, 0.0f),
 								glm::vec3(5.4f, 0.0f, 0.0f),
 								glm::vec3(0.0, 0.0, 1.0),
@@ -513,6 +561,7 @@ void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
 
 
     LightObject light2 = LightObject(
+								"ceiling_2",
 								glm::vec3(0.03f, 7.1, 0.0f),
 								glm::vec3(0.03f, 0.0f, 0.0f),
 								glm::vec3(0.0, 0.0, 1.0),

@@ -1,14 +1,19 @@
 #pragma once
 
+#include <string>
 
-#include "glad/glad.h"
-#include "glm/glm.hpp"
-#include "glm/gtx/transform.hpp"
+#include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+
 
 
 class LightObject
 {  
     public: 
+
+        // Light ID
+        std::string lightID;
 
         // Light position
         glm::vec3 lightPosition;
@@ -49,9 +54,10 @@ class LightObject
 
         LightObject();
 
-        LightObject(glm::vec3 lightPosition, glm::vec3 lightColor);
+        LightObject(std::string lightID, glm::vec3 lightPosition, glm::vec3 lightColor);
 
         LightObject(
+                std::string lightID,
                 glm::vec3 lightPosition, 
                 glm::vec3 lightDirection, 
                 glm::vec3 lightUp, 
@@ -63,6 +69,7 @@ class LightObject
             );
 
         LightObject(
+            std::string lightID,
             glm::vec3 lightPosition, 
             glm::vec3 lightDirection, 
             glm::vec3 lightUp, 
@@ -87,5 +94,8 @@ class LightObject
         void On();
 
         bool isOn();
+
+        // Turn off if on and on iff off. Returns true if now on, false if now off.
+        bool ToggleLight();
 
 };

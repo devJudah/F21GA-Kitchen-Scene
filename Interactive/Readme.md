@@ -2,6 +2,8 @@
 
 ## Contents
 
+- [Basic Interaction and Hotkey guide](#basic-interaction-and-hotkey-guide)
+
 - [Model Exporting and Importing](#model-exporting-and-importing)
 
 - [Scene Setup](#scene-setup)
@@ -17,7 +19,7 @@
 
 - [Interaction](#interaction)
     
-    - [Mouse](#mouse)
+    - [Mouse an Camera](#mouse-and-camera)
     - [Keyboard](#keyboard)
     - [UI](#ui)
 
@@ -27,6 +29,10 @@
 
 - [References](#references)
 
+
+## Basic Interaction and Hotkey Guide
+
+F key : ON/OFF light
 
 ## Model Exporting and Importing
 
@@ -72,7 +78,7 @@ Next, any transformations are applied to the object.
 
 <img src="Readme_Images/models/apply_all_transforms.png" alt="Apply transformations" height="500"/>
 
-Then the object is exported as a glTF file using the following settings.
+Finally, the object is exported as a glTF file using the following settings.
 
 <img src="Readme_Images/models/kettle_export_settings.png" alt="Export settings" height="600"/>
 
@@ -108,6 +114,10 @@ Model placement, light placement?
 
 ### Attenuation
 
+
+#### References
+- Lecture 14 - Advanced Lights
+
 ### Shadows
 
 
@@ -132,6 +142,11 @@ Model placement, light placement?
 
 <br /><br />
 
+### Screenshots
+
+<img src="Readme_Images/screenshots/lightoff.png" alt="Light off" height="600"/>
+<img src="Readme_Images/screenshots/lighton.png" alt="Light on" height="600"/>
+
 ## Additional Effects
 
 ### Object highlights/outlines - Stencil Test
@@ -149,7 +164,8 @@ To highlight the currently selected object, it is possible to turn on object out
 
 ## Interaction
 
-### Mouse
+
+### Mouse and Camera
 
 #### References
 
@@ -159,6 +175,14 @@ To highlight the currently selected object, it is possible to turn on object out
 ### Keyboard
 
 ### UI
+
+The UI is built using the [Dear ImGui](https://github.com/ocornut/imgui) library.
+
+
+#### References
+- [Dear ImGui](https://github.com/ocornut/imgui) by [@ocornut](https://github.com/ocornut)
+- Interactive imgui_manual by Pascal Thomet [@pthom](https://github.com/pthom) - https://pthom.github.io/imgui_manual_online/manual/imgui_manual.html
+
 
 
 ## Animations

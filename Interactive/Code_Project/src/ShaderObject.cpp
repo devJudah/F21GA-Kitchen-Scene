@@ -38,6 +38,10 @@ void ShaderObject::setMat4(string name, glm::mat4 value)
     glUniformMatrix4fv(glGetUniformLocation(pipeline.pipe.program, name.c_str()), 1, GL_FALSE, &value[0][0]);
 }
 
+void ShaderObject::setBool(string name, bool value)
+{
+    glUniform1i(glGetUniformLocation(pipeline.pipe.program, name.c_str()), (int)value);
+}
 
 void ShaderObject::setLightStructInt(string name, int vIndex, int value)
 {   
@@ -63,6 +67,11 @@ void ShaderObject::setLightStructMat4(string name, int vIndex, glm::mat4 value)
     this->setMat4(uName, value);
 }
 
+void ShaderObject::setLightStructBool(string name, int vIndex, bool value)
+{
+    string uName = this->LightStructNameHelper(name, vIndex);
+    this->setBool(uName, value);
+}
 
 void ShaderObject::RegisterModel(string modelID)
 {

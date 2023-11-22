@@ -44,6 +44,8 @@ struct LightStruct {
     float atten_constant;   // Attenuation constant
     float atten_linear;     // Attenuation linear term
     float atten_quadratic;  // Attenuation quadratic term
+
+    bool turnedOn; // If this light is on or off
 };
 
 uniform LightStruct lights[NUM_LIGHTS];
@@ -123,6 +125,9 @@ void main()
     vec3 normal = normalize(fs_in.Normal);
 
     for(int i=0; i < num_lights; i++) {
+        
+        if (!lights[i].turnedOn) continue;
+
         // Ambient
         vec3 ambient = lights[i].k_ambient * lights[i].lightColor;
 

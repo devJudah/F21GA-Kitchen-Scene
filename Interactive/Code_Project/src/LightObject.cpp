@@ -10,18 +10,20 @@
 
 LightObject::LightObject() { }
 
-LightObject::LightObject(glm::vec3 lightPosition, glm::vec3 lightColor)
+LightObject::LightObject(std::string lightID, glm::vec3 lightPosition, glm::vec3 lightColor)
 {
+    this->lightID = lightID;
     this->lightPosition = lightPosition;
     this->lightColor = lightColor;
 
     this->switched_on = true;
 }
 
-LightObject::LightObject(glm::vec3 lightPosition, glm::vec3 lightDirection, glm::vec3 lightUp, 
+LightObject::LightObject(std::string lightID, glm::vec3 lightPosition, glm::vec3 lightDirection, glm::vec3 lightUp, 
             float near_plane, float far_plane, bool directionalLight,
             glm::vec3 lightColor, GLfloat k_ambient )
 {
+    this->lightID = lightID;
     this->lightPosition = lightPosition;
     this->lightDirection = lightDirection;
     this->lightUp = lightUp;
@@ -34,11 +36,12 @@ LightObject::LightObject(glm::vec3 lightPosition, glm::vec3 lightDirection, glm:
     this->switched_on = true;
 }
 
-LightObject::LightObject(glm::vec3 lightPosition, glm::vec3 lightDirection, glm::vec3 lightUp, 
+LightObject::LightObject(std::string lightID, glm::vec3 lightPosition, glm::vec3 lightDirection, glm::vec3 lightUp, 
             float near_plane, float far_plane, bool directionalLight,
             glm::vec3 lightColor, GLfloat k_ambient,
             GLfloat atten_constant, GLfloat atten_linear, GLfloat atten_quadratic)
 {
+    this->lightID = lightID;
     this->lightPosition = lightPosition;
     this->lightDirection = lightDirection;
     this->lightUp = lightUp;
@@ -85,4 +88,16 @@ void LightObject::Off()
 bool LightObject::isOn()
 {
     return this->switched_on;
+}
+
+bool LightObject::ToggleLight()
+{
+    if(this->switched_on) {
+        this->Off();
+        return false;
+    }
+    else {
+        this->On();
+        return true;
+    }
 }
