@@ -896,8 +896,10 @@ void ui()
 				//ImGui::Text("Orths (BL, BR, B, T): %.3f, %.3f, %.3f, %.3f", lights_s[lightSelectedDB].orth_left, lights_s[lightSelectedDB].orth_right, lights_s[lightSelectedDB].orth_bottom, lights_s[lightSelectedDB].orth_top);
 				ImGui::Text("Light near: %.3f Far: %.3f", lights_s[lightSelectedDB].near_plane, lights_s[lightSelectedDB].far_plane);
 				*/
+				/*
 				ImGui::Text("Sun Pos: %.3f, %.3f, %.3f", lights_s[0].lightPosition.x, lights_s[0].lightPosition.y, lights_s[0].lightPosition.z);
 				ImGui::Text("Sun offset: %.3f", SunOffset);
+				*/
 
 			}
 			ImGui::End();

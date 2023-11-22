@@ -360,6 +360,67 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	models[obj_kettle.ModelID] = obj_kettle;
 	modelSelectableID.push_back(obj_kettle.ModelID);
 
+	// Storage jar (silver) - Body
+	ModelObject obj_sj = ModelObject(
+								"sj_silver_body", 
+								"assets/storageJar_1_body.gltf",
+								glm::vec3(-3.51f, 1.65f, 2.17f),
+								glm::vec3(0.0f, -0.45f, 0.0f),
+								glm::vec3(0.3f, 0.3f, 0.3f),
+								"s_shadow"
+							);
+
+	obj_sj.SetMaterialProperties(128);
+		
+	models[obj_sj.ModelID] = obj_sj;
+	modelSelectableID.push_back(obj_sj.ModelID);
+
+	// Storage jar (silver) - Lid
+	ModelObject obj_sjL = ModelObject(
+								"sj_silver_lid", 
+								"assets/storageJar_1_lid.gltf",
+								glm::vec3(-3.51f, 2.135f, 2.17f),
+								glm::vec3(0.0f, -0.45f, 0.0f),
+								glm::vec3(0.3f, 0.3f, 0.3f),
+								"s_shadow"
+							);
+
+	obj_sjL.SetMaterialProperties(128);
+		
+	models[obj_sjL.ModelID] = obj_sjL;
+	modelSelectableID.push_back(obj_sjL.ModelID);
+
+	// Storage jar (black) - Body
+	ModelObject obj_sj2 = ModelObject(
+								"sj_black_body", 
+								"assets/storageJar_2_body.gltf",
+								glm::vec3(-3.575f, 1.65f, 1.80f),
+								glm::vec3(0.0f, 0.2f, 0.0f),
+								glm::vec3(0.3f, 0.3f, 0.3f),
+								"s_shadow"
+							);
+
+	obj_sj2.SetMaterialProperties(128);
+		
+	models[obj_sj2.ModelID] = obj_sj2;
+	modelSelectableID.push_back(obj_sj2.ModelID);
+
+	// Storage jar (black) - Lid
+	ModelObject obj_sjL2 = ModelObject(
+								"sj_black_lid", 
+								"assets/storageJar_1_lid.gltf",
+								glm::vec3(-3.575f, 2.135f, 1.80f),
+								glm::vec3(0.0f, 0.2f, 0.0f),
+								glm::vec3(0.3f, 0.3f, 0.3f),
+								"s_shadow"
+							);
+
+	obj_sjL2.SetMaterialProperties(128);
+		
+	models[obj_sjL2.ModelID] = obj_sjL2;
+	modelSelectableID.push_back(obj_sjL2.ModelID);
+
+
     // Model - Dog
 	ModelObject obj1 = ModelObject(
 						"Dog", 
