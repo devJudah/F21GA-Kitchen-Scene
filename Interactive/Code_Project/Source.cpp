@@ -1164,6 +1164,16 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 			NoClipToggle();
 	}
 
+	//sun light
+	if (key == GLFW_KEY_F && action == GLFW_PRESS) {
+	lights_s[0].ToggleLight(); // toggle light state
+	}
+
+	//ceiling light
+	if (key == GLFW_KEY_V && action == GLFW_PRESS) {
+	lights_s[1].ToggleLight(); // toggle light state
+	lights_s[2].ToggleLight(); // toggle light state
+	}
 	
 	// Light debug
 	/*
