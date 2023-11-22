@@ -442,10 +442,10 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	// Upper cabinet
 	ModelObject obj_cab = ModelObject(
 		"cabin", 
-		"assets/cabinv4.gltf",
-		glm::vec3(9.057f, 3.789f, -2.214f), 	// New position, placed above the bottom cabinet
-		glm::vec3(3.050f, -3.062f, -3.142f), 	// Rotation
-		glm::vec3(0.9f, 0.9f, 0.9f),  			// Scale
+		"assets/cabinv5.gltf",
+		glm::vec3(7.624f, 3.783f, -3.066f), 	// New position, placed above the bottom cabinet
+		glm::vec3(3.200f, -3.128f, -3.142f), 	// Rotation
+		glm::vec3(0.8f, 0.8f, 0.8f),  			// Scale
 		"s_shadow"
 	);
 
@@ -453,7 +453,21 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 			
 	models[obj_cab.ModelID] = obj_cab;
 	modelSelectableID.push_back(obj_cab.ModelID);
-	*/
+
+	// front cabinet
+	ModelObject obj_cabfront = ModelObject(
+		"cabinfront", 
+		"assets/cabinfront.gltf",
+		glm::vec3(7.589f, 3.783f, -3.078f), 	// New position, placed above the bottom cabinet
+		glm::vec3(3.200f, -3.128f, -3.142f), 	// Rotation
+		glm::vec3(0.8f, 0.8f, 0.8f),			// Scale
+		"s_shadow"
+	);
+
+	obj_cabfront.SetMaterialProperties(64);
+			
+	models[obj_cabfront.ModelID] = obj_cabfront;
+	modelSelectableID.push_back(obj_cabfront.ModelID);
 
 }
 
