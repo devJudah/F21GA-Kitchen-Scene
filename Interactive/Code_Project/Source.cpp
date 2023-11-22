@@ -45,6 +45,7 @@ using namespace glm;
 #include "src/LightObject.hpp"				// For light info
 #include "src/ContentInitialisation.hpp" 	// For loading shaders, models and lights
 #include "src/Animations.hpp"				// For small animations
+#include "src/FrameGraph.hpp"				// For the storage of data for the frame graphs
 
 
 // Main fuctions
@@ -82,6 +83,8 @@ void onMouseWheelCallback(GLFWwindow *window, double xoffset, double yoffset);
 
 // Other helper functions
 void resetAllModelPositions();
+void NoClipToggle();
+void moveSun(float offset);
 
 // VARIABLES
 GLFWwindow *window; 								// Keep track of the window
@@ -95,7 +98,7 @@ auto currentTime = 0.0f;							// Framerate
 auto deltaTime = 0.0f;								// time passed
 auto lastTime = 0.0f;								// Used to calculate Frame rate
 
-auto fovy = 75.0f;									// Field of view (y axis)
+auto fovy = 50.0f;									// Field of view (y axis)
 
 CameraController camera;							// Camera
 
@@ -108,7 +111,20 @@ float lastY = 0.0f;									//
 bool enableMouseMovement = true;					// Can the mouse move the view
 bool mouseCapture = true;							// Capture mouse inside the window
 
-bool displayInfoBox = true;							// Show the bottom right info box
+float movementSpeed = 3.0f;
+
+bool NoClip = false;
+float NoClipMovementSpeed = 5.0f;
+
+// UI display flags
+bool UI_display	= false;								// Show any UI
+bool UI_displayInfoBox = true;							// Show the bottom right info box
+bool UI_displayFrameGraphBox = false;					// Show frame graphs
+bool UI_displaySunPosition = false;						// Show sun position changer
+
+// Frametime / fps graph stuff
+FrameGraphData fpsGraph;
+FrameGraphData frameTimeGraph;
 
 
 Debugger debugger;									// Add one debugger to use for callbacks ( Win64 - openGLDebugCallback() ) or manual calls ( Apple - glCheckError() ) 
@@ -149,9 +165,18 @@ float objectMovSpeed = 1.0f;
 ToastPop toastPop1;
 ToastPop toastPop2;
 
+// Sun position - TODO: Move these into a sensible class
+float SunStartPosZ = 3.0f;		// This should be the same as the setting for light_sun. TODO: Set these together
+float SunMaxHeight = 13.0f; 	// This should be the same as the setting for light_sun. TODO: Set these together
+float SunOffset = 0.0f;
+
 //CYRIL light
-bool lightOn = false; // Initial state of the light, off by default
+bool lightOn = true; // Initial state of the light, on by default
 int lightSelectedDB = 0;
+vec3 defaultLightColour;
+
+
+
 
 int main()
 {
@@ -372,7 +397,9 @@ void startup()
 
 	// Camera settings
 	camera.fov_y = fovy;
-	// camera.canFly_Off();	// Stop player moving from the floor
+	camera.collisionCheck = true;
+	camera.canFly_Off();	// Stop player moving from the floor
+	camera.movementSpeed = movementSpeed;
 
 
 	// Animation test
@@ -382,12 +409,17 @@ void startup()
 	toastPop2.Initialise(models["toast_2"].Position, models["toast_2"].Rotation);
 	toastPop2.reverseSpin = true;
 
+
+	// Extension to Cyril's light code, set initial light colour
+	defaultLightColour = lights_s[lightSelectedDB].lightColor;
+
 }
 
 void update()
 {	
+	/* Key presses */
 	
-	// Key press updates
+	// Object rotation
 	if (keyStatus[GLFW_KEY_LEFT]) models[modelSelectableID[selectedModel]].Rotation.y += objectMovSpeed * deltaTime;
 	if (keyStatus[GLFW_KEY_RIGHT]) models[modelSelectableID[selectedModel]].Rotation.y -= objectMovSpeed * deltaTime;
 	if (keyStatus[GLFW_KEY_UP]) models[modelSelectableID[selectedModel]].Rotation.x += objectMovSpeed * deltaTime;
@@ -412,8 +444,7 @@ void update()
 	if (keyStatus[GLFW_KEY_Q]) camera.keyPressed(CameraController::UP, deltaTime);
 	if (keyStatus[GLFW_KEY_E]) camera.keyPressed(CameraController::DOWN, deltaTime);
 
-	
-
+	// Start toast animation. TODO: move this 
 	if (keyStatus[GLFW_KEY_G]) {
 		if(!toastPop1.isRunning()) {
 			toastPop1.Start(models["toast_1"]);
@@ -426,7 +457,8 @@ void update()
 	//CYRIL light
     if (lightOn) {
         lights_s[lightSelectedDB].On(); // use the method On to light on
-		lights_s[lightSelectedDB].lightColor = glm::vec3(1.0f, 1.0f, 0.9f); // white and a bit yellow color to light on
+		//lights_s[lightSelectedDB].lightColor = glm::vec3(1.0f, 1.0f, 0.9f); // white and a bit yellow color to light on
+		lights_s[lightSelectedDB].lightColor = defaultLightColour;
     } else {
         lights_s[lightSelectedDB].Off(); // use the method Off to light off
         lights_s[lightSelectedDB].lightColor = glm::vec3(0.0f, 0.0f, 0.0f); // black color to light off
@@ -434,6 +466,9 @@ void update()
 
 	// Update any animations
 	animations();
+
+	// Updates sun position
+	moveSun(SunOffset);
 
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
@@ -668,100 +703,208 @@ void render()
 }
 
 void ui()
-{
+{	
+	/**
+	 * See https://github.com/ocornut/imgui and https://pthom.github.io/imgui_manual_online/manual/imgui_manual.html
+	 * for Dear ImGui info
+	*/
+
 	// Basic settings
 	ImGuiIO &io = ImGui::GetIO();
 	// 
-	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration; 	// NoTitleBa + NoResize + NoScrollbar + NoCollapse
-	window_flags |= ImGuiWindowFlags_AlwaysAutoResize;				
-	window_flags |= ImGuiWindowFlags_NoSavedSettings; 				
-	window_flags |= ImGuiWindowFlags_NoFocusOnAppearing; 			
-	window_flags |= ImGuiWindowFlags_NoNav;
 
-	// Top title bar
-	if (ImGui::BeginMainMenuBar())
-    {
-        if (ImGui::BeginMenu("File"))
-        {
-            if (ImGui::MenuItem("Exit", "")) glfwSetWindowShouldClose(window, GLFW_TRUE);
-            ImGui::EndMenu();
-        }
-        if (ImGui::BeginMenu("Object"))
-        {
-            if (ImGui::MenuItem("Reset all model positions", ""))  resetAllModelPositions();
-
-			if(showModelHighlight == true) {
-				if (ImGui::MenuItem("Hide Outlines", "T")) showModelHighlight = false;
-			} else {
-				if (ImGui::MenuItem("Show Outlines", "T")) showModelHighlight = true;
-			}
-            
-            ImGui::EndMenu();
-        }
-		if (ImGui::BeginMenu("Settings"))
-        {
-			if(displayInfoBox == true) {
-				if (ImGui::MenuItem("Hide info box", "")) displayInfoBox = false;
-			} else {
-				if (ImGui::MenuItem("Show info box", "")) displayInfoBox = true;
-			}
+	// Probably should do some fps counter code through OpenGL?
+	fpsGraph.AddData(ImGui::GetIO().Framerate); 
+	frameTimeGraph.AddData(1000.0f / ImGui::GetIO().Framerate);
 	
-			if(showWireFrame == true) {
-				if (ImGui::MenuItem("Hide line view", "Z")) { showWireFrame = false; } 
-			} else {
-				if (ImGui::MenuItem("Show line view", "Z")) { showWireFrame = true; }
-			}
+	ImGui::StyleColorsClassic();
+	// See https://github.com/cinder/Cinder/blob/master/src/imgui/imgui_draw.cpp#L230-L283 for style options. E.g:
+	// style.Colors[ImGuiCol_WindowBg] = ImVec4(0.00f, 0.00f, 0.00f, 1.0f);
+	// ImGuiStyle& style = ImGui::GetStyle(); // Get the style so we can change bits of it
 
-            ImGui::EndMenu();
-        }
-        ImGui::EndMainMenuBar();
-    }
-
-	
+	// Declare window_flags
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoScrollbar;
 
 	const auto PAD = 10.0f;
 	const ImGuiViewport *viewport = ImGui::GetMainViewport();
 	ImVec2 work_pos = viewport->WorkPos; // Use work area to avoid menu-bar/task-bar, if any!
 	ImVec2 work_size = viewport->WorkSize;
 	ImVec2 window_pos, window_pos_pivot;
-	window_pos.x = work_pos.x + work_size.x - PAD;
-	window_pos.y = work_pos.y + work_size.y - PAD;
-	window_pos_pivot.x = 1.0f;
-	window_pos_pivot.y = 1.0f;
+	
 
-	if(displayInfoBox == true) {
-		ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
-		window_flags |= ImGuiWindowFlags_NoMove;
+	// Nested ifs getting a bit out of control maybe should break these up into their own functions
+	if (UI_display) 
+	{
+		// Top title bar
+		if (ImGui::BeginMainMenuBar())
+		{
+			if (ImGui::BeginMenu("File"))
+			{
+				if (ImGui::MenuItem("Exit", "")) glfwSetWindowShouldClose(window, GLFW_TRUE);
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Object"))
+			{
+				if (ImGui::MenuItem("Reset all model positions", ""))  resetAllModelPositions();
 
-		ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
-		bool *p_open = NULL;
-		if (ImGui::Begin("Info", nullptr, window_flags)) {
-			// ImGui::Text("About: 3D Graphics and Animation 2023/24"); // ImGui::Separator();
-			ImGui::Text("Performance: %.3fms/Frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-			ImGui::Text("Pipeline: %s", shaders[models[modelSelectableID[selectedModel]].MshaderID].pipeline.pipe.error?"ERROR":"OK");
-			// Camera info
-			// ImGui::Text("Camera position: %.3f, %.3d, %.3f", camera.Position.x, camera.Position.y, camera.Position.z);
-			// ImGui::Text("Camera front: %.3f, %.3d, %.3f", camera.Front.x, camera.Front.y, camera.Front.z);
-			//
-			ImGui::Separator();
-			ImGui::Text("Object Mov Speed: %.3f", objectMovSpeed);
-			// Model info
-			ImGui::Text("Selected model ID: %s", modelSelectableID[selectedModel].c_str());
-			ImGui::Text("Position: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Position.x, models[modelSelectableID[selectedModel]].Position.y, models[modelSelectableID[selectedModel]].Position.z);
-			ImGui::Text("Rotation: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Rotation.x, models[modelSelectableID[selectedModel]].Rotation.y, models[modelSelectableID[selectedModel]].Rotation.z);
-			ImGui::Text("Scale: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Scale.x, models[modelSelectableID[selectedModel]].Scale.y, models[modelSelectableID[selectedModel]].Scale.z);
-			// Light info
-			/*
-			int lightSelectedDB = 1;
-			ImGui::Text("Light Dir: %.3f, %.3f, %.3f", lights_s[lightSelectedDB].lightDirection.x, lights_s[lightSelectedDB].lightDirection.y, lights_s[lightSelectedDB].lightDirection.z);
-			ImGui::Text("Light FOV: %.3f", lights_s[lightSelectedDB].perspective_fov);
-			//ImGui::Text("Orths (BL, BR, B, T): %.3f, %.3f, %.3f, %.3f", lights_s[lightSelectedDB].orth_left, lights_s[lightSelectedDB].orth_right, lights_s[lightSelectedDB].orth_bottom, lights_s[lightSelectedDB].orth_top);
-			ImGui::Text("Light near: %.3f Far: %.3f", lights_s[lightSelectedDB].near_plane, lights_s[lightSelectedDB].far_plane);
-			*/
+				if(showWireFrame == true) {
+					if (ImGui::MenuItem("Hide line view", "Z")) { showWireFrame = false; } 
+				} else {
+					if (ImGui::MenuItem("Show line view", "Z")) { showWireFrame = true; }
+				}
+
+				ImGui::Separator();
+
+				if(showModelHighlight == true) {
+					if (ImGui::MenuItem("Hide Outlines", "T")) showModelHighlight = false;
+				} else {
+					if (ImGui::MenuItem("Show Outlines", "T")) showModelHighlight = true;
+				}
+				
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Settings"))
+			{
+				if(UI_displayInfoBox == true) {
+					if (ImGui::MenuItem("Hide info box", "")) UI_displayInfoBox = false;
+				} else {
+					if (ImGui::MenuItem("Show info box", "")) UI_displayInfoBox = true;
+				}
+
+				if(UI_displayFrameGraphBox == true) {
+					if (ImGui::MenuItem("Hide frame graphs", "")) UI_displayFrameGraphBox = false;
+				} else {
+					if (ImGui::MenuItem("Show frame graphs", "")) UI_displayFrameGraphBox = true;
+				}
+
+				ImGui::Separator();
+
+				if(UI_displaySunPosition == true) {
+					if (ImGui::MenuItem("Sun position (On)", "")) UI_displaySunPosition = false;
+				} else {
+					if (ImGui::MenuItem("Sun position (Off)", "")) UI_displaySunPosition = true;
+				}
+
+				ImGui::Separator();
+
+				if(NoClip == true) {
+					if (ImGui::MenuItem("Turn NoClip Off", "")) { NoClipToggle(); } 
+				} else {
+					if (ImGui::MenuItem("Turn NoClip On", "")) { NoClipToggle(); }
+				}
+
+				ImGui::EndMenu();
+			}
+			ImGui::EndMainMenuBar();
 		}
-		ImGui::End();
-	}
 
+		
+		// Graphs
+		if (UI_displayFrameGraphBox) {
+			// Set window flags
+			window_flags = ImGuiWindowFlags_NoScrollbar;
+			//window_flags |= ImGuiWindowFlags_NoTitleBar;
+			window_flags |= ImGuiWindowFlags_NoResize;
+			window_flags |= ImGuiWindowFlags_NoScrollbar;
+			window_flags |= ImGuiWindowFlags_NoSavedSettings;
+			window_flags |= ImGuiWindowFlags_NoFocusOnAppearing;
+			window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
+
+			if (ImGui::Begin("Frame Graphs", nullptr, window_flags)) {
+				float fpsSamples[fpsGraph.getGraphDataSize()];
+				float fpsTotal = 0;
+				for (int n = 0; n < fpsGraph.getGraphDataSize(); n++) {
+					fpsSamples[n] = fpsGraph.getGraphDataN(n);
+					fpsTotal += fpsGraph.getGraphDataN(n);
+				}
+				char fpsLabel[32];
+				sprintf(fpsLabel, "FPS. Avg: %.2f", fpsTotal/fpsGraph.getGraphDataSize());
+				// Should set dynamic scales?
+				ImGui::PlotLines(fpsLabel, fpsSamples, fpsGraph.getGraphDataSize(), 0, "", 0.0, 120.0, ImVec2(0, 100.0f));
+
+				float ftSamples[frameTimeGraph.getGraphDataSize()];
+				float ftTotal = 0;
+				for (int n = 0; n < frameTimeGraph.getGraphDataSize(); n++) {
+					ftSamples[n] = frameTimeGraph.getGraphDataN(n);
+					ftTotal += frameTimeGraph.getGraphDataN(n);
+				}
+				char ftLabel[32];
+				sprintf(ftLabel, "FPS. Avg: %.2f", ftTotal/frameTimeGraph.getGraphDataSize());
+				ImGui::PlotLines(ftLabel, ftSamples, frameTimeGraph.getGraphDataSize(), 0, "", 0.0, 100.0f, ImVec2(0, 100.0f));
+			}
+			ImGui::End();
+		}
+
+
+		// Sun moving slider
+		if (UI_displaySunPosition) {
+			// Set window flags
+			window_flags = ImGuiWindowFlags_NoScrollbar;
+			//window_flags |= ImGuiWindowFlags_NoTitleBar;
+			window_flags |= ImGuiWindowFlags_NoResize;
+			window_flags |= ImGuiWindowFlags_NoScrollbar;
+			window_flags |= ImGuiWindowFlags_NoSavedSettings;
+			window_flags |= ImGuiWindowFlags_NoFocusOnAppearing;
+			window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
+
+			if (ImGui::Begin("Sun", nullptr, window_flags)) {
+				float cSamples[50];
+				if (ImGui::SliderFloat("Sun Position", &SunOffset, -1.5, 1.5, "%.2f", ImGuiSliderFlags_AlwaysClamp));
+			}
+			ImGui::End();
+		}
+
+
+		// Provided info box
+		window_flags = ImGuiWindowFlags_NoDecoration; 	// NoTitleBar + NoResize + NoScrollbar + NoCollapse
+		window_flags |= ImGuiWindowFlags_AlwaysAutoResize;				
+		window_flags |= ImGuiWindowFlags_NoSavedSettings; 				
+		window_flags |= ImGuiWindowFlags_NoFocusOnAppearing; 			
+		window_flags |= ImGuiWindowFlags_NoNav;
+		
+		window_pos.x = work_pos.x + work_size.x - PAD;
+		window_pos.y = work_pos.y + work_size.y - PAD;
+		window_pos_pivot.x = 1.0f;
+		window_pos_pivot.y = 1.0f;
+
+		if(UI_displayInfoBox == true) {
+			ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
+			window_flags |= ImGuiWindowFlags_NoMove;
+
+			ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
+			bool *p_open = NULL;
+			if (ImGui::Begin("Info", nullptr, window_flags)) {
+				// ImGui::Text("About: 3D Graphics and Animation 2023/24"); // ImGui::Separator();
+				ImGui::Text("Performance: %.3fms/Frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+				ImGui::Text("Pipeline: %s", shaders[models[modelSelectableID[selectedModel]].MshaderID].pipeline.pipe.error?"ERROR":"OK");
+				// Camera info
+				ImGui::Text("Camera position: %.3f, %.3d, %.3f", camera.Position.x, camera.Position.y, camera.Position.z);
+				ImGui::Text("Camera front: %.3f, %.3d, %.3f", camera.Front.x, camera.Front.y, camera.Front.z);
+				//
+				ImGui::Separator();
+				ImGui::Text("Object Mov Speed: %.3f", objectMovSpeed);
+				// Model info
+				ImGui::Text("Selected model ID: %s", modelSelectableID[selectedModel].c_str());
+				ImGui::Text("Position: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Position.x, models[modelSelectableID[selectedModel]].Position.y, models[modelSelectableID[selectedModel]].Position.z);
+				ImGui::Text("Rotation: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Rotation.x, models[modelSelectableID[selectedModel]].Rotation.y, models[modelSelectableID[selectedModel]].Rotation.z);
+				ImGui::Text("Scale: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Scale.x, models[modelSelectableID[selectedModel]].Scale.y, models[modelSelectableID[selectedModel]].Scale.z);
+				// Light info
+				/*
+				int lightSelectedDB = 1;
+				ImGui::Text("Light Dir: %.3f, %.3f, %.3f", lights_s[lightSelectedDB].lightDirection.x, lights_s[lightSelectedDB].lightDirection.y, lights_s[lightSelectedDB].lightDirection.z);
+				ImGui::Text("Light FOV: %.3f", lights_s[lightSelectedDB].perspective_fov);
+				//ImGui::Text("Orths (BL, BR, B, T): %.3f, %.3f, %.3f, %.3f", lights_s[lightSelectedDB].orth_left, lights_s[lightSelectedDB].orth_right, lights_s[lightSelectedDB].orth_bottom, lights_s[lightSelectedDB].orth_top);
+				ImGui::Text("Light near: %.3f Far: %.3f", lights_s[lightSelectedDB].near_plane, lights_s[lightSelectedDB].far_plane);
+				*/
+				/*
+				ImGui::Text("Sun Pos: %.3f, %.3f, %.3f", lights_s[0].lightPosition.x, lights_s[0].lightPosition.y, lights_s[0].lightPosition.z);
+				ImGui::Text("Sun offset: %.3f", SunOffset);
+				*/
+
+			}
+			ImGui::End();
+		}
+	}
 
 	// Alert user to how the mouse can be recaptured
 	if (mouseCapture == false) {
@@ -778,7 +921,7 @@ void ui()
 		ImGui::End();
 	}
 	
-
+	
 
 	// Rendering imgui
 	ImGui::Render();
@@ -819,6 +962,16 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 		}
 	}
 
+	// Show UI
+	// No clip
+	if (key == GLFW_KEY_C && action == GLFW_PRESS) {
+			if (UI_display) {
+			UI_display = false;
+		} else {
+			UI_display = true;
+		}
+	}
+
 	// Model speed
 	if (key == GLFW_KEY_O && action == GLFW_PRESS) {
 		objectMovSpeed += 0.05;
@@ -855,12 +1008,17 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 	}
 
 	// Debug polygons on
-	if (key == GLFW_KEY_Z && action == GLFW_PRESS) {
+	if (key == GLFW_KEY_X && action == GLFW_PRESS) {
 		if (showWireFrame) {
 			showWireFrame = false;
 		} else {
 			showWireFrame = true;
 		}
+	}
+
+	// No clip
+	if (key == GLFW_KEY_Z && action == GLFW_PRESS) {
+			NoClipToggle();
 	}
 
 	//CYRIL light
@@ -1050,5 +1208,38 @@ void resetAllModelPositions()
 	for(int i=0; i < modelSelectableID.size(); i++) {
 		models[modelSelectableID[i]].ResetTranslations();
 	}
+}
+
+void NoClipToggle()
+{
+	if(NoClip == true){
+		NoClip = false;
+		camera.canFly_Off();
+		camera.collisionCheck = true;
+		camera.movementSpeed = movementSpeed;
+	} else {
+		NoClip = true;
+		camera.canFly_On();
+		camera.collisionCheck = false;
+		camera.movementSpeed = NoClipMovementSpeed;
+	}
+}
+
+void moveSun(float offset) {
+	// Going to move the sun in a smooth curve using cos() - Assuming sun starts at max height
+
+	float zScale = 2.0; // Scale this movement in the z direction a bit more
+
+	// Contain the range of possible values - values outside this range won't do anything
+	float x = offset;
+	if(offset > 1.5) x = 1.5;
+	if(offset < -1.5) x = -1.5;
+
+	// Sun expected at position 0
+	lights_s[0].lightPosition.y = SunMaxHeight * cos(x);
+	
+
+	lights_s[0].lightPosition.z = SunStartPosZ +  (x * zScale);
+
 }
 
