@@ -95,7 +95,7 @@ auto currentTime = 0.0f;							// Framerate
 auto deltaTime = 0.0f;								// time passed
 auto lastTime = 0.0f;								// Used to calculate Frame rate
 
-auto fovy = 75.0f;									// Field of view (y axis)
+auto fovy = 50.0f;									// Field of view (y axis)
 
 CameraController camera;							// Camera
 
@@ -372,7 +372,8 @@ void startup()
 
 	// Camera settings
 	camera.fov_y = fovy;
-	// camera.canFly_Off();	// Stop player moving from the floor
+	camera.collisionCheck = true;
+	camera.canFly_Off();	// Stop player moving from the floor
 
 
 	// Animation test
@@ -740,8 +741,8 @@ void ui()
 			ImGui::Text("Performance: %.3fms/Frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 			ImGui::Text("Pipeline: %s", shaders[models[modelSelectableID[selectedModel]].MshaderID].pipeline.pipe.error?"ERROR":"OK");
 			// Camera info
-			// ImGui::Text("Camera position: %.3f, %.3d, %.3f", camera.Position.x, camera.Position.y, camera.Position.z);
-			// ImGui::Text("Camera front: %.3f, %.3d, %.3f", camera.Front.x, camera.Front.y, camera.Front.z);
+			ImGui::Text("Camera position: %.3f, %.3d, %.3f", camera.Position.x, camera.Position.y, camera.Position.z);
+			ImGui::Text("Camera front: %.3f, %.3d, %.3f", camera.Front.x, camera.Front.y, camera.Front.z);
 			//
 			ImGui::Separator();
 			ImGui::Text("Object Mov Speed: %.3f", objectMovSpeed);
