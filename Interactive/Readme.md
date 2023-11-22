@@ -32,7 +32,8 @@
 
 ## Basic Interaction and Hotkey Guide
 
-F key : ON/OFF light
+V key : ON/OFF ceiling light
+F key : ON/OFF sun
 
 ## Model Exporting and Importing
 
