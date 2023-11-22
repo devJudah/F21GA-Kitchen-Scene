@@ -44,6 +44,8 @@ class ShaderObject {
 
         void setMat4(string name, glm::mat4 value);
 
+        void setBool(string name, bool value);
+
         /**
          * Light properties helper functions
          * TODO: Move this to another class? They don't quite fit here
@@ -56,6 +58,7 @@ class ShaderObject {
 
         void setLightStructMat4(string name, int vIndex, glm::mat4 value);
 
+        void setLightStructBool(string name, int vIndex, bool value);
 
         // Which models are using this shader
         void RegisterModel(string modelID);
