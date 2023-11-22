@@ -175,7 +175,8 @@ float SunStartPosZ = 3.0f;		// This should be the same as the setting for light_
 float SunMaxHeight = 13.0f; 	// This should be the same as the setting for light_sun. TODO: Set these together
 float SunOffset = 0.0f;
 
-
+//light
+bool lightOn = false;
 
 int main()
 {
@@ -660,6 +661,13 @@ void render()
 		models[modelID].content.DrawModel(models[modelID].content.vaoAndEbos, models[modelID].content.model);
 	}
 
+
+	//light
+	if (lightOn) {
+		lights_s[0].On();
+	} else {
+	        lights_s[0].Off();
+	}
 
 	// Outline around object
 	// See https://learnopengl.com/Advanced-OpenGL/Stencil-testing for details
@@ -1166,7 +1174,11 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 			NoClipToggle();
 	}
 
-
+    	//light
+    	if (key == GLFW_KEY_F && action == GLFW_PRESS) {
+        	lightOn = !lightOn; // toggle light state
+    	}
+	
 	// Light debug
 	/*
 	// Light view
