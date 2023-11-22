@@ -32,7 +32,7 @@
 
 ## Basic Interaction and Hotkey Guide
 
-
+F key : ON/OFF light
 
 ## Model Exporting and Importing
 
@@ -141,6 +141,11 @@ Model placement, light placement?
 - _Gamma Correction_ from Learn OpenGL by Joey de Vries - https://learnopengl.com/Advanced-Lighting/Gamma-Correction
 
 <br /><br />
+
+### Screenshots
+
+<img src="Readme_Images/screenshots/lightoff.png" alt="Light off" height="600"/>
+<img src="Readme_Images/screenshots/lighton.png" alt="Light on" height="600"/>
 
 ## Additional Effects
 
