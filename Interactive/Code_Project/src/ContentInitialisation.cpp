@@ -420,6 +420,52 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	models[obj_sjL2.ModelID] = obj_sjL2;
 	modelSelectableID.push_back(obj_sjL2.ModelID);
 
+	// Model - Cup
+	ModelObject cup = ModelObject(
+						"cup", 
+						"assets/cup.gltf",
+						glm::vec3(1.169f, 1.225f, 2.099f),
+						//glm::vec3(25.0f, 12.0f, 3.0f),
+						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(0.11f, 0.11f, 0.11f),
+						"s_shadow"
+						);
+					
+	cup.SetMaterialProperties(16);
+	
+	// This is really terrible
+	models[cup.ModelID] = cup;
+	modelSelectableID.push_back(cup.ModelID);
+
+	// Model - Table
+	ModelObject table = ModelObject(
+						"table", 
+						"assets/table.gltf",
+						glm::vec3(3.048f, 1.0f, 2.149f),
+						glm::vec3(0.0f, -1.6f, 0.0f),
+						glm::vec3(1.0f, 1.0f, 1.0f),
+						"s_shadow"
+						);
+					
+	table.SetMaterialProperties(16);
+	
+	// This is really terrible
+	models[table.ModelID] = table;
+	modelSelectableID.push_back(table.ModelID);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Model - Dog
 	ModelObject obj1 = ModelObject(
@@ -438,7 +484,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	modelSelectableID.push_back(obj1.ModelID);
 	// End of dog
 
-	/*
+	
 	// Upper cabinet
 	ModelObject obj_cab = ModelObject(
 		"cabin", 
