@@ -490,7 +490,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 		"cabin", 
 		"assets/cabinv5.gltf",
 		glm::vec3(7.624f, 3.783f, -3.066f), 	// New position, placed above the bottom cabinet
-		glm::vec3(3.200f, -3.128f, -3.142f), 	// Rotation
+		glm::vec3(0.0f, 0.0f, 0.0f), 	// Rotation
 		glm::vec3(0.8f, 0.8f, 0.8f),  			// Scale
 		"s_shadow"
 	);
@@ -503,9 +503,9 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	// front cabinet
 	ModelObject obj_cabfront = ModelObject(
 		"cabinfront", 
-		"assets/cabinfront.gltf",
-		glm::vec3(7.589f, 3.783f, -3.078f), 	// New position, placed above the bottom cabinet
-		glm::vec3(3.200f, -3.128f, -3.142f), 	// Rotation
+		"assets/cabinfrontv2.gltf",
+		glm::vec3(5.228, 3.773f, -2.055f), 	// New position, placed above the bottom cabinet
+		glm::vec3(0.002f, 0.0f, 0.0f), 	// Rotation
 		glm::vec3(0.8f, 0.8f, 0.8f),			// Scale
 		"s_shadow"
 	);
