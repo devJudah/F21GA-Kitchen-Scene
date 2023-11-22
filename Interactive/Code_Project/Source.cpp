@@ -789,14 +789,6 @@ void ui()
 
 				ImGui::Separator();
 
-				if(UI_displaySunPosition == true) {
-					if (ImGui::MenuItem("Sun position (On)", "")) UI_displaySunPosition = false;
-				} else {
-					if (ImGui::MenuItem("Sun position (Off)", "")) UI_displaySunPosition = true;
-				}
-
-				ImGui::Separator();
-
 				if(NoClip == true) {
 					if (ImGui::MenuItem("Turn NoClip Off", "")) { NoClipToggle(); } 
 				} else {
@@ -896,10 +888,12 @@ void ui()
 				static int UI_lights_item_current = 0;
 				ImGui::LabelText("##LightSelect", "Light Select");
 				ImGui::ListBox("##lightSelectListBox", &UI_lights_item_current, UI_vLightIDs.data(), UI_vLightIDs.size(), 8);
-
+				
 				ImGui::Separator();
 
 				LightObject& uiSelectedLight = lights_s[UI_lights_item_current];
+
+				ImGui::Text("Light ID: %d", uiSelectedLight);
 
 				ImGui::LabelText("##Position", "Position");
 				ImGui::InputFloat("Position x", &uiSelectedLight.lightPosition.x, 0.1f, 1.0f, "%.3f");
@@ -931,7 +925,7 @@ void ui()
 				if (ImGui::SliderFloat("Perspective FOV",  &uiSelectedLight.perspective_fov, 0, 180.0, "%.3f"));
 
 				ImGui::LabelText("", "Light Properties");
-				// Bit annoying here but ok
+
 				ImGui::ColorEdit3("Light Colour", (float*) &uiSelectedLight.lightColor, ImGuiColorEditFlags_Float);
 
 				if (ImGui::SliderFloat("K ambient",  &uiSelectedLight.k_ambient, 0.0, 5.0, "%.3f"));
@@ -940,8 +934,8 @@ void ui()
 				
 				ImGui::LabelText("", "Attenuation Properties");
 				ImGui::InputFloat("Constant", &uiSelectedLight.atten_constant, 0.1f, 1.0f, "%.3f");
-				ImGui::InputFloat("Linear", &uiSelectedLight.atten_linear, 0.01f, 0.1f, "%.3f");
-				ImGui::InputFloat("Quadratic", &uiSelectedLight.atten_quadratic, 0.01f, 0.1f, "%.3f");
+				ImGui::InputFloat("Linear", &uiSelectedLight.atten_linear, 0.01f, 0.1f, "%.5f");
+				ImGui::InputFloat("Quadratic", &uiSelectedLight.atten_quadratic, 0.001f, 0.01f, "%.5f");
 
 			}
 			ImGui::End();
@@ -1052,8 +1046,16 @@ void ui()
 	// Alert user to how the mouse can be recaptured
 	if (mouseCapture == false) {
 		// Set this top middle;
+		window_flags = ImGuiWindowFlags_NoDecoration; 	// NoTitleBar + NoResize + NoScrollbar + NoCollapse
+		window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
+		window_flags |= ImGuiWindowFlags_NoSavedSettings;
+		window_flags |= ImGuiWindowFlags_NoFocusOnAppearing;
+		window_flags |= ImGuiWindowFlags_NoNav;
+
 		window_pos.y = work_pos.y + 8.0*PAD;
 		window_pos.x = (work_pos.x + work_size.x) - PAD;
+		window_pos_pivot.x = 1.0f;
+		window_pos_pivot.y = 1.0f;
 		ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
 		window_flags |= ImGuiWindowFlags_NoMove;
 		ImGui::SetNextWindowBgAlpha(0.0f);
