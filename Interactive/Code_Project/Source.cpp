@@ -121,7 +121,8 @@ bool UI_display	= false;								// Show any UI
 bool UI_displayInfoBox = true;							// Show the bottom right info box
 bool UI_displayFrameGraphBox = false;					// Show frame graphs
 bool UI_displaySunPosition = false;						// Show sun position changer
-bool UI_displayObjectProperties = false;					// Show object properties
+bool UI_displayObjectProperties = false;				// Show object properties
+bool UI_displayLightProperties = false;					// Show light properties
 
 // Frametime / fps graph stuff
 FrameGraphData fpsGraph;
@@ -135,8 +136,9 @@ bool lightViewDebug = false;
 
 // Hold all the models
 map<string, ModelObject> models;
-// For use in some UI stuff
+// For use in some UI stuff - Probably a way more sensible way to do this
 vector<const char*> UI_vModelIDs;
+vector<const char*> UI_vLightIDs;
 
 // Holds modelsIDs which can be selected (probably all of them?) - Would rather iterate through map<> models but that doesn't seem to work well
 vector<string> modelSelectableID;
@@ -172,12 +174,6 @@ ToastPop toastPop2;
 float SunStartPosZ = 3.0f;		// This should be the same as the setting for light_sun. TODO: Set these together
 float SunMaxHeight = 13.0f; 	// This should be the same as the setting for light_sun. TODO: Set these together
 float SunOffset = 0.0f;
-
-//CYRIL light
-bool lightOn = true; // Initial state of the light, on by default
-int lightSelectedDB = 0;
-vec3 defaultLightColour;
-
 
 
 
@@ -412,10 +408,6 @@ void startup()
 	toastPop2.Initialise(models["toast_2"].Position, models["toast_2"].Rotation);
 	toastPop2.reverseSpin = true;
 
-
-	// Extension to Cyril's light code, set initial light colour
-	defaultLightColour = lights_s[lightSelectedDB].lightColor;
-
 	// Populate model vector
 	//https://stackoverflow.com/questions/54519163/how-to-convert-stdvectorstdstring-to-const-char-array/54519324#54519324
 	// Why does C++ have to be like this
@@ -423,6 +415,10 @@ void startup()
 		UI_vModelIDs.push_back(modelID.c_str());
 	}
 
+	// Populate light vector
+	for(const LightObject& lightID : lights_s) {
+		UI_vLightIDs.push_back(lightID.lightID.c_str());
+	}
 }
 
 void update()
@@ -463,18 +459,6 @@ void update()
 			//toastPop2.Tick(models["toast_2"], deltaTime);
 		}
 	}
-
-	//CYRIL light
-	// Note this gets called a lot, probably don't need to run the on/off code every time
-    if (lightOn) {
-        lights_s[lightSelectedDB].On(); // use the method On to light on
-		//lights_s[lightSelectedDB].lightColor = glm::vec3(1.0f, 1.0f, 0.9f); // white and a bit yellow color to light on
-		lights_s[lightSelectedDB].lightColor = defaultLightColour;
-    } else {
-        lights_s[lightSelectedDB].Off(); // use the method Off to light off
-        lights_s[lightSelectedDB].lightColor = glm::vec3(0.0f, 0.0f, 0.0f); // black color to light off
-    }
-	
 
 	// Update any animations
 	animations();
@@ -823,6 +807,23 @@ void ui()
 
 				ImGui::EndMenu();
 			}
+			if (ImGui::BeginMenu("Lights"))
+			{
+
+				if(UI_displaySunPosition == true) {
+					if (ImGui::MenuItem("Sun position (On)", "")) UI_displaySunPosition = false;
+				} else {
+					if (ImGui::MenuItem("Sun position (Off)", "")) UI_displaySunPosition = true;
+				}
+
+				if(UI_displayLightProperties) {
+					if (ImGui::MenuItem("Hide Light Properties", "")) { UI_displayLightProperties = false; } 
+				} else {
+					if (ImGui::MenuItem("Show Light Properties", "")) { UI_displayLightProperties = true; }
+				}
+
+				ImGui::EndMenu();
+			}
 			ImGui::EndMainMenuBar();
 		}
 
@@ -878,6 +879,72 @@ void ui()
 			if (ImGui::Begin("Sun", nullptr, window_flags)) {
 				float cSamples[50];
 				if (ImGui::SliderFloat("Sun Position", &SunOffset, -1.5, 1.5, "%.2f", ImGuiSliderFlags_AlwaysClamp));
+			}
+			ImGui::End();
+		}
+
+		// Lights
+		if (UI_displayLightProperties) {
+			// Set window flags
+			window_flags = ImGuiWindowFlags_NoScrollbar;
+			//window_flags |= ImGuiWindowFlags_NoTitleBar;
+			window_flags |= ImGuiWindowFlags_NoResize;
+			window_flags |= ImGuiWindowFlags_NoScrollbar;
+			window_flags |= ImGuiWindowFlags_NoSavedSettings;
+			window_flags |= ImGuiWindowFlags_NoFocusOnAppearing;
+			window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
+
+			if (ImGui::Begin("Light Properties", nullptr, window_flags)) {
+				static int UI_lights_item_current = 0;
+				ImGui::LabelText("##LightSelect", "Light Select");
+				ImGui::ListBox("##lightSelectListBox", &UI_lights_item_current, UI_vLightIDs.data(), UI_vLightIDs.size(), 8);
+
+				ImGui::Separator();
+
+				LightObject& uiSelectedLight = lights_s[UI_lights_item_current];
+
+				ImGui::LabelText("##Position", "Position");
+				ImGui::InputFloat("Position x", &uiSelectedLight.lightPosition.x, 0.1f, 1.0f, "%.3f");
+				ImGui::InputFloat("Position y", &uiSelectedLight.lightPosition.y, 0.1f, 1.0f, "%.3f");
+				ImGui::InputFloat("Position z", &uiSelectedLight.lightPosition.z, 0.1f, 1.0f, "%.3f");
+
+				ImGui::LabelText("##Direction", "Direction");
+				ImGui::InputFloat("Direction x", &uiSelectedLight.lightDirection.x, 0.1f, 1.0f, "%.3f");
+				ImGui::InputFloat("Direction y", &uiSelectedLight.lightDirection.y, 0.1f, 1.0f, "%.3f");
+				ImGui::InputFloat("Direction z", &uiSelectedLight.lightDirection.z, 0.1f, 1.0f, "%.3f");
+
+				ImGui::LabelText("##LightUp", "Light up");
+				ImGui::InputFloat("Direction x", &uiSelectedLight.lightUp.x, 0.1f, 1.0f, "%.3f");
+				ImGui::InputFloat("Direction y", &uiSelectedLight.lightUp.y, 0.1f, 1.0f, "%.3f");
+				ImGui::InputFloat("Direction z", &uiSelectedLight.lightUp.z, 0.1f, 1.0f, "%.3f");
+
+
+				ImGui::LabelText("", "Light Type");
+				ImGui::Checkbox("Directional", &uiSelectedLight.DirectionalLight);
+
+				if (ImGui::SliderFloat("Near plane",  &uiSelectedLight.near_plane, 0.1, 150.0, "%.3f"));
+				if (ImGui::SliderFloat("Far plane",  &uiSelectedLight.far_plane, 0.1, 150.0, "%.3f"));
+
+				if (ImGui::SliderFloat("Orth left",  &uiSelectedLight.orth_left, -100, 100.0, "%.3f"));
+				if (ImGui::SliderFloat("Orth right",  &uiSelectedLight.orth_right, -100, 100.0, "%.3f"));
+				if (ImGui::SliderFloat("Orth bottom",  &uiSelectedLight.orth_bottom, -100, 100.0, "%.3f"));
+				if (ImGui::SliderFloat("Orth top",  &uiSelectedLight.orth_top, -100, 100.0, "%.3f"));
+
+				if (ImGui::SliderFloat("Perspective FOV",  &uiSelectedLight.perspective_fov, 0, 180.0, "%.3f"));
+
+				ImGui::LabelText("", "Light Properties");
+				// Bit annoying here but ok
+				ImGui::ColorEdit3("Light Colour", (float*) &uiSelectedLight.lightColor, ImGuiColorEditFlags_Float);
+
+				if (ImGui::SliderFloat("K ambient",  &uiSelectedLight.k_ambient, 0.0, 5.0, "%.3f"));
+
+				ImGui::Checkbox("On", &uiSelectedLight.switched_on);
+				
+				ImGui::LabelText("", "Attenuation Properties");
+				ImGui::InputFloat("Constant", &uiSelectedLight.atten_constant, 0.1f, 1.0f, "%.3f");
+				ImGui::InputFloat("Linear", &uiSelectedLight.atten_linear, 0.01f, 0.1f, "%.3f");
+				ImGui::InputFloat("Quadratic", &uiSelectedLight.atten_quadratic, 0.01f, 0.1f, "%.3f");
+
 			}
 			ImGui::End();
 		}
@@ -1099,30 +1166,11 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 			NoClipToggle();
 	}
 
-	//CYRIL light
-	// Toggle light on/off with 'L' key
-	if (key == GLFW_KEY_L && action == GLFW_PRESS) {
-		lightOn = !lightOn; // Toggles light status
-	}
-
-	
 
 	// Light debug
 	/*
 	// Light view
-
-	
-	if (key == GLFW_KEY_V && action == GLFW_PRESS) {
-		if (lights_s[0].isOn()) {
-			lights_s[0].Off();
-		} else {
-			lights_s[0].On();
-		}
-	}
-	
 	int lightSelectedDB = 1;
-
-	
 	if (key == GLFW_KEY_G && action == GLFW_PRESS) {
 		
 		if(lightViewDebug){ 
@@ -1138,77 +1186,6 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 			camera.Up = lights_s[lightSelectedDB].lightUp;
 			projMatrix = glm::perspective(glm::radians(lights_s[lightSelectedDB].perspective_fov), (GLfloat) SHADOW_WIDTH / (GLfloat) SHADOW_HEIGHT, lights_s[lightSelectedDB].near_plane, lights_s[lightSelectedDB].far_plane);
 		}
-	}
-	
-
-	
-	if (key == GLFW_KEY_1 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].lightDirection.x--;
-	}
-	if (key == GLFW_KEY_2 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].lightDirection.x++;
-	}
-	if (key == GLFW_KEY_3 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].lightDirection.y--;
-	}
-	if (key == GLFW_KEY_4 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].lightDirection.y++;
-	}
-	if (key == GLFW_KEY_5 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].lightDirection.z--;
-	}
-	if (key == GLFW_KEY_6 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].lightDirection.z++;
-	}
-	*/
-
-	/*
-	if (key == GLFW_KEY_1 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].orth_left--;
-	}
-	if (key == GLFW_KEY_2 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].orth_left++;
-	}
-	if (key == GLFW_KEY_3 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].orth_right--;
-	}
-	if (key == GLFW_KEY_4 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].orth_right++;
-	}
-	if (key == GLFW_KEY_5 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].orth_bottom--;
-	}
-	if (key == GLFW_KEY_6 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].orth_bottom++;
-	}
-	if (key == GLFW_KEY_7 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].orth_top--;
-	}
-	if (key == GLFW_KEY_8 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].orth_top++;
-	}
-	*/
-
-	/*
-	if (key == GLFW_KEY_7 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].perspective_fov--;
-	}
-	if (key == GLFW_KEY_8 && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].perspective_fov++;
-	}
-
-	if (key == GLFW_KEY_X && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].near_plane--;
-	}
-	if (key == GLFW_KEY_C && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].near_plane++;
-	}
-
-	if (key == GLFW_KEY_V && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].far_plane--;
-	}
-	if (key == GLFW_KEY_B && action == GLFW_PRESS) {
-		lights_s[lightSelectedDB].far_plane++;
 	}
 	*/
 

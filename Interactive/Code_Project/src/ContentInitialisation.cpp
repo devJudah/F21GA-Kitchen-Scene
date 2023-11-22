@@ -521,6 +521,7 @@ void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
 {   
     
     LightObject light_sun = LightObject(
+								"sun",
 								glm::vec3(22.0f, 13.0f, 3.0f),
 								glm::vec3(0.0f),
 								glm::vec3(0.0, 1.0, 0.0),
@@ -544,6 +545,7 @@ void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
 
 
 	LightObject light1 = LightObject(
+								"ceiling_1",
 								glm::vec3(5.4f, 7.1f, 0.0f),
 								glm::vec3(5.4f, 0.0f, 0.0f),
 								glm::vec3(0.0, 0.0, 1.0),
@@ -559,6 +561,7 @@ void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
 
 
     LightObject light2 = LightObject(
+								"ceiling_2",
 								glm::vec3(0.03f, 7.1, 0.0f),
 								glm::vec3(0.03f, 0.0f, 0.0f),
 								glm::vec3(0.0, 0.0, 1.0),
