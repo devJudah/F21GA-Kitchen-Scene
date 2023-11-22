@@ -84,6 +84,7 @@ void onMouseWheelCallback(GLFWwindow *window, double xoffset, double yoffset);
 // Other helper functions
 void resetAllModelPositions();
 void NoClipToggle();
+void moveSun(float offset);
 
 // VARIABLES
 GLFWwindow *window; 								// Keep track of the window
@@ -118,6 +119,10 @@ float NoClipMovementSpeed = 5.0f;
 // UI display flags
 bool displayInfoBox = true;							// Show the bottom right info box
 bool displayFrameGraphBox = false;					// Show frame graphs
+
+// Frametime / fps graph stuff
+FrameGraphData fpsGraph;
+FrameGraphData frameTimeGraph;
 
 
 Debugger debugger;									// Add one debugger to use for callbacks ( Win64 - openGLDebugCallback() ) or manual calls ( Apple - glCheckError() ) 
@@ -158,14 +163,17 @@ float objectMovSpeed = 1.0f;
 ToastPop toastPop1;
 ToastPop toastPop2;
 
+// Sun position - TODO: Move these into a sensible class
+float SunStartPosZ = 3.0f;		// This should be the same as the setting for light_sun. TODO: Set these together
+float SunMaxHeight = 13.0f; 	// This should be the same as the setting for light_sun. TODO: Set these together
+float SunOffset = 0.0f;
+
 //CYRIL light
 bool lightOn = true; // Initial state of the light, on by default
 int lightSelectedDB = 0;
 vec3 defaultLightColour;
 
-// Frametime / fps graph stuff
-FrameGraphData fpsGraph;
-FrameGraphData frameTimeGraph;
+
 
 
 int main()
@@ -407,8 +415,9 @@ void startup()
 
 void update()
 {	
+	/* Key presses */
 	
-	// Key press updates
+	// Object rotation
 	if (keyStatus[GLFW_KEY_LEFT]) models[modelSelectableID[selectedModel]].Rotation.y += objectMovSpeed * deltaTime;
 	if (keyStatus[GLFW_KEY_RIGHT]) models[modelSelectableID[selectedModel]].Rotation.y -= objectMovSpeed * deltaTime;
 	if (keyStatus[GLFW_KEY_UP]) models[modelSelectableID[selectedModel]].Rotation.x += objectMovSpeed * deltaTime;
@@ -433,8 +442,7 @@ void update()
 	if (keyStatus[GLFW_KEY_Q]) camera.keyPressed(CameraController::UP, deltaTime);
 	if (keyStatus[GLFW_KEY_E]) camera.keyPressed(CameraController::DOWN, deltaTime);
 
-	
-
+	// Start toast animation. TODO: move this 
 	if (keyStatus[GLFW_KEY_G]) {
 		if(!toastPop1.isRunning()) {
 			toastPop1.Start(models["toast_1"]);
@@ -456,6 +464,9 @@ void update()
 
 	// Update any animations
 	animations();
+
+	// Updates sun position
+	moveSun(SunOffset);
 
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
@@ -804,6 +815,25 @@ void ui()
 	}
 
 
+	// Sun moving slider
+	if (false) {
+		// Set window flags
+		window_flags = ImGuiWindowFlags_NoScrollbar;
+		//window_flags |= ImGuiWindowFlags_NoTitleBar;
+		window_flags |= ImGuiWindowFlags_NoResize;
+		window_flags |= ImGuiWindowFlags_NoScrollbar;
+		window_flags |= ImGuiWindowFlags_NoSavedSettings;
+		window_flags |= ImGuiWindowFlags_NoFocusOnAppearing;
+		window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
+
+		if (ImGui::Begin("Sun", nullptr, window_flags)) {
+			float cSamples[50];
+			if (ImGui::SliderFloat("Sun Position", &SunOffset, -1.5, 1.5, "%.2f", ImGuiSliderFlags_AlwaysClamp));
+		}
+		ImGui::End();
+	}
+
+
 	// Provided info box
 	window_flags = ImGuiWindowFlags_NoDecoration; 	// NoTitleBar + NoResize + NoScrollbar + NoCollapse
 	window_flags |= ImGuiWindowFlags_AlwaysAutoResize;				
@@ -849,6 +879,9 @@ void ui()
 			//ImGui::Text("Orths (BL, BR, B, T): %.3f, %.3f, %.3f, %.3f", lights_s[lightSelectedDB].orth_left, lights_s[lightSelectedDB].orth_right, lights_s[lightSelectedDB].orth_bottom, lights_s[lightSelectedDB].orth_top);
 			ImGui::Text("Light near: %.3f Far: %.3f", lights_s[lightSelectedDB].near_plane, lights_s[lightSelectedDB].far_plane);
 			*/
+			ImGui::Text("Sun Pos: %.3f, %.3f, %.3f", lights_s[0].lightPosition.x, lights_s[0].lightPosition.y, lights_s[0].lightPosition.z);
+			ImGui::Text("Sun offset: %.3f", SunOffset);
+
 		}
 		ImGui::End();
 	}
@@ -958,6 +991,16 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 	if (key == GLFW_KEY_Z && action == GLFW_PRESS) {
 			NoClipToggle();
 	}
+
+
+	// Move sun
+	if (key == GLFW_KEY_V && action == GLFW_PRESS) {
+		SunOffset -= 0.05f;
+	}
+	if (key == GLFW_KEY_B && action == GLFW_PRESS) {
+		SunOffset += 0.05f;
+	}
+
 
 	//CYRIL light
 	// Toggle light on/off with 'L' key
@@ -1161,5 +1204,23 @@ void NoClipToggle()
 		camera.collisionCheck = false;
 		camera.movementSpeed = NoClipMovementSpeed;
 	}
+}
+
+void moveSun(float offset) {
+	// Going to move the sun in a smooth curve using cos() - Assuming sun starts at max height
+
+	float zScale = 2.0; // Scale this movement in the z direction a bit more
+
+	// Contain the range of possible values - values outside this range won't do anything
+	float x = offset;
+	if(offset > 1.5) x = 1.5;
+	if(offset < -1.5) x = -1.5;
+
+	// Sun expected at position 0
+	lights_s[0].lightPosition.y = SunMaxHeight * cos(x);
+	
+
+	lights_s[0].lightPosition.z = SunStartPosZ +  (x * zScale);
+
 }
 
