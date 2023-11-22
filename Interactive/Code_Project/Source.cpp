@@ -82,6 +82,7 @@ void onMouseWheelCallback(GLFWwindow *window, double xoffset, double yoffset);
 
 // Other helper functions
 void resetAllModelPositions();
+void NoClipToggle();
 
 // VARIABLES
 GLFWwindow *window; 								// Keep track of the window
@@ -107,6 +108,11 @@ float lastY = 0.0f;									//
 
 bool enableMouseMovement = true;					// Can the mouse move the view
 bool mouseCapture = true;							// Capture mouse inside the window
+
+float movementSpeed = 3.0f;
+
+bool NoClip = false;
+float NoClipMovementSpeed = 5.0f;
 
 bool displayInfoBox = true;							// Show the bottom right info box
 
@@ -150,7 +156,7 @@ ToastPop toastPop1;
 ToastPop toastPop2;
 
 //CYRIL light
-bool lightOn = false; // Initial state of the light, off by default
+bool lightOn = true; // Initial state of the light, on by default
 int lightSelectedDB = 0;
 
 int main()
@@ -374,6 +380,7 @@ void startup()
 	camera.fov_y = fovy;
 	camera.collisionCheck = true;
 	camera.canFly_Off();	// Stop player moving from the floor
+	camera.movementSpeed = movementSpeed;
 
 
 	// Animation test
@@ -713,6 +720,12 @@ void ui()
 				if (ImGui::MenuItem("Show line view", "Z")) { showWireFrame = true; }
 			}
 
+			if(NoClip == true) {
+				if (ImGui::MenuItem("Turn NoClip Off", "")) { NoClipToggle(); } 
+			} else {
+				if (ImGui::MenuItem("Turn NoClip On", "")) { NoClipToggle(); }
+			}
+
             ImGui::EndMenu();
         }
         ImGui::EndMainMenuBar();
@@ -856,12 +869,17 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 	}
 
 	// Debug polygons on
-	if (key == GLFW_KEY_Z && action == GLFW_PRESS) {
+	if (key == GLFW_KEY_X && action == GLFW_PRESS) {
 		if (showWireFrame) {
 			showWireFrame = false;
 		} else {
 			showWireFrame = true;
 		}
+	}
+
+	// No clip
+	if (key == GLFW_KEY_Z && action == GLFW_PRESS) {
+			NoClipToggle();
 	}
 
 	//CYRIL light
@@ -1050,6 +1068,21 @@ void resetAllModelPositions()
 {
 	for(int i=0; i < modelSelectableID.size(); i++) {
 		models[modelSelectableID[i]].ResetTranslations();
+	}
+}
+
+void NoClipToggle()
+{
+	if(NoClip == true){
+		NoClip = false;
+		camera.canFly_Off();
+		camera.collisionCheck = true;
+		camera.movementSpeed = movementSpeed;
+	} else {
+		NoClip = true;
+		camera.canFly_On();
+		camera.collisionCheck = false;
+		camera.movementSpeed = NoClipMovementSpeed;
 	}
 }
 

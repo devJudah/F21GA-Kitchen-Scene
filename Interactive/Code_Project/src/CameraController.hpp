@@ -66,6 +66,8 @@ class CameraController
 		this->Front = DEFAULT_CAMERA_FRONT;
 		this->Up = DEFAULT_CAMERA_UP;
 
+		this->Position.y = DEFAULT_CAMERA_HEIGHT;
+
 		this->yaw = YAW;
 		
 		this->movementSpeed = MOVEMENT_SPEED;
