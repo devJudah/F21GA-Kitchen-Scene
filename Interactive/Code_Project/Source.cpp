@@ -45,6 +45,7 @@ using namespace glm;
 #include "src/LightObject.hpp"				// For light info
 #include "src/ContentInitialisation.hpp" 	// For loading shaders, models and lights
 #include "src/Animations.hpp"				// For small animations
+#include "src/FrameGraph.hpp"				// For the storage of data for the frame graphs
 
 
 // Main fuctions
@@ -114,7 +115,9 @@ float movementSpeed = 3.0f;
 bool NoClip = false;
 float NoClipMovementSpeed = 5.0f;
 
+// UI display flags
 bool displayInfoBox = true;							// Show the bottom right info box
+bool displayFrameGraphBox = false;					// Show frame graphs
 
 
 Debugger debugger;									// Add one debugger to use for callbacks ( Win64 - openGLDebugCallback() ) or manual calls ( Apple - glCheckError() ) 
@@ -158,6 +161,12 @@ ToastPop toastPop2;
 //CYRIL light
 bool lightOn = true; // Initial state of the light, on by default
 int lightSelectedDB = 0;
+vec3 defaultLightColour;
+
+// Frametime / fps graph stuff
+FrameGraphData fpsGraph;
+FrameGraphData frameTimeGraph;
+
 
 int main()
 {
@@ -390,6 +399,10 @@ void startup()
 	toastPop2.Initialise(models["toast_2"].Position, models["toast_2"].Rotation);
 	toastPop2.reverseSpin = true;
 
+
+	// Extension to Cyril's light code, set initial light colour
+	defaultLightColour = lights_s[lightSelectedDB].lightColor;
+
 }
 
 void update()
@@ -434,7 +447,8 @@ void update()
 	//CYRIL light
     if (lightOn) {
         lights_s[lightSelectedDB].On(); // use the method On to light on
-		lights_s[lightSelectedDB].lightColor = glm::vec3(1.0f, 1.0f, 0.9f); // white and a bit yellow color to light on
+		//lights_s[lightSelectedDB].lightColor = glm::vec3(1.0f, 1.0f, 0.9f); // white and a bit yellow color to light on
+		lights_s[lightSelectedDB].lightColor = defaultLightColour;
     } else {
         lights_s[lightSelectedDB].Off(); // use the method Off to light off
         lights_s[lightSelectedDB].lightColor = glm::vec3(0.0f, 0.0f, 0.0f); // black color to light off
@@ -676,16 +690,29 @@ void render()
 }
 
 void ui()
-{
+{	
+	/**
+	 * See https://github.com/ocornut/imgui and https://pthom.github.io/imgui_manual_online/manual/imgui_manual.html
+	 * for Dear ImGui info
+	*/
+
 	// Basic settings
 	ImGuiIO &io = ImGui::GetIO();
 	// 
-	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration; 	// NoTitleBa + NoResize + NoScrollbar + NoCollapse
-	window_flags |= ImGuiWindowFlags_AlwaysAutoResize;				
-	window_flags |= ImGuiWindowFlags_NoSavedSettings; 				
-	window_flags |= ImGuiWindowFlags_NoFocusOnAppearing; 			
-	window_flags |= ImGuiWindowFlags_NoNav;
 
+	
+	ImGui::StyleColorsClassic();
+	// See https://github.com/cinder/Cinder/blob/master/src/imgui/imgui_draw.cpp#L230-L283 for style options. E.g:
+	// style.Colors[ImGuiCol_WindowBg] = ImVec4(0.00f, 0.00f, 0.00f, 1.0f);
+	// ImGuiStyle& style = ImGui::GetStyle(); // Get the style so we can change bits of it
+
+	// Declare window_flags
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoScrollbar;
+
+	// Probably should do some fps counter code through OpenGL?
+	fpsGraph.AddData(ImGui::GetIO().Framerate); 
+	frameTimeGraph.AddData(1000.0f / ImGui::GetIO().Framerate);
+	
 	// Top title bar
 	if (ImGui::BeginMainMenuBar())
     {
@@ -713,7 +740,15 @@ void ui()
 			} else {
 				if (ImGui::MenuItem("Show info box", "")) displayInfoBox = true;
 			}
-	
+
+			if(displayFrameGraphBox == true) {
+				if (ImGui::MenuItem("Hide frame graphs", "")) displayFrameGraphBox = false;
+			} else {
+				if (ImGui::MenuItem("Show frame graphs", "")) displayFrameGraphBox = true;
+			}
+
+			ImGui::Separator();
+
 			if(showWireFrame == true) {
 				if (ImGui::MenuItem("Hide line view", "Z")) { showWireFrame = false; } 
 			} else {
@@ -732,7 +767,49 @@ void ui()
     }
 
 	
+	// Graphs
+	if (displayFrameGraphBox) {
+		// Set window flags
+		window_flags = ImGuiWindowFlags_NoScrollbar;
+		//window_flags |= ImGuiWindowFlags_NoTitleBar;
+		window_flags |= ImGuiWindowFlags_NoResize;
+		window_flags |= ImGuiWindowFlags_NoScrollbar;
+		window_flags |= ImGuiWindowFlags_NoSavedSettings;
+		window_flags |= ImGuiWindowFlags_NoFocusOnAppearing;
+		window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
 
+		if (ImGui::Begin("Frame Graphs", nullptr, window_flags)) {
+			float fpsSamples[fpsGraph.getGraphDataSize()];
+			float fpsTotal = 0;
+			for (int n = 0; n < fpsGraph.getGraphDataSize(); n++) {
+				fpsSamples[n] = fpsGraph.getGraphDataN(n);
+				fpsTotal += fpsGraph.getGraphDataN(n);
+			}
+			char fpsLabel[32];
+			sprintf(fpsLabel, "FPS. Avg: %.2f", fpsTotal/fpsGraph.getGraphDataSize());
+			// Should set dynamic scales?
+			ImGui::PlotLines(fpsLabel, fpsSamples, fpsGraph.getGraphDataSize(), 0, "", 0.0, 120.0, ImVec2(0, 100.0f));
+
+			float ftSamples[frameTimeGraph.getGraphDataSize()];
+			float ftTotal = 0;
+			for (int n = 0; n < frameTimeGraph.getGraphDataSize(); n++) {
+				ftSamples[n] = frameTimeGraph.getGraphDataN(n);
+				ftTotal += frameTimeGraph.getGraphDataN(n);
+			}
+			char ftLabel[32];
+			sprintf(ftLabel, "FPS. Avg: %.2f", ftTotal/frameTimeGraph.getGraphDataSize());
+			ImGui::PlotLines(ftLabel, ftSamples, frameTimeGraph.getGraphDataSize(), 0, "", 0.0, 100.0f, ImVec2(0, 100.0f));
+		}
+		ImGui::End();
+	}
+
+
+	// Provided info box
+	window_flags = ImGuiWindowFlags_NoDecoration; 	// NoTitleBar + NoResize + NoScrollbar + NoCollapse
+	window_flags |= ImGuiWindowFlags_AlwaysAutoResize;				
+	window_flags |= ImGuiWindowFlags_NoSavedSettings; 				
+	window_flags |= ImGuiWindowFlags_NoFocusOnAppearing; 			
+	window_flags |= ImGuiWindowFlags_NoNav;
 	const auto PAD = 10.0f;
 	const ImGuiViewport *viewport = ImGui::GetMainViewport();
 	ImVec2 work_pos = viewport->WorkPos; // Use work area to avoid menu-bar/task-bar, if any!
