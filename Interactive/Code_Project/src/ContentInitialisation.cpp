@@ -424,7 +424,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	ModelObject cup = ModelObject(
 						"cup", 
 						"assets/cup.gltf",
-						glm::vec3(1.169f, 1.225f, 2.099f),
+						glm::vec3(1.169f, 1.692f, 2.099f),
 						//glm::vec3(25.0f, 12.0f, 3.0f),
 						glm::vec3(0.0f, 0.0f, 0.0f),
 						glm::vec3(0.11f, 0.11f, 0.11f),
@@ -437,21 +437,75 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	models[cup.ModelID] = cup;
 	modelSelectableID.push_back(cup.ModelID);
 
-	// Model - Table
+	// Model - TABLE
 	ModelObject table = ModelObject(
 						"table", 
 						"assets/table.gltf",
-						glm::vec3(3.048f, 1.0f, 2.149f),
+						glm::vec3(3.047f, 1.441f, 2.204f),
 						glm::vec3(0.0f, -1.6f, 0.0f),
 						glm::vec3(1.0f, 1.0f, 1.0f),
 						"s_shadow"
 						);
 					
 	table.SetMaterialProperties(16);
-	
-	// This is really terrible
 	models[table.ModelID] = table;
 	modelSelectableID.push_back(table.ModelID);
+
+	// Model - FRIDGE-DOOR
+	ModelObject fridgeDoor = ModelObject(
+						"fridgeDoor", 
+						"assets/fridge_door.gltf",
+						glm::vec3(9.947f, -0.035f, -1.297f),
+						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(1.0f, 0.8f, 1.0f),
+						"s_shadow"
+						);
+					
+	fridgeDoor.SetMaterialProperties(16);
+	models[fridgeDoor.ModelID] = fridgeDoor;
+	modelSelectableID.push_back(fridgeDoor.ModelID);
+
+	// Model - FRIDGE-Body
+	ModelObject fridgeBody = ModelObject(
+						"fridgeBody", 
+						"assets/fridge_body.gltf",
+						glm::vec3(8.829f, -0.104f, -2.445f),
+						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(1.0f, 0.8f, 1.0f),
+						"s_shadow"
+						);
+					
+	fridgeBody.SetMaterialProperties(16);
+	models[fridgeBody.ModelID] = fridgeBody;
+	modelSelectableID.push_back(fridgeBody.ModelID);
+
+	// Model - Chair
+	ModelObject chairs = ModelObject(
+						"chairs", 
+						"assets/chairs.gltf",
+						glm::vec3(1.731f, -0.0f, 3.788f),
+						glm::vec3(0.0f, 3.1f, 0.0f),
+						glm::vec3(0.5f, 0.6f, 0.5f),
+						"s_shadow"
+						);
+					
+	chairs.SetMaterialProperties(16);
+	models[chairs.ModelID] = chairs;
+	modelSelectableID.push_back(chairs.ModelID);
+
+	// Model - Dish
+	ModelObject dish = ModelObject(
+						"dish", 
+						"assets/Dish.gltf",
+						glm::vec3(1.661f, 1.643f, 2.651f),
+						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(0.4f, 0.4f, 0.4f),
+						"s_shadow"
+						);
+					
+	dish.SetMaterialProperties(16);
+	models[dish.ModelID] = dish;
+	modelSelectableID.push_back(dish.ModelID);
 
 
 
