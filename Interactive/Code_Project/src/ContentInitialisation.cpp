@@ -58,6 +58,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	*/
 
 	// Outside image
+	/*
 	ModelObject objOutside = ModelObject(
 						"outside_box", 
 						"assets/background_image.gltf",
@@ -71,6 +72,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	objOutside.SetMaterialProperties(0);
 	models[objOutside.ModelID] = objOutside;
 	//modelSelectableID.push_back(objOutside.ModelID);
+	*/
 
 	// Floor
     ModelObject floor = ModelObject(
@@ -375,7 +377,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	modelSelectableID.push_back(obj1.ModelID);
 	// End of dog
 
-
+	/*
 	// Upper cabinet
 	ModelObject obj_cab = ModelObject(
 		"cabin", 
@@ -390,8 +392,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 			
 	models[obj_cab.ModelID] = obj_cab;
 	modelSelectableID.push_back(obj_cab.ModelID);
-
-
+	*/
 
 }
 
