@@ -425,9 +425,9 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	ModelObject obj1 = ModelObject(
 						"Dog", 
 						"assets/dog.gltf",
-						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(9.0f, 0.0f, 7.68f),
 						//glm::vec3(25.0f, 12.0f, 3.0f),
-						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(0.0f, -2.7f, 0.0f),
 						glm::vec3(1.0f, 1.0f, 1.0f),
 						"s_shadow"
 						);
