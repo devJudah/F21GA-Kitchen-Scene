@@ -395,7 +395,7 @@ bool StorageJarMov::LidMov(float t)
         currentPosition_Lid = startPosition_Lid;
         currentRotation_Lid = startRotation_Lid;
     }
-        else if (t <= ts[1]) {
+    else if (t <= ts[1]) {
         currentPosition_Lid = BasicMovement::lerp(startPosition_Lid, p1, BasicMovement::normalise(t, ts[0], ts[1]));
         currentRotation_Lid = BasicMovement::lerp(startRotation_Lid, r1, BasicMovement::normalise(t, ts[0], ts[1]));
     }
@@ -467,6 +467,90 @@ bool StorageJarMov::LidMov(float t)
         //currentRotation_Lid = currentRotation_Lid;
         return false;
     }
+    return true;
+}
 
+
+CabinDoorMove::CabinDoorMove()
+{
+
+}
+
+void CabinDoorMove::Initialise(glm::vec3 startPosition, glm::vec3 startRotation)
+{
+    this->startPosition = startPosition;
+    this->startRotation = startRotation;
+    this->currentPosition = startPosition;
+    this->currentRotation = startRotation;
+}
+bool CabinDoorMove::isRunning()
+{
+    return animationRunning;
+}
+
+void CabinDoorMove::Start(ModelObject &door)
+{
+    // If the animation isn't running, start it
+    if (!animationRunning) 
+    {
+        this->animationRunning = true;
+        this->startPosition = currentPosition;
+        this->startRotation = currentRotation;
+    }
+}
+
+bool CabinDoorMove::Tick(ModelObject &door, float deltaTime)
+{   
+    if (!animationRunning) {
+        return animationRunning;
+    }
+    
+    // Move the door
+    t += animationSpeed * deltaTime;
+
+    bool aniRun = this->DoorMov(door, t);
+    door.Position = this->currentPosition;
+    door.Rotation = this->currentRotation;
+
+    // Stop animation! 
+    if (aniRun == false) {
+        this->animationRunning = false;
+        this->t = 0.0;
+    }
+
+    return animationRunning;
+}
+
+bool CabinDoorMove::DoorMov(ModelObject &door, float t)
+{   
+    vec3 targetRot1 = vec3(startRotation.x, isOpen ? startRotation.y + 0.5 : startRotation.y - 0.5, startRotation.z);
+
+    vec3 targetRot2 = vec3(startRotation.x, isOpen ? startRotation.y + 1 : startRotation.y - 1, startRotation.z);
+
+    vec3 targetRot3 = vec3(startRotation.x, isOpen ? startRotation.y + 1.5 : startRotation.y - 1.5, startRotation.z);
+
+    vec3 targetRot4 = vec3(startRotation.x, isOpen ? door.DefaultRotation.y : startRotation.y - 2, startRotation.z);
+
+    float ts[] = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0};
+
+    if (t < ts[0]) {
+        this->currentRotation = startRotation;
+    }
+    else if (t <= ts[1]) {
+        this->currentRotation = BasicMovement::lerp(startRotation, targetRot1, BasicMovement::normalise(t, ts[0], ts[1]));
+    }
+    else if (t <= ts[2]) {
+        this->currentRotation = BasicMovement::lerp(targetRot1, targetRot2, BasicMovement::normalise(t, ts[1], ts[2]));
+    }
+    else if (t <= ts[3]) {
+        this->currentRotation = BasicMovement::lerp(targetRot2, targetRot3, BasicMovement::normalise(t, ts[2], ts[3]));
+    }
+    else if (t <= ts[4]) {
+        this->currentRotation = BasicMovement::lerp(targetRot3, targetRot4, BasicMovement::normalise(t, ts[3], ts[4]));
+    } else {
+        isOpen = isOpen ? false : true;
+        return false;
+    }
+    
     return true;
 }

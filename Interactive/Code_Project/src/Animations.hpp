@@ -97,6 +97,41 @@ class StorageJarMov
 
         bool JarMov(float t);
         bool LidMov(float t);
+};
 
+class CabinDoorMove
+{
+    public:
+
+        float animationSpeed = 1.0;
+        
+        bool reverseSpin = false;
+
+        
+        CabinDoorMove();
+
+        void Initialise(glm::vec3 startPosition, glm::vec3 startRotation);
+
+
+        bool isRunning();
+
+        void Start(ModelObject &door);
+
+        bool Tick(ModelObject &door, float deltaTime);
+
+
+    private:
+        glm::vec3 startPosition;
+        glm::vec3 startRotation;
+
+        glm::vec3 currentPosition;
+        glm::vec3 currentRotation;
+
+        bool animationRunning = false;
+        bool isOpen = false;
+        
+        float t = 0.0;
+
+        bool DoorMov(ModelObject &door, float t);
 };
 

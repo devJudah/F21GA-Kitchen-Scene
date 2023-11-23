@@ -170,7 +170,7 @@ float objectMovSpeed = 1.0f;
 ToastPop toastPop1;
 ToastPop toastPop2;
 StorageJarMov storageJarMov1;
-
+CabinDoorMove cabinDoorMove;
 
 // Sun position - TODO: Move these into a sensible class
 float SunStartPosZ = 3.0f;		// This should be the same as the setting for light_sun. TODO: Set these together
@@ -406,6 +406,7 @@ void startup()
 	// !!WARNING!! This doesn't seem to stop if the model IDs here don't exist - so it will crash later in the render loop - be careful with model_ids!
 	toastPop1.Initialise(models["toast_1"].Position, models["toast_1"].Rotation);
 	toastPop2.Initialise(models["toast_2"].Position, models["toast_2"].Rotation);
+	cabinDoorMove.Initialise(models["cabinfront2"].Position, models["cabinfront2"].Rotation);
 	toastPop2.reverseSpin = true;
 
 	// Storage Jar
@@ -477,9 +478,13 @@ void update()
 			if(!storageJarMov1.isRunning()) {
 				storageJarMov1.Start(models["sj_silver_body"], models["sj_silver_lid"]);
 			}
+		} else if (modelSelectableID[selectedModel] == "cabinfront2") {
+			if(!cabinDoorMove.isRunning()) {
+				cabinDoorMove.Start(models["cabinfront2"]);
+			}
 		}
-
 	}
+
 
 	// Update any animations
 	animations();
@@ -505,6 +510,10 @@ void animations()
 
 	if (storageJarMov1.isRunning()) {
 		storageJarMov1.Tick(models["sj_silver_body"], models["sj_silver_lid"], deltaTime);
+	}
+
+	if (cabinDoorMove.isRunning()) {
+		cabinDoorMove.Tick(models["cabinfront2"], deltaTime);
 	}
 }
 
