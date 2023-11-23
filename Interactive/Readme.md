@@ -302,6 +302,22 @@ To highlight the currently selected object, it is possible to turn on object out
 
 The stencil test is used to only write to the stencil buffer when an object we want to highlight is rendered. Once all these objects have been rendered, we use the data in the stencil buffer as a mask on areas not to overwrite, and render a slightly larger version of the model. Since this has the effect of giving the object an outline, that can also been seen through other objects.
 
+<img src="Readme_Images/effects/outline_highlight.png" alt="UI overview" width="500"/>
+
+### Polygon Lines
+
+Rendering normally or with polygon lines, by using OpenGL's rendering options.
+```
+if (showWireFrame) {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Draw lines
+} else {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Draw normally
+}
+```
+
+<img src="Readme_Images/effects/linedraw.png" alt="UI overview" width="500"/>
+
+
 
 #### References
 
