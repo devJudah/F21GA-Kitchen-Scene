@@ -177,6 +177,14 @@ float SunStartPosZ = 3.0f;		// This should be the same as the setting for light_
 float SunMaxHeight = 13.0f; 	// This should be the same as the setting for light_sun. TODO: Set these together
 float SunOffset = 0.0f;
 
+// Sky colours
+vec4 SkyBlueColor = vec4{0.741f, 0.925f, 1.0f, 1.0f};
+vec4 OrangeDusk = vec4{0.929f, 0.655f, 0.259f, 1.0f};
+
+// Current sky colour
+vec4 SkyColor = SkyBlueColor;
+
+
 int main()
 {
 	cout << endl << "===" << endl << "3D Graphics and Animation - Running..." << endl;
@@ -513,11 +521,12 @@ void render()
 	glViewport(0, 0, windowWidth, windowHeight);
 
 	// Clear colour buffer
+	/*
 	glm::vec4 grayLilac = glm::vec4(0.831f, 0.792f, 0.803f, 1.0f);
 	glm::vec4 darkGray = glm::vec4(0.05f, 0.05f, 0.05f, 1.0f);
 	glm::vec4 skyBlue = glm::vec4(0.741f, 0.925f, 1.0f, 1.0f);
 	glm::vec4 backgroundColor = skyBlue;
-
+	*/
 	/*
 	glClearBufferfv(GL_COLOR, 0, &backgroundColor[0]);
 
@@ -529,7 +538,7 @@ void render()
 	// Alternative way to clear buffer. From https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
 	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	//glClearColor(0.831f, 0.792f, 0.803f, 1.0f);
-	glClearColor(0.741f, 0.925f, 1.0f, 1.0f);
+	glClearColor(SkyColor.r, SkyColor.g, SkyColor.b, SkyColor.a);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
@@ -893,9 +902,15 @@ void ui()
 			window_flags |= ImGuiWindowFlags_NoFocusOnAppearing;
 			window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
 
-			if (ImGui::Begin("Sun", nullptr, window_flags)) {
-				float cSamples[50];
+			if (ImGui::Begin("Sky", nullptr, window_flags)) {
 				if (ImGui::SliderFloat("Sun Position", &SunOffset, -1.5, 1.5, "%.2f", ImGuiSliderFlags_AlwaysClamp));
+				
+				ImGui::Separator();
+
+				ImGui::ColorEdit3("Sky Colour", (float*) &SkyColor, ImGuiColorEditFlags_Float);
+
+				if (ImGui::Button("Blue Sky")) { SkyColor = SkyBlueColor; }
+				
 			}
 			ImGui::End();
 		}

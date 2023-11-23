@@ -81,7 +81,7 @@ bool ToastPop::Tick(ModelObject &toast, float deltaTime)
 bool ToastPop::ToastMov(float t)
 {   
     vec3 downPos = vec3(startPosition.x, startPosition.y - 0.15, startPosition.z);
-    vec3 topPos = vec3(startPosition.x, startPosition.y + 1.3, startPosition.z);
+    vec3 topPos = vec3(startPosition.x, startPosition.y + 1.12, startPosition.z);
     vec3 bouncePos = vec3(startPosition.x, startPosition.y - 0.08, startPosition.z);
 
     vec3 endPos = vec3(-3.470, 2.20, -3.055);
