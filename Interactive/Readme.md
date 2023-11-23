@@ -36,8 +36,41 @@
 
 ## Basic Interaction and Hotkey Guide
 
-V key : ON/OFF ceiling light
-F key : ON/OFF sun
+Mouse movement : Move camera / view
+
+| Key | Effect |
+| --- | --- |
+| `W` | Move forward |
+| `S` | Move backward |
+| `A` | Move left |
+| `D` | Move right |
+| `Q` | Move Up (NoClip enabled) |
+| `E` | Move Down (NoClip enabled) |
+| `Tab` | Toggle mouse lock to window |
+| `C` | Toggle UI (Off by default) |
+| `Z` | Toggle NoClip |
+| `X` | Toggle Wireframe |
+| `F` | Sun on/off |
+| `V` | Ceiling lights on/off |
+| `R` | Reset selected object position |
+| `Z` | Toggle NoClip |
+| `,` | Change selected object (Object ID shown in bottom right info box) |
+| `.` | Change selected object (Object ID shown in bottom right info box) |
+| `H` | Move selected object left relative to the camera |
+| `K` | Move selected object right relative to the camera |
+| `U` | Move selected object forward relative to the camera |
+| `J` | Move selected object back relative to the camera |
+| `Y` | Move selected object down |
+| `I` | Move selected object up|
+| `O` | Increase move selected object sensitivity |
+| `L` | Decrease move selected object sensitivity |
+| `Left` | Rotate selected object |
+| `Right` | Rotate selected object |
+| `Up` | Rotate selected object |
+| `Down` | Rotate selected object |
+
+
+<br /><br />
 
 ## Model Exporting and Importing
 
@@ -440,5 +473,5 @@ Animation was added and interaction with cabinetfront 1. Upon selecting this obj
 
 ## References
 
-Any other references / reference summary
+Extensive use was made of LearnOpenGL by Joey de Vries - https://learnopengl.com/ 
 
