@@ -39,7 +39,7 @@
 Mouse movement : Move camera / view
 
 | Key | Effect |
-| --- | --- |
+| :---: | --- |
 | `W` | Move forward |
 | `S` | Move backward |
 | `A` | Move left |
@@ -239,7 +239,7 @@ These terms are then added together to produce the final effect.
 
 ### Attenuation
 
-To reduce the effect of the lights the further away they are from an object (fragment), attenuation is used. This uses the light's position and fragment position to reduce the lighting on that fragment. This effect is combined with Blinn-Phong lighting mode, in the `fs_shsadow_map.glsl` shader.
+To reduce the effect of the lights the further away they are from an object (fragment), attenuation is used. This uses the light's position and fragment position to reduce the lighting on that fragment. This effect is combined with Blinn-Phong lighting model, in the `fs_shsadow_map.glsl` shader.
 
 ```
  // Attenuation
@@ -293,7 +293,7 @@ Lights and their basic properties are set in `LightObject.hpp` and `LightObject.
 
 ### Multiple lights and shadows
 
-The light model is extended to work with multiple lights (and produce shadows for them) by rendering the scene once for each light to produce a depth map, then combining the light and shadow values in `fs_shsadow_map.glsl`. This is done by looping through each light, processing the information for the fragment and then adding them together to produce a final light term
+The light model is extended to work with multiple lights (and produce shadows for them) by rendering the scene once for each light to produce a depth map (one for each light), then combining the light and shadow values in `fs_shsadow_map.glsl`. This is done by looping through each light, processing the information for the fragment and then adding them together to produce a final light term
 ```
 for(int i=0; i < num_lights; i++) {
 
@@ -337,6 +337,11 @@ The stencil test is used to only write to the stencil buffer when an object we w
 
 <img src="Readme_Images/effects/outline_highlight.png" alt="UI overview" width="500"/>
 
+#### References
+
+- _Stencil testing_ from Learn OpenGL by Joey de Vries - https://learnopengl.com/Advanced-OpenGL/Stencil-testing
+- _OpenGL Tutorial 15 - Stencil Buffer & Outlining_ by Victor Gordan - https://www.youtube.com/watch?v=ngF9LWWxhd0
+
 ### Polygon Lines
 
 Rendering normally or with polygon lines, by using OpenGL's rendering options.
@@ -351,18 +356,13 @@ if (showWireFrame) {
 <img src="Readme_Images/effects/linedraw.png" alt="UI overview" width="500"/>
 
 
-
-#### References
-
-- _Stencil testing_ from Learn OpenGL by Joey de Vries - https://learnopengl.com/Advanced-OpenGL/Stencil-testing
-- _OpenGL Tutorial 15 - Stencil Buffer & Outlining_ by Victor Gordan - https://www.youtube.com/watch?v=ngF9LWWxhd0
-
-
 <br /><br />
 
 ## Interaction
 
 ### Camera
+
+The camera code is found in the `CameraController.hpp` file. This code uses _Camera_ from Learn OpenGL as a reference.
 
 When the camera view matrix is called, it takes the camera position, front (what it is currently looking at) and up vector to produce a view matrix. 
 
