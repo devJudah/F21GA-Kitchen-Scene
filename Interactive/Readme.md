@@ -234,9 +234,19 @@ Used the early made plate from blender and then the texture are baked in for the
 Then the file exported as a .gltf file and then is trasfered to the opengl 
 ,images inside the opengl is given below
 
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/9e0ca3737f4d4a4f9ae176300d0fc44480386723/Interactive/Readme_Images/screenshots/Plate/dish_import.png"  height="450"/>
+
+## Fridge 
+
+Similar to the Plate fride is also exported,
+Export setting image is given below
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/9c0d1b4f260566f50806c13df5ff9bda6b6043f3/Interactive/Readme_Images/screenshots/Fridge/Screenshot%202023-11-23%20at%2010.58.07.png"  height="300"/>
 
 
+The openGL image of the fridge is displayed below
 
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/9c0d1b4f260566f50806c13df5ff9bda6b6043f3/Interactive/Readme_Images/screenshots/Fridge/fridgeImport.png"  height="450"/>
 
 
 
