@@ -898,7 +898,7 @@ void ui()
 					ftTotal += frameTimeGraph.getGraphDataN(n);
 				}
 				char ftLabel[32];
-				sprintf(ftLabel, "FPS. Avg: %.2f", ftTotal/frameTimeGraph.getGraphDataSize());
+				sprintf(ftLabel, "Frame time. Avg: %.2f", ftTotal/frameTimeGraph.getGraphDataSize());
 				ImGui::PlotLines(ftLabel, ftSamples, frameTimeGraph.getGraphDataSize(), 0, "", 0.0, 100.0f, ImVec2(0, 100.0f));
 			}
 			ImGui::End();

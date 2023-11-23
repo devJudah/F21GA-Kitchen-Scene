@@ -319,7 +319,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
     ModelObject obj_kettle = ModelObject(
 								"kettle", 
 								"assets/kettle.gltf",
-								glm::vec3(-3.45, 1.65, 1.35),
+								glm::vec3(-3.45, 1.65, -1.55),
 								glm::vec3(0.0f, 0.0f, 0.0f),
 								glm::vec3(0.2f, 0.2f, 0.2f),
 								"s_shadow"
@@ -394,7 +394,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	ModelObject cup = ModelObject(
 						"cup", 
 						"assets/cup.gltf",
-						glm::vec3(1.169f, 1.692f, 2.099f),
+						glm::vec3(1.169f, 1.567f, 2.099f),
 						//glm::vec3(25.0f, 12.0f, 3.0f),
 						glm::vec3(0.0f, 0.0f, 0.0f),
 						glm::vec3(0.11f, 0.11f, 0.11f),
@@ -418,7 +418,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 					
 	table.SetMaterialProperties(16);
 	models[table.ModelID] = table;
-	modelSelectableID.push_back(table.ModelID);
+	//modelSelectableID.push_back(table.ModelID);
 
 	// Model - FRIDGE-DOOR
 	ModelObject fridgeDoor = ModelObject(
@@ -446,11 +446,11 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 					
 	fridgeBody.SetMaterialProperties(16);
 	models[fridgeBody.ModelID] = fridgeBody;
-	modelSelectableID.push_back(fridgeBody.ModelID);
+	//modelSelectableID.push_back(fridgeBody.ModelID);
 
 	// Model - Chair
-	ModelObject chairs = ModelObject(
-						"chairs", 
+	ModelObject chair1 = ModelObject(
+						"chair_1", 
 						"assets/chairs.gltf",
 						glm::vec3(1.731f, -0.0f, 3.788f),
 						glm::vec3(0.0f, 3.1f, 0.0f),
@@ -458,15 +458,41 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 						"s_shadow"
 						);
 					
-	chairs.SetMaterialProperties(16);
-	models[chairs.ModelID] = chairs;
-	modelSelectableID.push_back(chairs.ModelID);
+	chair1.SetMaterialProperties(16);
+	models[chair1.ModelID] = chair1;
+	modelSelectableID.push_back(chair1.ModelID);
+
+	ModelObject chair2 = ModelObject(
+						"chair_2", 
+						"assets/chairs.gltf",
+						glm::vec3(2.931f, -0.0f, 3.788f),
+						glm::vec3(0.0f, 3.1f, 0.0f),
+						glm::vec3(0.5f, 0.6f, 0.5f),
+						"s_shadow"
+						);
+					
+	chair2.SetMaterialProperties(16);
+	models[chair2.ModelID] = chair2;
+	modelSelectableID.push_back(chair2.ModelID);
+
+	ModelObject chair3 = ModelObject(
+						"chair_3", 
+						"assets/chairs.gltf",
+						glm::vec3(4.031f, -0.0f, 3.788f),
+						glm::vec3(0.0f, 3.1f, 0.0f),
+						glm::vec3(0.5f, 0.6f, 0.5f),
+						"s_shadow"
+						);
+					
+	chair3.SetMaterialProperties(16);
+	models[chair3.ModelID] = chair3;
+	modelSelectableID.push_back(chair3.ModelID);
 
 	// Model - Dish
 	ModelObject dish = ModelObject(
 						"dish", 
 						"assets/Dish.gltf",
-						glm::vec3(1.661f, 1.643f, 2.651f),
+						glm::vec3(1.661f, 1.508f, 2.651f),
 						glm::vec3(0.0f, 0.0f, 0.0f),
 						glm::vec3(0.4f, 0.4f, 0.4f),
 						"s_shadow"
@@ -508,7 +534,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	obj_cab.SetMaterialProperties(64);
 			
 	models[obj_cab.ModelID] = obj_cab;
-	modelSelectableID.push_back(obj_cab.ModelID);
+	//modelSelectableID.push_back(obj_cab.ModelID);
 
 	// front cabinet
 	ModelObject obj_cabfront1 = ModelObject(
@@ -523,7 +549,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	obj_cabfront1.SetMaterialProperties(64);
 			
 	models[obj_cabfront1.ModelID] = obj_cabfront1;
-	modelSelectableID.push_back(obj_cabfront1.ModelID);
+	//modelSelectableID.push_back(obj_cabfront1.ModelID);
 
 	ModelObject obj_cabfront2 = ModelObject(
 		"cabinfront2", 
@@ -538,6 +564,37 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 			
 	models[obj_cabfront2.ModelID] = obj_cabfront2;
 	modelSelectableID.push_back(obj_cabfront2.ModelID);
+
+
+	ModelObject obj1_cooker = ModelObject(
+						"cooker_stove", 
+						"assets/cooker_stove.gltf",
+						glm::vec3(0.0f, 0.0f, 0.2f),
+						glm::vec3(0.0f, 0.0f, 0.0f),
+						gScale,
+						"s_shadow"
+						);
+
+	obj1_cooker.SetMaterialProperties(16);
+
+	models[obj1_cooker.ModelID] = obj1_cooker;
+	//modelSelectableID.push_back(obj1_cooker.ModelID);
+
+
+	ModelObject obj1_door = ModelObject(
+						"door", 
+						"assets/door.gltf",
+						glm::vec3(0.0f, 0.0f, 0.0f),
+						glm::vec3(0.0f, 0.0f, 0.0f),
+						gScale,
+						"s_shadow"
+						);
+
+	obj1_door.SetMaterialProperties(16);
+
+	models[obj1_door.ModelID] = obj1_door;
+
+
 }
 
 void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
