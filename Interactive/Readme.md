@@ -200,3 +200,26 @@ The UI is built using the [Dear ImGui](https://github.com/ocornut/imgui) library
 
 Any other references / reference summary
 
+
+
+## Upper Cabinet
+
+First I changed the model into three meshes and baked the material for each object,
+1: Back frame
+2: Front frame with all the doors of cabinet except 1
+3: 1 Remaining cabinet door
+
+<img src="Readme_Images/models/cabinfront_1.png"  height="600"/>
+<img src="Readme_Images/models/cabinfront_2.png" height="600"/>
+<img src="Readme_Images/models/cabin_backframe.png" height="600"/>
+
+Then Exported all three meshes with gltf format and imported in the project and placed the models onto their correct place.
+<img src="Readme_Images/models/cabinet_placement.png" height="600"/>
+
+
+Then added animation and interaction with cabinetfront 1. Upon selecting this object and pressing G will rotate open the door. But I was unable to specify the direction of the animation.
+<img src="Readme_Images/models/doorOpen.png" height="600"/>
+
+##References
+
+Baking and openGL documentation: as mentioned above.
