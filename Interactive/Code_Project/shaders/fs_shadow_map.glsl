@@ -81,7 +81,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, vec3 lightPos, int shadowMapInde
     // Fix for "Shadow Acne" - Calculate bias (based on depth map resolution and slope)
     vec3 normal = normalize(fs_in.Normal);
     vec3 lightDir = normalize(lightPos - fs_in.FragPos);
-    float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
+    float bias = max(0.01 * (1.0 - dot(normal, lightDir)), 0.001);
 
     // PCF (percentage-closer filtering) - Help smooth shadow edges
     float shadowTotal = 0.0;
