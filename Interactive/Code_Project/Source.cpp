@@ -991,19 +991,19 @@ void ui()
 				string mID = UI_vModelIDs.at(UI_models_item_current);
 
 				ImGui::LabelText("##Position", "Position");
-				ImGui::InputFloat("Position x", &models[mID].Position.x, 0.1f, 1.0f, "%.3f");
-				ImGui::InputFloat("Position y", &models[mID].Position.y, 0.1f, 1.0f, "%.3f");
-				ImGui::InputFloat("Position z", &models[mID].Position.z, 0.1f, 1.0f, "%.3f");
+				ImGui::InputFloat("Position x", &models[mID].Position.x, 0.1f, 1.0f, "%.4f");
+				ImGui::InputFloat("Position y", &models[mID].Position.y, 0.1f, 1.0f, "%.4f");
+				ImGui::InputFloat("Position z", &models[mID].Position.z, 0.1f, 1.0f, "%.4f");
 
 				ImGui::LabelText("##Rotation", "Rotation");
-				if (ImGui::SliderFloat("Rotation x", &models[mID].Rotation.x, -8, 8, "%.3f"));
-				if (ImGui::SliderFloat("Rotation y", &models[mID].Rotation.y, -8, 8, "%.3f"));
-				if (ImGui::SliderFloat("Rotation z", &models[mID].Rotation.z, -8, 8, "%.3f"));
+				if (ImGui::SliderFloat("Rotation x", &models[mID].Rotation.x, -8, 8, "%.4f"));
+				if (ImGui::SliderFloat("Rotation y", &models[mID].Rotation.y, -8, 8, "%.4f"));
+				if (ImGui::SliderFloat("Rotation z", &models[mID].Rotation.z, -8, 8, "%.4f"));
 
 				ImGui::LabelText("##Scale", "Scale");
-				if (ImGui::SliderFloat("Scale x",  &models[mID].Scale.x, -2.0, 2.0, "%.3f"));
-				if (ImGui::SliderFloat("Scale y",  &models[mID].Scale.y, -2.0, 2.0, "%.3f"));
-				if (ImGui::SliderFloat("Scale z",  &models[mID].Scale.z, -2.0, 2.0, "%.3f"));
+				if (ImGui::SliderFloat("Scale x",  &models[mID].Scale.x, -2.0, 2.0, "%.4f"));
+				if (ImGui::SliderFloat("Scale y",  &models[mID].Scale.y, -2.0, 2.0, "%.4f"));
+				if (ImGui::SliderFloat("Scale z",  &models[mID].Scale.z, -2.0, 2.0, "%.4f"));
 
 				if (ImGui::Button("Reset Model Position")) { models[mID].ResetTranslations(); }
 
