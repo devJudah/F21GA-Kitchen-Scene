@@ -371,6 +371,16 @@ There are various key presses that produce effects within the Interactive OpenGL
 
 The UI is built using the [Dear ImGui](https://github.com/ocornut/imgui) library.
 
+<img src="Readme_Images/ui/overall_ui.png" alt="UI overview" width="1000"/>
+
+The UI has a main menu bar that accesses the other UI menu options.
+
+There are menu for model selection and manipulation, as well as for light selection and manipulation.
+
+There's information boxes for the frame time and FPS graphs. General camera and scene information is shown in the bottom right.
+
+There are additional options for sun movement that tries to follow a curve to mimic time passing.
+
 
 #### References
 - [Dear ImGui](https://github.com/ocornut/imgui) by [@ocornut](https://github.com/ocornut)
