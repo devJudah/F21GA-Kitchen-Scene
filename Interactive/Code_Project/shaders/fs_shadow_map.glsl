@@ -62,6 +62,9 @@ uniform int PCF_FilterSize = 3; // How many samples to take for the PCF.
                                 // Samples taken: PCF_FilterSize^2 (since this is 3 samples in x and 3 samples in y directions)
                                 // Possibly should also be odd?
 
+// Gamma
+uniform float gamma;
+
 
 float ShadowCalculation(vec4 fragPosLightSpace, vec3 lightPos, int shadowMapIndex)
 {   
@@ -174,8 +177,8 @@ void main()
     // Add total lighting together with colour
     totalLighting *= color;
 
-    // Gamma correction. TODO: Move this into option
-    float gamma = 2.2;
+    // Gamma correction.
+    // float gamma = 2.2;
     totalLighting = pow(totalLighting, vec3(1.0/gamma));
 
     // Final result

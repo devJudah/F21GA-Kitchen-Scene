@@ -15,6 +15,6 @@ uniform mat4 model_matrix;
 uniform float brightness;
 
 void main(void){
-  //color = brightness * texture(tex, fs_in.tc);
-  color = texture(tex, fs_in.tc);
+  color = brightness * texture(tex, fs_in.tc);
+  //color = texture(tex, fs_in.tc);
 }

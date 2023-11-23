@@ -100,6 +100,8 @@ auto lastTime = 0.0f;								// Used to calculate Frame rate
 
 auto fovy = 50.0f;									// Field of view (y axis)
 
+float lightGamma = 1.5f;							// Gamma
+
 CameraController camera;							// Camera
 
 // Camera movement
@@ -638,6 +640,9 @@ void render()
 
 	// Shadow shader
 	shaders["s_shadow"].Use();
+
+	shaders["s_shadow"].setFloat("gamma", lightGamma);
+
 	shaders["s_shadow"].setMat4("view_matrix", viewMatrix);
 	shaders["s_shadow"].setMat4("proj_matrix", projMatrix);
 	shaders["s_shadow"].setVec3("viewPosition", camera.Position);
@@ -936,6 +941,11 @@ void ui()
 			window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
 
 			if (ImGui::Begin("Light Properties", nullptr, window_flags)) {
+				
+				ImGui::InputFloat("Gamma", &lightGamma, 0.1f, 0.5f, "%.2f");
+
+				ImGui::Separator();
+
 				static int UI_lights_item_current = 0;
 				ImGui::LabelText("##LightSelect", "Light Select");
 				ImGui::ListBox("##lightSelectListBox", &UI_lights_item_current, UI_vLightIDs.data(), UI_vLightIDs.size(), 8);
