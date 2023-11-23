@@ -555,20 +555,33 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	modelSelectableID.push_back(obj_cab.ModelID);
 
 	// front cabinet
-	ModelObject obj_cabfront = ModelObject(
+	ModelObject obj_cabfront1 = ModelObject(
 		"cabinfront", 
-		"assets/cabinfrontv2.gltf",
-		glm::vec3(5.228, 3.773f, -2.055f), 	// New position, placed above the bottom cabinet
+		"assets/cabinfrontw1.gltf",
+		glm::vec3(5.295f, 3.787f, -3.016f), 	// New position, placed above the bottom cabinet
 		glm::vec3(0.002f, 0.0f, 0.0f), 	// Rotation
 		glm::vec3(0.8f, 0.8f, 0.8f),			// Scale
 		"s_shadow"
 	);
 
-	obj_cabfront.SetMaterialProperties(64);
+	obj_cabfront1.SetMaterialProperties(64);
 			
-	models[obj_cabfront.ModelID] = obj_cabfront;
-	modelSelectableID.push_back(obj_cabfront.ModelID);
+	models[obj_cabfront1.ModelID] = obj_cabfront1;
+	modelSelectableID.push_back(obj_cabfront1.ModelID);
 
+ModelObject obj_cabfront2 = ModelObject(
+		"cabinfront2", 
+		"assets/cabinfrontw2.gltf",
+		glm::vec3(6.574f, 2.312f, -2.999f), 	// New position, placed above the bottom cabinet
+		glm::vec3(0.002f, 4.759f, 0.0f), 	// Rotation
+		glm::vec3(0.015f, 0.0358f, 0.011f),			// Scale
+		"s_shadow"
+	);
+
+	obj_cabfront2.SetMaterialProperties(64);
+			
+	models[obj_cabfront2.ModelID] = obj_cabfront2;
+	modelSelectableID.push_back(obj_cabfront2.ModelID);
 }
 
 void ContentInitialisation::LoadLightS(vector<LightObject> &lights_s)
