@@ -283,6 +283,33 @@ class CameraController
 		}
 
 
+		// Test for extended upper cab, upto fridge and fridge
+		/*
+				--------------------
+				|   _____| ----|_| |_ z_2
+				|  |               |\_z_3 (fridge edge)
+				|__|               |_ z_1
+				|                  |
+				|                  |
+				|                  |
+				--------------------
+				   |      |    |  |
+		 		  x_1    x_2  x_3 x_4 
+		
+		*/
+
+		float xCabUpper[2] = {7.125, 9.369}; // x_3, x_4
+		float zCabUpper[2] = {-2.54, -2.035}; // z_2, z_3 (confusing)
+
+		// Check the upper cab area to fridge
+		if (newPosition.x < xCabUpper[0] && newPosition.z < zCabUpper[0]) {
+			return false;
+		}
+		// Check the if we're in fridge area
+		if (newPosition.x > xCabUpper[0] && newPosition.x < xCabUpper[1] && newPosition.z < zCabUpper[1]) {
+			return false;
+		}
+
 		// Nothing hit (hopefully!) so return true
 		return true;
 	}
