@@ -223,3 +223,21 @@ Then added animation and interaction with cabinetfront 1. Upon selecting this ob
 ##References
 
 Baking and openGL documentation: as mentioned above.
+
+## Plate
+
+Used the early made plate from blender and then the texture are baked in for the plate 
+the image of baked on is given below 
+
+<img src="https://github.com/devJudah/F21GA-Kitchen-Scene/blob/e9b6432a017ac4e092e3c2ca9f1f47887d081a22/Interactive/Readme_Images/screenshots/Plate/Screenshot%202023-11-22%20at%2020.48.08.png"  height="600"/>
+
+Then the file exported as a .gltf file and then is trasfered to the opengl 
+images inside the opengl is given below
+
+
+
+
+
+
+
+
