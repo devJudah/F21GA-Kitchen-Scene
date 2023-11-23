@@ -60,3 +60,43 @@ class ToastPop
 
 };
 
+class StorageJarMov
+{
+
+    public:
+
+        float animationSpeed = 1.0;
+
+        StorageJarMov();
+
+        void Initialise(glm::vec3 startPosition_SJ, glm::vec3 startRotation_SJ, glm::vec3 startPosition_Lid, glm::vec3 startRotation_Lid);
+
+        bool isRunning();
+
+        void Start(ModelObject &storageJar, ModelObject &storageJarLid);
+
+        bool Tick(ModelObject &storageJar, ModelObject &storageJarLid, float deltaTime);
+
+
+    private:
+        glm::vec3 startPosition_SJ;
+        glm::vec3 startRotation_SJ;
+
+        glm::vec3 startPosition_Lid;
+        glm::vec3 startRotation_Lid;
+
+        glm::vec3 currentPosition_SJ;
+        glm::vec3 currentRotation_SJ;
+
+        glm::vec3 currentPosition_Lid;
+        glm::vec3 currentRotation_Lid;
+
+        bool animationRunning = false;
+
+        float t = 0.0;
+
+        bool JarMov(float t);
+        bool LidMov(float t);
+
+};
+

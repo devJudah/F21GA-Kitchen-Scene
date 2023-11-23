@@ -169,6 +169,8 @@ float objectMovSpeed = 1.0f;
 // Animations
 ToastPop toastPop1;
 ToastPop toastPop2;
+StorageJarMov storageJarMov1;
+
 
 // Sun position - TODO: Move these into a sensible class
 float SunStartPosZ = 3.0f;		// This should be the same as the setting for light_sun. TODO: Set these together
@@ -406,6 +408,17 @@ void startup()
 	toastPop2.Initialise(models["toast_2"].Position, models["toast_2"].Rotation);
 	toastPop2.reverseSpin = true;
 
+	// Storage Jar
+	storageJarMov1.Initialise(
+								models["sj_silver_body"].Position, 
+								models["sj_silver_body"].Rotation, 
+								models["sj_silver_lid"].Position,
+								models["sj_silver_lid"].Rotation
+							);
+
+
+
+
 	// Populate model vector
 	//https://stackoverflow.com/questions/54519163/how-to-convert-stdvectorstdstring-to-const-char-array/54519324#54519324
 	// Why does C++ have to be like this
@@ -448,14 +461,24 @@ void update()
 	if (keyStatus[GLFW_KEY_Q]) camera.keyPressed(CameraController::UP, deltaTime);
 	if (keyStatus[GLFW_KEY_E]) camera.keyPressed(CameraController::DOWN, deltaTime);
 
-	// Start toast animation. TODO: move this 
+	// Start animations
+	// This isn't really what we want to do, it would be better to associate an animation with a model (or similar)
+	// Rather than doing a check to see if a changeable ID matches. TODO: Make this better.
 	if (keyStatus[GLFW_KEY_G]) {
-		if(!toastPop1.isRunning()) {
-			toastPop1.Start(models["toast_1"]);
-			toastPop2.Start(models["toast_2"]);
-			//toastPop1.Tick(models["toast_1"], deltaTime);
-			//toastPop2.Tick(models["toast_2"], deltaTime);
+		if (modelSelectableID[selectedModel] == "toaster") {
+			if(!toastPop1.isRunning()) {
+				toastPop1.Start(models["toast_1"]);
+				toastPop2.Start(models["toast_2"]);
+				//toastPop1.Tick(models["toast_1"], deltaTime);
+				//toastPop2.Tick(models["toast_2"], deltaTime);
+			}
 		}
+		else if (modelSelectableID[selectedModel] == "sj_silver_body") {
+			if(!storageJarMov1.isRunning()) {
+				storageJarMov1.Start(models["sj_silver_body"], models["sj_silver_lid"]);
+			}
+		}
+
 	}
 
 	// Update any animations
@@ -478,6 +501,10 @@ void animations()
 	if (toastPop1.isRunning()) {
 		toastPop1.Tick(models["toast_1"], deltaTime);
 		toastPop2.Tick(models["toast_2"], deltaTime);
+	}
+
+	if (storageJarMov1.isRunning()) {
+		storageJarMov1.Tick(models["sj_silver_body"], models["sj_silver_lid"], deltaTime);
 	}
 }
 
@@ -1025,19 +1052,6 @@ void ui()
 				ImGui::Text("Position: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Position.x, models[modelSelectableID[selectedModel]].Position.y, models[modelSelectableID[selectedModel]].Position.z);
 				ImGui::Text("Rotation: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Rotation.x, models[modelSelectableID[selectedModel]].Rotation.y, models[modelSelectableID[selectedModel]].Rotation.z);
 				ImGui::Text("Scale: %.3f, %.3f, %.3f", models[modelSelectableID[selectedModel]].Scale.x, models[modelSelectableID[selectedModel]].Scale.y, models[modelSelectableID[selectedModel]].Scale.z);
-				// Light info
-				/*
-				int lightSelectedDB = 1;
-				ImGui::Text("Light Dir: %.3f, %.3f, %.3f", lights_s[lightSelectedDB].lightDirection.x, lights_s[lightSelectedDB].lightDirection.y, lights_s[lightSelectedDB].lightDirection.z);
-				ImGui::Text("Light FOV: %.3f", lights_s[lightSelectedDB].perspective_fov);
-				//ImGui::Text("Orths (BL, BR, B, T): %.3f, %.3f, %.3f, %.3f", lights_s[lightSelectedDB].orth_left, lights_s[lightSelectedDB].orth_right, lights_s[lightSelectedDB].orth_bottom, lights_s[lightSelectedDB].orth_top);
-				ImGui::Text("Light near: %.3f Far: %.3f", lights_s[lightSelectedDB].near_plane, lights_s[lightSelectedDB].far_plane);
-				*/
-				/*
-				ImGui::Text("Sun Pos: %.3f, %.3f, %.3f", lights_s[0].lightPosition.x, lights_s[0].lightPosition.y, lights_s[0].lightPosition.z);
-				ImGui::Text("Sun offset: %.3f", SunOffset);
-				*/
-
 			}
 			ImGui::End();
 		}
@@ -1177,27 +1191,6 @@ void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
 	lights_s[2].ToggleLight(); // toggle light state
 	}
 	
-	// Light debug
-	/*
-	// Light view
-	int lightSelectedDB = 1;
-	if (key == GLFW_KEY_G && action == GLFW_PRESS) {
-		
-		if(lightViewDebug){ 
-			lightViewDebug = false;
-			// Reset stuff
-			projMatrix = glm::perspective(glm::radians(fovy), aspect, 0.1f, 1000.0f);
-			camera.Front = vec3(0.0f, 0.0f, -1.0f);
-			camera.Up = vec3(0.0, 1.0, 0.0);
-		} else {
-			lightViewDebug = true;
-			camera.Position = lights_s[lightSelectedDB].lightPosition;
-			camera.Front = lights_s[lightSelectedDB].lightDirection;
-			camera.Up = lights_s[lightSelectedDB].lightUp;
-			projMatrix = glm::perspective(glm::radians(lights_s[lightSelectedDB].perspective_fov), (GLfloat) SHADOW_WIDTH / (GLfloat) SHADOW_HEIGHT, lights_s[lightSelectedDB].near_plane, lights_s[lightSelectedDB].far_plane);
-		}
-	}
-	*/
 
 	/*
 		General keys
