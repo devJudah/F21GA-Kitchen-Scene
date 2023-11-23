@@ -285,37 +285,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	models[obj_toaster.ModelID] = obj_toaster;
 	modelSelectableID.push_back(obj_toaster.ModelID);
 
-	/*
-	ModelObject obj_toast_1 = ModelObject(
-								"toast_1", 
-								"assets/toast.gltf",
-								glm::vec3(-3.47, 1.96, -3.03),
-								glm::vec3(0.0f, 0.1f, 0.0f),
-								glm::vec3(0.4f, 0.4f, 0.4f),
-								"s_shadow"
-							);
-
-	obj_toast_1.SetMaterialProperties(4);
-
-	models[obj_toast_1.ModelID] = obj_toast_1;
-	modelSelectableID.push_back(obj_toast_1.ModelID);
-
-	
-	ModelObject obj_toast_2 = ModelObject(
-								"toast_2", 
-								"assets/toast.gltf",
-								glm::vec3(-3.33, 1.96, -3.05),
-								glm::vec3(0.0f, 0.1f, 0.0f),
-								glm::vec3(0.4f, 0.4f, 0.4f),
-								"s_shadow"
-							);
-
-	obj_toast_2.SetMaterialProperties(4);
-
-	models[obj_toast_2.ModelID] = obj_toast_2;
-	modelSelectableID.push_back(obj_toast_2.ModelID);
-	*/
-
+	// Toast
 	ModelObject obj_toast_1 = ModelObject(
 								"toast_1", 
 								"assets/toast_gl3.gltf",
@@ -433,7 +403,6 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 					
 	cup.SetMaterialProperties(16);
 	
-	// This is really terrible
 	models[cup.ModelID] = cup;
 	modelSelectableID.push_back(cup.ModelID);
 
@@ -441,7 +410,7 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	ModelObject table = ModelObject(
 						"table", 
 						"assets/table.gltf",
-						glm::vec3(3.047f, 1.441f, 2.204f),
+						glm::vec3(3.047f, 1.3f, 2.204f),
 						glm::vec3(0.0f, -1.6f, 0.0f),
 						glm::vec3(1.0f, 1.0f, 1.0f),
 						"s_shadow"
@@ -455,9 +424,9 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	ModelObject fridgeDoor = ModelObject(
 						"fridgeDoor", 
 						"assets/fridge_door.gltf",
-						glm::vec3(9.947f, -0.035f, -1.297f),
+						glm::vec3(9.080, -0.049, -2.570),
 						glm::vec3(0.0f, 0.0f, 0.0f),
-						glm::vec3(1.0f, 0.8f, 1.0f),
+						glm::vec3(0.7, 0.6, 0.7),
 						"s_shadow"
 						);
 					
@@ -469,9 +438,9 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	ModelObject fridgeBody = ModelObject(
 						"fridgeBody", 
 						"assets/fridge_body.gltf",
-						glm::vec3(8.829f, -0.104f, -2.445f),
+						glm::vec3(8.315, -0.104, -3.345),
 						glm::vec3(0.0f, 0.0f, 0.0f),
-						glm::vec3(1.0f, 0.8f, 1.0f),
+						glm::vec3(0.7, 0.6, 0.7),
 						"s_shadow"
 						);
 					
@@ -508,19 +477,6 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	modelSelectableID.push_back(dish.ModelID);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     // Model - Dog
 	ModelObject obj1 = ModelObject(
 						"Dog", 
@@ -543,9 +499,9 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	ModelObject obj_cab = ModelObject(
 		"cabin", 
 		"assets/cabinv5.gltf",
-		glm::vec3(7.624f, 3.783f, -3.066f), 	// New position, placed above the bottom cabinet
+		glm::vec3(6.8, 3.583, -3.250), 	// New position, placed above the bottom cabinet
 		glm::vec3(0.0f, 0.0f, 0.0f), 	// Rotation
-		glm::vec3(0.8f, 0.8f, 0.8f),  			// Scale
+		glm::vec3(0.750, 0.750, 0.750),  			// Scale
 		"s_shadow"
 	);
 
@@ -558,9 +514,9 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	ModelObject obj_cabfront1 = ModelObject(
 		"cabinfront", 
 		"assets/cabinfrontw1.gltf",
-		glm::vec3(5.295f, 3.787f, -3.016f), 	// New position, placed above the bottom cabinet
-		glm::vec3(0.002f, 0.0f, 0.0f), 	// Rotation
-		glm::vec3(0.8f, 0.8f, 0.8f),			// Scale
+		glm::vec3(4.6, 3.583, -3.250), 	// New position, placed above the bottom cabinet
+		glm::vec3(0.00f, 0.0f, 0.0f), 	// Rotation
+		glm::vec3(0.750, 0.750, 0.750),			// Scale
 		"s_shadow"
 	);
 
@@ -569,12 +525,12 @@ void ContentInitialisation::LoadModels(map<string, ModelObject> &models, vector<
 	models[obj_cabfront1.ModelID] = obj_cabfront1;
 	modelSelectableID.push_back(obj_cabfront1.ModelID);
 
-ModelObject obj_cabfront2 = ModelObject(
+	ModelObject obj_cabfront2 = ModelObject(
 		"cabinfront2", 
 		"assets/cabinfrontw2.gltf",
-		glm::vec3(6.574f, 2.312f, -2.999f), 	// New position, placed above the bottom cabinet
-		glm::vec3(0.002f, 4.759f, 0.0f), 	// Rotation
-		glm::vec3(0.015f, 0.0358f, 0.011f),			// Scale
+		glm::vec3(5.758, 2.246, -3.220), 	// New position, placed above the bottom cabinet
+		glm::vec3(0, -1.5707963, 0.0f), 	// Rotation
+		glm::vec3(0.01f, 0.0335, 0.0101f),			// Scale
 		"s_shadow"
 	);
 
